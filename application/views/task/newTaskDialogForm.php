@@ -14,6 +14,16 @@
 				<?php } ?>
 
 			</select>
+
+			<label for="taskResponsableUser" class="control-label">Responsável: *</label>
+			<select  class="input-block-level" id="taskResponsableUser" name="taskResponsableUser" data-rel="chosen">
+				<option></option>
+				<?php foreach($taskResponsableUsers as $taskResponsableUser) { ?>
+				<option value="<?=$taskResponsableUser->userID?>"><?=$taskResponsableUser->userName?></option>
+				<?php } ?>
+
+			</select>
+
 			<label for="newTaskTitle" class="control-label">Título *</label>
 			<input type="text" class="input-block-level" placeholder="Título" id="newTaskTitle" name="newTaskTitle">
 		</form>

@@ -80,17 +80,13 @@ class Task extends MY_Controller {
 
 		$data->tasks = $this->task_model->getAll();
 
-		if($this->input->post('taskID')) {
+		$data->taskID = '';
 
-			$data->taskID = $this->input->post('taskID');
+		$data->taskTitle = '';
 
-			$data->taskTitle = $this->input->post('taskTitle');
+		$this->load->model('user/user_model');
 
-		} else {
-			$data->taskID = '';
-
-			$data->taskTitle = '';
-		}
+		$data->taskResponsableUsers = $this->user_model->getAll();
 
 		echo $this->load->view('task/newTaskDialogForm', $data, true);
 	}

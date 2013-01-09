@@ -51,29 +51,6 @@ class Task_Model extends CI_Model {
         return $query;
     }
 
-    function getAllByDemandID($demandID) {
-
-        $cols = array(
-            'u.userName  AS taskResponsableName',
-            'taskID',
-            'taskTitle',
-            'taskDesc',
-            'taskKind',
-            'taskStatus',
-            'taskKindName',
-            'taskStatusName',
-            );
-        $this->db->select($cols);
-        $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
-        $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
-        $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
-        $this->db->where('taskDemand', $demandID);
-        $query = $this->db->get('tzadiTask t');
-
-        return $query->result();
-
-    }
-
     function search($whereParameters, $statuses = null) {
 
         $cols = array(

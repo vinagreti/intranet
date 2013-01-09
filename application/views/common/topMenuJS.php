@@ -20,9 +20,11 @@
 
 	$("#saveNewTask").live('click', function( e ){
 		newTaskFather = $('#newTaskFather').val(); 
+		taskResponsableUser = $('#taskResponsableUser').val();
 		newTaskTitle = $('#newTaskTitle').val();
 		$.post(base_url + "task/createTask", {
 			taskFather : newTaskFather,
+			taskResponsableUser : taskResponsableUser,
 			taskTitle : newTaskTitle
 		},function( response ) {
 			$('#tzadiDialogs').modal('hide');
