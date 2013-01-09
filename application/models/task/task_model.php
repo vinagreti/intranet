@@ -208,4 +208,8 @@ class Task_Model extends CI_Model {
         return $query->num_rows();
     }
 
+    function getAllKind(){
+        $query = $this->db->get('tzadiTaskKind');
+        return $query->result();
+    }
 }

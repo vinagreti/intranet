@@ -88,6 +88,8 @@ class Task extends MY_Controller {
 
 		$data->taskResponsableUsers = $this->user_model->getAll();
 
+		$data->taskKinds = $this->task_model->getAllKind();
+
 		echo $this->load->view('task/newTaskDialogForm', $data, true);
 	}
 

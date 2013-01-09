@@ -6,6 +6,19 @@
 	<div class="modal-body">
 
 		<form class="form-vertical">
+
+			<label for="newTaskTitle" class="control-label">Título *</label>
+			<input type="text" class="input-block-level" placeholder="Título" id="newTaskTitle" name="newTaskTitle">
+
+			<label for="taskKind" class="control-label">Tipo: *</label>
+			<select  class="input-block-level" id="taskKind" name="taskKind" data-rel="chosen">
+				<option></option>
+				<?php foreach($taskKinds as $taskKind) { ?>
+				<option value="<?=$taskKind->taskKindID?>"><?=$taskKind->taskKindName?></option>
+				<?php } ?>
+
+			</select>
+
 			<label for="newTaskFather" class="control-label">Tarefa pai: *</label>
 			<select  class="input-block-level" id="newTaskFather" name="newTaskFather" data-rel="chosen">
 				<option value="<?=$taskID?>"><?=$taskTitle?></option>
@@ -23,9 +36,6 @@
 				<?php } ?>
 
 			</select>
-
-			<label for="newTaskTitle" class="control-label">Título *</label>
-			<input type="text" class="input-block-level" placeholder="Título" id="newTaskTitle" name="newTaskTitle">
 		</form>
 
 	</div>
