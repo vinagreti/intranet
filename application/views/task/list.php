@@ -24,6 +24,17 @@
 						</div>
 					</div>
 
+					<div class="control-group warning">
+						<label class="control-label" for="filterFrojectID">Projeto: </label>
+						<div class="controls">
+							<select id="filterFrojectID">
+								<option></option>
+								<?php foreach ($taskProjects as $project) { ?>
+								<option value="<?=$project->projectID?>"><?=$project->projectTitle?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
 
 					<div class="control-group warning">
 						<label class="control-label" for="filterTaskID">Task number: </label>

@@ -30,6 +30,7 @@ $(document).ready(function(){
 		$(".taskList").append("</br></br></br></br></br>Carregando...</br></br></br></br></br></br>");
 
 		$.post(base_url+"task/ajaxSearch", {
+			taskProject : searchPattern["taskProject"],
 			taskID : searchPattern["taskID"],
 			taskFather : searchPattern["taskFather"],
 			taskStatus : searchPattern["taskStatus"],
@@ -240,6 +241,7 @@ $(document).ready(function(){
 
 		filterID : $("#filterID").val(),
 		filterTaskID : $("#filterTaskID").val(),
+		filterFrojectID : $("#filterFrojectID").val(),
 		filterFatherID : $("#filterFatherID").val(),
 		filterStatus1 : $("#filterStatus1").is(':checked'),
 		filterStatus2 : $("#filterStatus2").is(':checked'),
@@ -258,6 +260,7 @@ $(document).ready(function(){
 		searchPattern = [];
 		$("#filterID").attr("value", "");
 		$("#filterTaskID").attr("value", "");
+		$("#filterFrojectID").attr("value", "");
 		$("#filterFatherID").attr("value", "");
 		$("#filterStatus1").attr("checked", false);
 		$("#filterStatus2").attr("checked", false);
@@ -274,6 +277,7 @@ $(document).ready(function(){
 		
 		if ( $("#filterTaskID").val() )	searchPattern["taskID"] = $("#filterTaskID").val();
 		if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
+		if ( $("#filterFrojectID").val() ) searchPattern["taskProject"] = $("#filterFrojectID").val();
 		if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
 		if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
 		if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);

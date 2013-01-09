@@ -13,6 +13,7 @@ class Task extends MY_Controller {
 		$this->load->model('task/task_model');
 		$data->tasks = $this->task_model->getAll();
 		$data->taskFilters = $this->task_model->getAllFilters();
+		$data->taskProjects = $this->task_model->getAllProject();
 
 		$this->loadViewWithTemplate('task/list', $data, true);
 	}
@@ -27,6 +28,7 @@ class Task extends MY_Controller {
 
 		if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
 		if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
+		if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
 		if(isset($searchPattern["taskStatus"])) $statuses = $searchPattern["taskStatus"];
 
 		$this->load->model('task/task_model');
@@ -119,7 +121,6 @@ class Task extends MY_Controller {
 	public function createProject()
 	{
 		$data = $this->input->post();
-		$data['projectCreatorUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createProject($data);
 
