@@ -68,7 +68,7 @@
 					</li>
 				</ul>
 			</td>
-			<td class="center"><small><?=substr($task->taskTitle, 0, 40)?></small></td>
+			<td class="center"><small><a href="#" rel="tooltip" title="<?=$task->taskTitle?>"><?=substr($task->taskTitle, 0, 80)?></a></small></td>
 			<td class="center"><small><?=substr($task->taskResponsableName, 0, 20)?></small></td>
 			<td class="center"><small><?=substr($task->taskKindName, 0, 20)?></small></td>
 			<td class="center"><small><?=substr($task->taskFather, 0, 30)?></small></td>

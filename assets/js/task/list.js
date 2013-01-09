@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 	var searchPattern = new Array();
 
+	$('#taskTitle').tooltip();
+
 	refreshList(searchPattern);
 
 
