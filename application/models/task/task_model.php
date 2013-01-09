@@ -15,6 +15,7 @@ class Task_Model extends CI_Model {
             'u.userName  AS taskResponsableName',
             'taskID',
             'taskFather',
+            'taskProject',
             'taskTitle',
             'taskDesc',
             'taskKind',
@@ -210,6 +211,11 @@ class Task_Model extends CI_Model {
 
     function getAllKind(){
         $query = $this->db->get('tzadiTaskKind');
+        return $query->result();
+    }
+
+    function getAllProject(){
+        $query = $this->db->get('tzadiTaskProject');
         return $query->result();
     }
 }

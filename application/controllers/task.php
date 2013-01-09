@@ -90,6 +90,12 @@ class Task extends MY_Controller {
 
 		$data->taskKinds = $this->task_model->getAllKind();
 
+		$data->taskProjects = $this->task_model->getAllProject();
+
+		$data->projectID = '';
+
+		$data->projectTitle = '';
+
 		echo $this->load->view('task/newTaskDialogForm', $data, true);
 	}
 

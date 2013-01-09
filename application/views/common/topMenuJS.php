@@ -19,20 +19,48 @@
 	})
 
 	$("#saveNewTask").live('click', function( e ){
-		newTaskFather = $('#newTaskFather').val(); 
+		newTaskFather = "";
+		newTaskProject = "";
+
 		taskResponsableUser = $('#taskResponsableUser').val();
 		taskKind = $('#taskKind').val();
 		newTaskTitle = $('#newTaskTitle').val();
+
+		if ( $("#taskLink1").is(':checked') ) taskLink = "Vinculada";
+		if ( $("#taskLink2").is(':checked') ) taskLink = "Referenciada";
+
+		if ( $("#taskSource1").is(':checked') ) newTaskProject = $('#newTaskProject').val();
+		if ( $("#taskSource2").is(':checked') ) {
+			fatherSelect = $('#newTaskFather');
+			newTaskFather = fatherSelect.val();
+			newTaskProject = fatherSelect.find(':selected').attr('projectID');
+		} 
+
 		$.post(base_url + "task/createTask", {
 			taskFather : newTaskFather,
+			taskProject : newTaskProject,
 			taskKind : taskKind,
 			taskResponsableUser : taskResponsableUser,
-			taskTitle : newTaskTitle
+			taskTitle : newTaskTitle,
+			taskLink : taskLink			
 		},function( response ) {
 			$('#tzadiDialogs').modal('hide');
 		});
 	});
 
+	$(".taskSource").live('change', function( e ){
+		
+		$(".linkSelect").show();
+
+		if ( $("#taskSource1").is(':checked') ){
+			$(".projectSelect").show();
+			$(".taskSelect").hide();
+		} 
+		if ( $("#taskSource2").is(':checked') ) {
+			$(".projectSelect").hide();
+			$(".taskSelect").show();			
+		}
+	});
 
 // The topMenu add demand button functions
 	$(".newProjectButton").live('click', function( e ){
