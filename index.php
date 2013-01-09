@@ -23,19 +23,13 @@
 // detect the ambient (production, validation, development)
 switch ($_SERVER["HTTP_HOST"]) {
 
-	case 'tzadi.com':
+	case 'intranet.tzadi.com':
 
 	define('ENVIRONMENT', 'production');
 
 	break;
 
-	case 'www.tzadi.com':
-
-	define('ENVIRONMENT', 'production');
-
-	break;
-
-	case 'staging.tzadi.com':
+	case 'intranetstaging.tzadi.com':
 
 	define('ENVIRONMENT', 'staging');
 
@@ -70,6 +64,7 @@ if (defined('ENVIRONMENT'))
 		break;
 
 		case 'staging':
+		
 		case 'production':
 		error_reporting(0);
 		break;
