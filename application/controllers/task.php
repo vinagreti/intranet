@@ -67,6 +67,7 @@ class Task extends MY_Controller {
 	public function update($taskID)
 	{
 		$data = $this->input->post();
+		$data['taskResponsableUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$this->task_model->update($taskID, $data);
 
@@ -97,6 +98,7 @@ class Task extends MY_Controller {
 	public function createTask()
 	{
 		$data = $this->input->post();
+		$data['taskCreatorUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createTask($data);
 
@@ -113,6 +115,7 @@ class Task extends MY_Controller {
 	public function createProject()
 	{
 		$data = $this->input->post();
+		$data['projectCreatorUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createProject($data);
 
