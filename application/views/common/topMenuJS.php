@@ -21,7 +21,7 @@
 	$("#saveNewTask").live('click', function( e ){
 		newTaskFather = $('#newTaskFather').val(); 
 		newTaskTitle = $('#newTaskTitle').val();
-		$.post(base_url + "task/create", {
+		$.post(base_url + "task/createTask", {
 			taskFather : newTaskFather,
 			taskTitle : newTaskTitle
 		},function( response ) {

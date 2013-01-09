@@ -181,7 +181,7 @@ class Task_Model extends CI_Model {
 
     }
 
-    function create($data) {
+    function createTask($data) {
 
         $query = $this->db->insert('tzadiTask', $data);
 
@@ -192,6 +192,14 @@ class Task_Model extends CI_Model {
     function createProject($data) {
 
         $query = $this->db->insert('tzadiTaskProject', $data);
+
+        return $query;
+
+    }
+
+    function createComment($data) {
+
+        $query = $this->db->insert('tzadiTaskComment', $data);
 
         return $query;
 

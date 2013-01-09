@@ -282,4 +282,33 @@ $(document).ready(function(){
 		refreshList(searchPattern);
 	});
 
+// The topMenu add demand button functions
+	$(".commentButton").live('click', function( e ){
+
+		e.preventDefault();
+
+		$('#tzadiDialogs').empty();
+
+		taskID = $(this).attr("taskID");
+
+		$.post(base_url + "task/newCommentForm/", {
+			taskID : taskID
+		}, function( response ) {
+			$('#tzadiDialogs').append( response );
+		});
+
+		$('#tzadiDialogs').modal('show');
+	});
+
+	$("#saveNewComment").live('click', function( e ){
+		newComment = $('#newComment').val();
+		taskID = $('#newComment').attr("taskID");
+		$.post(base_url + "task/newComment", {
+			comment : newComment,
+			commentTask : taskID
+		},function( response ) {
+			$('#tzadiDialogs').modal('hide');
+		});
+	});
+
 });

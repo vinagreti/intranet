@@ -58,7 +58,7 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['cancel'] = 'private';
 		$methodsPermission['task']['view'] = 'private';
 		$methodsPermission['task']['update'] = 'private';
-		$methodsPermission['task']['create'] = 'private';
+		$methodsPermission['task']['createTask'] = 'private';
 		$methodsPermission['task']['createTaskForm'] = 'private';
 		$methodsPermission['task']['comment'] = 'private';
 		$methodsPermission['task']['commentForm'] = 'private';
@@ -67,6 +67,8 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['saveFilter'] = 'private';
 		$methodsPermission['task']['createProjectForm'] = 'private';
 		$methodsPermission['task']['createProject'] = 'private';
+		$methodsPermission['task']['newCommentForm'] = 'private';
+		$methodsPermission['task']['newComment'] = 'private';
 
 		// git class permission
 		$methodsPermission['git']['index'] = 'admin';

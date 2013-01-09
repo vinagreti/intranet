@@ -94,20 +94,11 @@ class Task extends MY_Controller {
 		echo $this->load->view('task/newTaskDialogForm', $data, true);
 	}
 
-
-	public function commentForm($taskID)
-	{
-		$data->taskID = $taskID;
-		echo $this->load->view('task/newTaskCommentDialogForm', $data, true);
-
-	}
-
-
-	public function create()
+	public function createTask()
 	{
 		$data = $this->input->post();
 		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->create($data);
+		$dbResponse = $this->task_model->createTask($data);
 
 		echo $dbResponse;
 	}
@@ -124,6 +115,23 @@ class Task extends MY_Controller {
 		$data = $this->input->post();
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createProject($data);
+
+		echo $dbResponse;
+	}
+
+	public function newCommentForm()
+	{
+		$data->taskID = $this->input->post("taskID");
+
+		echo $this->load->view('task/newCommentForm', $data, true);
+	}
+
+	public function newComment()
+	{
+		$data = $this->input->post();
+		$data['commentUser'] = $this->session->userdata('userID');
+		$this->load->model('task/task_model');
+		$dbResponse = $this->task_model->createComment($data);
 
 		echo $dbResponse;
 	}
