@@ -37,6 +37,18 @@
 					</div>
 
 					<div class="control-group warning">
+						<label class="control-label" for="filterResponsableID">Responsável: </label>
+						<div class="controls">
+							<select id="filterResponsableID">
+								<option></option>
+								<?php foreach ($users as $user) { ?>
+								<option value="<?=$user->userID?>"><?=$user->userName?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+
+					<div class="control-group warning">
 						<label class="control-label" for="filterTaskID">Task number: </label>
 						<div class="controls">
 							<input type="text" id="filterTaskID">

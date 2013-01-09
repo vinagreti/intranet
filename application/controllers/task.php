@@ -15,6 +15,9 @@ class Task extends MY_Controller {
 		$data->taskFilters = $this->task_model->getAllFilters();
 		$data->taskProjects = $this->task_model->getAllProject();
 
+		$this->load->model('user/user_model');
+		$data->users = $this->user_model->getAll();
+
 		$this->loadViewWithTemplate('task/list', $data, true);
 	}
 
@@ -29,6 +32,7 @@ class Task extends MY_Controller {
 		if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
 		if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
 		if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
+		if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
 		if(isset($searchPattern["taskStatus"])) $statuses = $searchPattern["taskStatus"];
 
 		$this->load->model('task/task_model');

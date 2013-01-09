@@ -5,6 +5,7 @@ $(document).ready(function(){
 	$('#taskTitle').tooltip();
 
 	refreshList(searchPattern);
+	resetFilter();
 
 
 	if($(".listEmpty")){
@@ -30,6 +31,7 @@ $(document).ready(function(){
 		$(".taskList").append("</br></br></br></br></br>Carregando...</br></br></br></br></br></br>");
 
 		$.post(base_url+"task/ajaxSearch", {
+			taskResponsableUser : searchPattern["taskResponsableUser"],
 			taskProject : searchPattern["taskProject"],
 			taskID : searchPattern["taskID"],
 			taskFather : searchPattern["taskFather"],
@@ -44,6 +46,20 @@ $(document).ready(function(){
 		});
 
 		
+	}
+
+	function resetFilter(){
+		$("#filterID").attr("value", "");
+		$("#filterTaskID").attr("value", "");
+		$("#filterFatherID").attr("value", "");
+		$("#filterFrojectID").attr("value", "");
+		$("#filterResponsableID").attr("value", "");
+		$("#filterStatus1").attr("checked", false);
+		$("#filterStatus2").attr("checked", false);
+		$("#filterStatus3").attr("checked", false);
+		$("#filterStatus4").attr("checked", false);
+		$("#filterStatus5").attr("checked", false);
+		$("#filterStatus6").attr("checked", false);
 	}
 
 	/*
@@ -243,6 +259,7 @@ $(document).ready(function(){
 		filterTaskID : $("#filterTaskID").val(),
 		filterFrojectID : $("#filterFrojectID").val(),
 		filterFatherID : $("#filterFatherID").val(),
+		filterResponsableID : $("#filterResponsableID").val(),
 		filterStatus1 : $("#filterStatus1").is(':checked'),
 		filterStatus2 : $("#filterStatus2").is(':checked'),
 		filterStatus3 : $("#filterStatus3").is(':checked'),
@@ -258,16 +275,7 @@ $(document).ready(function(){
 
 	$(".taskListFilterReset").live('click', function( e ){
 		searchPattern = [];
-		$("#filterID").attr("value", "");
-		$("#filterTaskID").attr("value", "");
-		$("#filterFrojectID").attr("value", "");
-		$("#filterFatherID").attr("value", "");
-		$("#filterStatus1").attr("checked", false);
-		$("#filterStatus2").attr("checked", false);
-		$("#filterStatus3").attr("checked", false);
-		$("#filterStatus4").attr("checked", false);
-		$("#filterStatus5").attr("checked", false);
-		$("#filterStatus6").attr("checked", false);
+		resetFilter();
 		refreshList(searchPattern);
 	});
 
@@ -278,6 +286,7 @@ $(document).ready(function(){
 		if ( $("#filterTaskID").val() )	searchPattern["taskID"] = $("#filterTaskID").val();
 		if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
 		if ( $("#filterFrojectID").val() ) searchPattern["taskProject"] = $("#filterFrojectID").val();
+		if ( $("#filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $("#filterResponsableID").val();
 		if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
 		if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
 		if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);
