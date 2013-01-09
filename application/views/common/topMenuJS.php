@@ -9,7 +9,7 @@
 
 		$('#tzadiDialogs').empty();
 
-		$.post(base_url + "task/createForm", {
+		$.post(base_url + "task/createTaskForm", {
 			form : "task/newTaskDialogForm"
 		},function( response ) {
 			$('#tzadiDialogs').append( response );
@@ -17,8 +17,6 @@
 
 		$('#tzadiDialogs').modal('show');
 	})
-
-	
 
 	$("#saveNewTask").live('click', function( e ){
 		newTaskFather = $('#newTaskFather').val(); 
@@ -39,7 +37,7 @@
 
 		$('#tzadiDialogs').empty();
 
-		$.post(base_url + "project/createForm", {
+		$.post(base_url + "task/createProjectForm", {
 			form : "create/newProjectDialogForm"
 		},function( response ) {
 			$('#tzadiDialogs').append( response );
@@ -47,4 +45,14 @@
 
 		$('#tzadiDialogs').modal('show');
 	});
+
+	$("#saveNewProject").live('click', function( e ){
+		newProjectTitle = $('#newProjectTitle').val();
+		$.post(base_url + "task/createProject", {
+			projectTitle : newProjectTitle
+		},function( response ) {
+			$('#tzadiDialogs').modal('hide');
+		});
+	});
+
 </script>

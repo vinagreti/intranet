@@ -73,7 +73,7 @@ class Task extends MY_Controller {
 		echo "Alteração realizada com sucesso!";
 	}
 
-	public function createForm()
+	public function createTaskForm()
 	{
 		$this->load->model('task/task_model');
 
@@ -91,14 +91,14 @@ class Task extends MY_Controller {
 			$data->taskTitle = '';
 		}
 
-		echo $this->loadViewWithJS('task/newTaskDialogForm', $data, true);
+		echo $this->load->view('task/newTaskDialogForm', $data, true);
 	}
 
 
 	public function commentForm($taskID)
 	{
 		$data->taskID = $taskID;
-		echo $this->loadViewWithJS('task/newTaskCommentDialogForm', $data, true);
+		echo $this->load->view('task/newTaskCommentDialogForm', $data, true);
 
 	}
 
@@ -108,6 +108,22 @@ class Task extends MY_Controller {
 		$data = $this->input->post();
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->create($data);
+
+		echo $dbResponse;
+	}
+
+	public function createProjectForm()
+	{
+		$data = '';
+
+		echo $this->load->view('task/newProjectDialogForm', $data, true);
+	}
+
+	public function createProject()
+	{
+		$data = $this->input->post();
+		$this->load->model('task/task_model');
+		$dbResponse = $this->task_model->createProject($data);
 
 		echo $dbResponse;
 	}

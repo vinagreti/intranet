@@ -59,22 +59,14 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['view'] = 'private';
 		$methodsPermission['task']['update'] = 'private';
 		$methodsPermission['task']['create'] = 'private';
-		$methodsPermission['task']['createForm'] = 'private';
+		$methodsPermission['task']['createTaskForm'] = 'private';
 		$methodsPermission['task']['comment'] = 'private';
 		$methodsPermission['task']['commentForm'] = 'private';
 		$methodsPermission['task']['listByStatus'] = 'private';
 		$methodsPermission['task']['ajaxSearch'] = 'private';
 		$methodsPermission['task']['saveFilter'] = 'private';
-
-		// project class permission
-		$methodsPermission['project']['index'] = 'private';
-		$methodsPermission['project']['finish'] = 'private';
-		$methodsPermission['project']['cancel'] = 'private';
-		$methodsPermission['project']['view'] = 'private';
-		$methodsPermission['project']['update'] = 'private';
-		$methodsPermission['project']['create'] = 'private';
-		$methodsPermission['project']['createForm'] = 'private';
-		$methodsPermission['project']['listByStatus'] = 'private';
+		$methodsPermission['task']['createProjectForm'] = 'private';
+		$methodsPermission['task']['createProject'] = 'private';
 
 		// git class permission
 		$methodsPermission['git']['index'] = 'admin';
