@@ -52,8 +52,8 @@ $(document).ready(function(){
 		$("#filterID").attr("value", "");
 		$("#filterTaskID").attr("value", "");
 		$("#filterFatherID").attr("value", "");
-		$("#filterFrojectID").attr("value", "");
-		$("#filterResponsableID").attr("value", "");
+		$(".filterFrojectID").attr("value", "");
+		$(".filterResponsableID").attr("value", "");
 		$("#filterStatus1").attr("checked", false);
 		$("#filterStatus2").attr("checked", false);
 		$("#filterStatus3").attr("checked", false);
@@ -244,7 +244,11 @@ $(document).ready(function(){
 	});
 
 	$(".taskListFilter").live('click', function( e ){
-		$(".filter").toggle();
+		$("#filter").modal("show");
+	});
+
+	$(".taskListFilterCancel").live('click', function( e ){
+		$("#filter").modal("hide");
 	});
 
 	$(".filterID").live('change', function( e ){
@@ -257,9 +261,9 @@ $(document).ready(function(){
 
 		filterID : $("#filterID").val(),
 		filterTaskID : $("#filterTaskID").val(),
-		filterFrojectID : $("#filterFrojectID").val(),
+		filterFrojectID : $(".filterFrojectID").val(),
 		filterFatherID : $("#filterFatherID").val(),
-		filterResponsableID : $("#filterResponsableID").val(),
+		filterResponsableID : $(".filterResponsableID").val(),
 		filterStatus1 : $("#filterStatus1").is(':checked'),
 		filterStatus2 : $("#filterStatus2").is(':checked'),
 		filterStatus3 : $("#filterStatus3").is(':checked'),
@@ -276,6 +280,7 @@ $(document).ready(function(){
 	$(".taskListFilterReset").live('click', function( e ){
 		searchPattern = [];
 		resetFilter();
+		$("#filter").modal("hide");
 		refreshList(searchPattern);
 	});
 
@@ -285,8 +290,8 @@ $(document).ready(function(){
 		
 		if ( $("#filterTaskID").val() )	searchPattern["taskID"] = $("#filterTaskID").val();
 		if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
-		if ( $("#filterFrojectID").val() ) searchPattern["taskProject"] = $("#filterFrojectID").val();
-		if ( $("#filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $("#filterResponsableID").val();
+		if ( $(".filterFrojectID").val() ) searchPattern["taskProject"] = $(".filterFrojectID").val();
+		if ( $(".filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $(".filterResponsableID").val();
 		if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
 		if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
 		if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);
@@ -294,6 +299,7 @@ $(document).ready(function(){
 		if ( $("#filterStatus5").is(':checked') ) searchPattern["taskStatus"].push(5);
 		if ( $("#filterStatus6").is(':checked') ) searchPattern["taskStatus"].push(6);
 
+		$("#filter").modal("hide");
 		refreshList(searchPattern);
 	});
 
