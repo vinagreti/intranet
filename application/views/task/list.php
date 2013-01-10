@@ -3,8 +3,9 @@
 	<h3>Tarefas</h3>
 
 	<h5>
-		<a class="taskListFilter" href="#"><i class="icon-search"></i> Filtro</a>
-		<a class="taskListFilterReset" href="#"><i class="icon-remove"></i></a>
+		<a class="taskListFilter btn btn-primary" href="#"><i class="icon-search icon-white"></i> </a>
+		<a class="taskFilterButton btn btn-info" href="#"><i class="icon-refresh icon-white"></i></a>
+		<a class="taskListFilterReset btn btn-danger" href="#"><i class="icon-remove icon-white"></i></a>
 	</h5>
 
 

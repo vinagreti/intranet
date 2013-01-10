@@ -5,7 +5,7 @@
 	<thead>
 		<tr>
 			<th><small>ID </small></th>
-			<th><small> </small></th>
+			<th><small>Ação</small></th>
 			<th><small>Título</small></th>
 			<th><small>Responsável</small></th>
 			<th><small>Tipo</small></th>
