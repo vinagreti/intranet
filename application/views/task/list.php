@@ -25,7 +25,7 @@
 
 
 					<label>Task father: </label>
-					<input class="span12" ype="text" id="filterFatherID" placeholder="Task father" name="filterFatherID">
+					<input class="span12" type="text" id="filterFatherID" placeholder="Task father" name="filterFatherID">
 
 					<label>Filtro pré-definido: </label>
 					<select class="filterID span12">
