@@ -65,7 +65,7 @@
 				</ul>
 			</td>
 
-			<td class="center"><small><a href="<?=base_url()?>task/view/<?=$task->taskID?>" rel="tooltip" title="<?=$task->taskTitle?>"><?=substr($task->taskTitle, 0, 80)?></a></small></td>
+			<td class="center"><small><a href="<?=base_url()?>task/view/<?=$task->taskID?>" target="_blank" rel="tooltip" title="<?=$task->taskTitle?>"><?=substr($task->taskTitle, 0, 80)?></a></small></td>
 			<td class="center"><small><?=substr($task->taskResponsableName, 0, 20)?></small></td>
 			<td class="center"><small><?=substr($task->taskKindName, 0, 20)?></small></td>
 			<td class="center"><small><?=substr($task->taskFather, 0, 30)?></small></td>
