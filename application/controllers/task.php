@@ -57,15 +57,12 @@ class Task extends MY_Controller {
 
 		$this->load->model('task/task_model');
 		$data->task = $this->task_model->getByID($taskID);
+		$data->statuses = $this->task_model->getAllStatus();
+		$data->kinds = $this->task_model->getAllKind();
+		$data->taskComments = $this->task_model->getAllCommentByTask($taskID);
 
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
-
-		$this->load->model('task/status_model');
-		$data->statuses = $this->status_model->getAll();
-
-		$this->load->model('task/kind_model');
-		$data->kinds = $this->kind_model->getAll();
 
 		$this->loadViewWithTemplate('task/view', $data, false);
 	}

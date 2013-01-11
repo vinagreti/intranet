@@ -209,13 +209,40 @@ class Task_Model extends CI_Model {
         return $query->num_rows();
     }
 
-    function getAllKind(){
-        $query = $this->db->get('tzadiTaskKind');
-        return $query->result();
-    }
-
     function getAllProject(){
         $query = $this->db->get('tzadiTaskProject');
         return $query->result();
+    }
+
+    function getAllKind() {
+
+        $this->db->order_by('taskKindName');
+        $query = $this->db->get('tzadiTaskKind');
+        return $query->result();
+
+    }
+
+    function getAllStatus() {
+
+        $this->db->order_by('taskStatusName');
+        $query = $this->db->get('tzadiTaskStatus');
+        return $query->result();
+
+    }
+
+    function getAllComment() {
+
+        $query = $this->db->get('tzadiTaskStatus');
+        return $query->result();
+
+    }
+
+    function getAllCommentByTask($taskID) {
+
+        $this->db->join('tzadiUser u', 'u.userID = c.commentUser', 'left');
+        $this->db->where('commentTask', $taskID);
+        $query = $this->db->get('tzadiTaskComment c');
+        return $query->result();
+
     }
 }
