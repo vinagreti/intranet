@@ -228,15 +228,16 @@ $(document).ready(function(){
 	- insere um comentário na tarefa selecionada
 	*/
 	$(".commentButton").live('click', function( e ){
+
 		e.preventDefault();
 
 		$('#tzadiDialogs').empty();
 
-		taskID = $(this).attr('taskID');
+		taskID = $(this).attr("taskID");
 
-		$.post(base_url + "task/commentForm/"+taskID, {
-			form : "task/newTaskCommentDialogForm"
-		},function( response ) {
+		$.post(base_url + "task/newCommentForm/", {
+			taskID : taskID
+		}, function( response ) {
 			$('#tzadiDialogs').append( response );
 		});
 
@@ -301,24 +302,6 @@ $(document).ready(function(){
 
 		$("#filter").modal("hide");
 		refreshList(searchPattern);
-	});
-
-// The topMenu add demand button functions
-	$(".commentButton").live('click', function( e ){
-
-		e.preventDefault();
-
-		$('#tzadiDialogs').empty();
-
-		taskID = $(this).attr("taskID");
-
-		$.post(base_url + "task/newCommentForm/", {
-			taskID : taskID
-		}, function( response ) {
-			$('#tzadiDialogs').append( response );
-		});
-
-		$('#tzadiDialogs').modal('show');
 	});
 
 	$("#saveNewComment").live('click', function( e ){
