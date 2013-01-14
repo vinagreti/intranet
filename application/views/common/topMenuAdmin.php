@@ -1,6 +1,9 @@
 <ul class="nav pull-right">
 	<li class="dropdown">
-		<a class="navBarConfigurationMenu" data-toggle="dropdown" href="#"><?=$this->session->userdata('userName')?> <i class="icon-chevron-down"></i></a>
+		<a class="navBarConfigurationMenu" data-toggle="dropdown" href="#" rel="tooltip" title="Configurações de conta">
+			<?=$this->session->userdata('userName')?>
+			<i class="icon-chevron-down"></i>
+		</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
 			<li><a tabindex="-1"  href="#profile">Perfil</a></li>
