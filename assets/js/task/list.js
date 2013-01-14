@@ -94,10 +94,12 @@ $(document).ready(function(){
 				$.post(base_url + "task/update/" + taskID, {
 					taskStatus : status,
 					taskID : taskID
+				}, function( e ){
+					refreshList(searchPattern);
 				});
 
 				$('#tzadiDialogs').modal('hide');
-				refreshList(searchPattern);				
+
 			} else {
 				$('.alert').show();
 			}
@@ -116,7 +118,7 @@ $(document).ready(function(){
 
 		taskID = $(this).attr('taskID');
 
-		if(confirmAction(taskID, 'aprovar')){
+		if(_confirmAction(taskID, 'aprovar')){
 
 			$.post(base_url + "task/update/" + taskID, {
 				taskStatus : 3,
@@ -170,7 +172,7 @@ $(document).ready(function(){
 
 		taskID = $(this).attr('taskID');
 
-		if(confirmAction(taskID, 'iniciar')){
+		if(_confirmAction(taskID, 'iniciar')){
 
 			$.post(base_url + "task/update/" + taskID, {
 				taskStatus : 4,
