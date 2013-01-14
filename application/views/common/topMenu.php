@@ -14,7 +14,7 @@
 			<li><a tabindex="-1" href="#" class="newTaskButton">Nova Tarefa</a></li>
 			<li><a tabindex="-1" href="#" class="newProjectButton">Novo Projeto</a></li>
 			<li class="divider"></li>
-			<li><a tabindex="-1" href="<?=base_url()?>task" target="blank">Listar Tarefas</a></li>
+			<li><a tabindex="-1" href="<?=base_url()?>task">Listar Tarefas</a></li>
 		</ul>
 	</li>
 </ul>
