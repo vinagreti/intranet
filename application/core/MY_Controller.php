@@ -74,7 +74,11 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['git']['index'] = 'admin';
 		$methodsPermission['git']['log'] = 'admin';
 		$methodsPermission['git']['pull'] = 'admin';
-
+		
+		// git class permission
+		$methodsPermission['gp']['index'] = 'public';
+		$methodsPermission['gp']['git'] = 'public';
+		
 		// git class permission
 		$methodsPermission['dashboard']['index'] = 'admin';
 		$methodsPermission['dashboard']['serverInfo'] = 'admin';
