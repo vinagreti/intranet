@@ -1,6 +1,6 @@
 <div class="span2">
 
-	<h4>Menu</h4>
+	<h4>Dashboard</h4>
 
 	    <ul class="nav nav-pills nav-stacked">
 				<li <?php if($this->router->method =="index") echo 'class="active"'; ?>><a href="<?=base_url()?>dashboard"><i class="icon-home"></i><span class="hidden-tablet"> Inicio</span></a></li>
