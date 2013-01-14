@@ -64,17 +64,17 @@ class Task extends MY_Controller {
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
 
-		$this->loadViewWithTemplate('task/view', $data, false);
+		$this->loadViewWithTemplate('task/view', $data, true);
 	}
 
 	public function update($taskID)
 	{
 		$data = $this->input->post();
-		$data['taskResponsableUser'] = $this->session->userdata('userID');
+		if(!$data['taskResponsableUser']) $data['taskResponsableUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
-		$this->task_model->update($taskID, $data);
+		$response = $this->task_model->update($taskID, $data);
 
-		echo "Alteração realizada com sucesso!";
+		echo($response);
 	}
 
 	public function createTaskForm()

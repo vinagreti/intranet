@@ -107,7 +107,7 @@ class Task_Model extends CI_Model {
     function getByID($taskID) {
         $cols = array(
             'u.userName  AS taskResponsableName',
-            'u.userName  AS taskCreatorName',
+            'u2.userName  AS taskCreatorName',
             'taskID',
             'taskTitle',
             'taskDesc',
@@ -155,7 +155,9 @@ class Task_Model extends CI_Model {
 
         $this->db->where('taskID', $taskID);
         $this->db->set($data);
-        $this->db->update('tzadiTask');
+        $query = $this->db->update('tzadiTask');
+
+        return $query;
 
     }
 
