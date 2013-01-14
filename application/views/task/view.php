@@ -87,10 +87,10 @@
 		</div>
 	</div><!--end: box-->
 
-	<?php foreach($taskComments as $task) { ?>
+	<?php foreach($taskComments as $comment) { ?>
 		<div class="alert alert-warning">
-			<p class="muted"><?=$task->commentDate?>	- <?=$task->userName?></p>
-			<p class="text-info"><?=$task->comment?></p>
+			<p class="muted"><?=$comment->commentAction?> - <?=$comment->commentDate?>	- <?=$comment->userName?></p>
+			<p class="text-info"><?=$comment->comment?></p>
 		</div>
 	<?php } ?>
 	

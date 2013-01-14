@@ -145,6 +145,26 @@ class Task extends MY_Controller {
 		echo $dbResponse;
 	}
 
+	public function action()
+	{
+		if($this->input->post()){
+			if($data->taskID = $this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				$data->action = $this->input->post("action");
+				echo $this->load->view('task/action', $data, true);			
+			}
+			else {
+				$data = $this->input->post();
+				$data['commentUser'] = $this->session->userdata('userID');
+				$this->load->model('task/task_model');
+				$dbResponse = $this->task_model->createComment($data);
+				echo $dbResponse;
+			}
+		} else {
+			echo "Fail! None argument passed.";
+		}
+	}
+
 	public function listByStatus($taskStatus){
 		$this->load->model('task/task_model');
 		$data->tasks = $this->task_model->getAllByStatus($taskStatus);

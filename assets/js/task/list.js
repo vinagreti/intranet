@@ -15,7 +15,7 @@ $(document).ready(function(){
 		/*
 	Esta função solicita a confirmação de uma ação pelo usuário
 	*/
-	function confirmAction(taskID, action){
+	function _confirmAction(taskID, action){
 	   var retVal = confirm("Deseja realmente " + action + " a tarefa " + taskID + " ?");
 	   if( retVal == true ){
 		  return true;
@@ -69,6 +69,41 @@ $(document).ready(function(){
 	*/
 	$('.actionButton').dropdown();
 
+	function listAction(taskID, status, action){
+
+		$('#tzadiDialogs').empty();
+
+		$.post(base_url + "task/action/", {
+			form : true,
+			taskID : taskID,
+			action : action
+		},function( response ) {
+			$('#tzadiDialogs').append( response );
+		});
+
+		$('#tzadiDialogs').modal('show');
+
+		$("#saveAction").live('click', function( e ){
+			if($('#actionComment').val() != ""){
+				actionComment = $('#actionComment').val();
+				$.post(base_url + "task/action", {
+					comment : actionComment,
+					commentTask : taskID,
+					commentAction : action
+				});
+				$.post(base_url + "task/update/" + taskID, {
+					taskStatus : status,
+					taskID : taskID
+				});
+
+				$('#tzadiDialogs').modal('hide');
+				refreshList(searchPattern);				
+			} else {
+				$('.alert').show();
+			}
+		});
+	}
+
 	/*
 	Função do botão APROVAR: approveButton
 	Este botão:
@@ -99,27 +134,16 @@ $(document).ready(function(){
 	/*
 	Função do botão REJEITAR: rejectButton
 	Este botão:
-	- muda o status de uma tarefa para NEW "taskStatus= 2"
-	- muda a tarefa para a tabela Rejected
+	- Abre um formulário para inserir um comentário
+	- muda o status de uma tarefa para REJECTED "taskStatus= 2"
 	*/
 	$(".rejectButton").live('click', function( e ){
-
-		e.preventDefault();
-
 		taskID = $(this).attr('taskID');
-
-		if(confirmAction(taskID, 'rejeitar')){
-
-			$.post(base_url + "task/update/" + taskID, {
-				taskStatus : 2,
-				taskID : taskID
-			},function( response ) {
-				refreshList(searchPattern);
-			});
-
-		}
-
+		action = "Rejeitar";
+		listAction(taskID, 2, action);
 	});
+
+
 
 	/*
 	Função do botão CANCELAR: cancelButton
@@ -128,22 +152,9 @@ $(document).ready(function(){
 	- muda a tarefa para a tabela Cancelled
 	*/
 	$(".cancelButton").live('click', function( e ){
-
-		e.preventDefault();
-
 		taskID = $(this).attr('taskID');
-
-		if(confirmAction(taskID, 'cancelar')){
-
-			$.post(base_url + "task/update/" + taskID, {
-				taskStatus : 5,
-				taskID : taskID
-			},function( response ) {
-				refreshList(searchPattern);
-			});
-
-		}
-
+		action = "Cancelar";
+		listAction(taskID, 5, action);
 	});
 
 
@@ -179,22 +190,9 @@ $(document).ready(function(){
 	- muda a tarefa para a tabela FINISHED
 	*/
 	$(".finishButton").live('click', function( e ){
-
-		e.preventDefault();
-
 		taskID = $(this).attr('taskID');
-
-		if(confirmAction(taskID, 'finalizar')){
-
-			$.post(base_url + "task/update/" + taskID, {
-				taskStatus : 6,
-				taskID : taskID
-			},function( response ) {
-				refreshList(searchPattern);
-			});
-
-		}
-
+		action = "Finalizar";
+		listAction(taskID, 6, action);
 	});
 
 	/*
@@ -204,22 +202,9 @@ $(document).ready(function(){
 	- muda a tarefa para a tabela NEW
 	*/
 	$(".rescueButton").live('click', function( e ){
-
-		e.preventDefault();
-
 		taskID = $(this).attr('taskID');
-
-		if(confirmAction(taskID, 'resgatar')){
-
-			$.post(base_url + "task/update/" + taskID, {
-				taskStatus : 1,
-				taskID : taskID
-			},function( response ) {
-				refreshList(searchPattern);
-			});
-
-		}
-
+		action = "Resgatar";
+		listAction(taskID, 1, action);
 	});
 
 	/*
@@ -242,6 +227,17 @@ $(document).ready(function(){
 		});
 
 		$('#tzadiDialogs').modal('show');
+	});
+
+	$("#saveNewComment").live('click', function( e ){
+		newComment = $('#newComment').val();
+		taskID = $('#newComment').attr("taskID");
+		$.post(base_url + "task/newComment", {
+			comment : newComment,
+			commentTask : taskID
+		},function( response ) {
+			$('#tzadiDialogs').modal('hide');
+		});
 	});
 
 	$(".taskListFilter").live('click', function( e ){
@@ -302,17 +298,6 @@ $(document).ready(function(){
 
 		$("#filter").modal("hide");
 		refreshList(searchPattern);
-	});
-
-	$("#saveNewComment").live('click', function( e ){
-		newComment = $('#newComment').val();
-		taskID = $('#newComment').attr("taskID");
-		$.post(base_url + "task/newComment", {
-			comment : newComment,
-			commentTask : taskID
-		},function( response ) {
-			$('#tzadiDialogs').modal('hide');
-		});
 	});
 
 });
