@@ -242,6 +242,35 @@ $(document).ready(function(){
 		});
 	});
 
+	/*
+	Função do botão ACTIVITY: activityButton
+	Este botão:
+	- Abre o formulário para registro de atividades
+	- insere um comentário na atividade selecionada
+	*/
+	$(".activityButton").live('click', function( e ){
+
+		e.preventDefault();
+
+		$('#tzadiDialogs').empty();
+
+		taskID = $(this).attr("taskID");
+
+		$.post(base_url + "task/activity/", {
+			form : true,
+			taskID : taskID
+		}, function( response ) {
+			$('#tzadiDialogs').append( response );
+			$('#time1').clockface();
+			$('#time2').clockface();
+			$('#date1').datepicker();
+			$('#date2').datepicker();
+		});
+
+		$('#tzadiDialogs').modal('show');
+
+	});
+	
 	$(".taskListFilter").live('click', function( e ){
 		$("#filter").modal("show");
 	});

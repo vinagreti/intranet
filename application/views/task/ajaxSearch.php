@@ -44,7 +44,7 @@
 							<?php } ?>
 							<?php if($task->taskStatus == "1" OR $task->taskStatus == "3") { ?>
 							<li>
-								<a class="startButton" taskID="<?=$task->taskID?>" tabindex="-1"  href="#profile"><i class="icon-time"></i> Iniciar</a>
+								<a class="startButton" taskID="<?=$task->taskID?>" tabindex="-1"  href="#profile"><i class="icon-play"></i> Iniciar</a>
 							</li>
 							<?php } ?>
 							<?php if($task->taskStatus == "4") { ?>
@@ -59,6 +59,9 @@
 							<?php } ?>
 							<li>
 								<a class="commentButton" taskID="<?=$task->taskID?>" tabindex="-1"  href="#profile"><i class="icon-comment"></i> Comentar</a>
+							</li>
+							<li>
+								<a class="activityButton" taskID="<?=$task->taskID?>" tabindex="-1"  href="#profile"><i class="icon-time"></i> Registrar atividade</a>
 							</li>
 						</ul>
 					</li>

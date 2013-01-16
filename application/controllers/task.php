@@ -165,6 +165,27 @@ class Task extends MY_Controller {
 		}
 	}
 
+	public function activity()
+	{
+		if($this->input->post()){
+			if($data->taskID = $this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				$data->date = date('d-m-Y', time());
+				$data->time = date('H:i', time());
+				echo $this->load->view('task/activity', $data, true);			
+			}
+			else {
+				$data = $this->input->post();
+				$data['activityUser'] = $this->session->userdata('userID');
+				$data['activityStart'] =  $this->myDatePhpMysql($data['activityStart']);
+				$data['activityEnd'] =  $this->myDatePhpMysql($data['activityEnd']);
+				$this->load->model('task/task_model');
+				$dbResponse = $this->task_model->registerActivity($data);
+				echo $dbResponse;
+			}
+		}
+	}
+	
 	public function listByStatus($taskStatus){
 		$this->load->model('task/task_model');
 		$data->tasks = $this->task_model->getAllByStatus($taskStatus);

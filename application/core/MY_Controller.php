@@ -70,6 +70,7 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['newCommentForm'] = 'private';
 		$methodsPermission['task']['newComment'] = 'private';
 		$methodsPermission['task']['action'] = 'private';
+		$methodsPermission['task']['activity'] = 'private';
 
 		// git class permission
 		$methodsPermission['git']['index'] = 'admin';
@@ -169,5 +170,30 @@ class MY_Controller extends CI_Controller {
 			</script>';
 	}
 
+	// Esta função pega uma string de data e transforma da data do php
+	// depois ela transforma a data do php na data para usar com o mysql
+	public function myDatePhpMysql($phpDate){
+		$date = date_create($phpDate);
+		$mySqlDate = date_format($date, 'Y-m-d H:i:s');
+
+		return $mySqlDate;
+	}
+
+	// Esta função pega uma data em mysql e transforma na data do php
+	public function myDateMysqlPhp($mySqlDate){
+		$date = date_create($mySqlDate);
+		$phpDate = date_format($date, 'd-m-Y H:i:s');
+
+		return $phpDate;
+	}
+
+	public function myTotalTime($date1, $date2) {
+		$date1 = new DateTime($date1);
+		$date2 = new DateTime($date2);
+		$diff = $date1->diff($date2);
+		$totalTime = $diff->format('%y-%m-%d %H:%i:%s');
+		return $totalTime;
+	}
+	
 }
 /* End of file */

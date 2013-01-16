@@ -185,6 +185,14 @@ class Task_Model extends CI_Model {
 
     }
 
+    function registerActivity($data) {
+
+        $query = $this->db->insert('tzadiTaskActivity', $data);
+
+        return $query;
+
+    }
+    
     function comment($data) {
 
         $query = $this->db->insert('tzadiTaskComment', $data);
