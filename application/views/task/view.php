@@ -101,4 +101,4 @@
 	
 </div><!-- end: span10 -->
 
-
+<script src="<?=base_url()?>assets/js/task/view.js"></script>
