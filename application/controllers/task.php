@@ -12,18 +12,19 @@ class Task extends MY_Controller {
 
 		$this->load->model('task/task_model');
 		$data->tasks = $this->task_model->getAll();
+		$this->loadViewWithTemplate('task/list', $data);
+	}
+
+	public function filter()
+	{
+		$this->load->model('task/task_model');
 		$data->taskFilters = $this->task_model->getAllFilters();
 		$data->taskProjects = $this->task_model->getAllProject();
 
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
 
-		$this->loadViewWithTemplate('task/list', $data);
-	}
-
-	public function filter()
-	{
-		echo $this->load->view('task/filter');
+		echo $this->load->view('task/filter', $data);
 	}
 
 	public function ajaxSearch(){

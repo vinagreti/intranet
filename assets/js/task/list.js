@@ -37,46 +37,57 @@ function resetFilter(){
 	$("#filterStatus5").attr("checked", false);
 	$("#filterStatus6").attr("checked", false);
 }
-	
+
+resetFilter();
+
 $(document).ready(function(){
+	if (typeof listFile !== 'function') {
+		listFile = function listFile(){
 
-	refreshList(searchPattern);
-	resetFilter();
+			refreshList(searchPattern);
 
-	$(".taskListFilterReset").live('click', function( e ){
-		searchPattern = [];
-		resetFilter();
-		$("#filter").modal("hide");
-		refreshList(searchPattern);
-	});
+			
 
-	$(".taskFilterButton").live('click', function( e ){
+			$(".taskListFilterReset").live('click', function( e ){
+				searchPattern = [];
+				resetFilter();
+				$("#filter").modal("hide");
+				refreshList(searchPattern);
+			});
 
-		searchPattern["taskStatus"] = [];
+			$(".taskFilterButton").live('click', function( e ){
+
+				searchPattern["taskStatus"] = [];
+				
+				if ( $("#filterTaskID").val() )	searchPattern["taskID"] = $("#filterTaskID").val();
+				if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
+				if ( $(".filterFrojectID").val() ) searchPattern["taskProject"] = $(".filterFrojectID").val();
+				if ( $(".filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $(".filterResponsableID").val();
+				if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
+				if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
+				if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);
+				if ( $("#filterStatus4").is(':checked') ) searchPattern["taskStatus"].push(4);
+				if ( $("#filterStatus5").is(':checked') ) searchPattern["taskStatus"].push(5);
+				if ( $("#filterStatus6").is(':checked') ) searchPattern["taskStatus"].push(6);
+
+				$("#filter").modal("hide");
+				refreshList(searchPattern);
+			});
+
+			$(".taskListFilter").live('click', function( e ){
+
+				$('#filter').empty();
+
+				$.post(base_url + "task/filter/", {
+					form : true
+				},function( response ) {
+					$('#filter').append( response );
+				});
+
+				$("#filter").modal("show");
+			});
+		};
 		
-		if ( $("#filterTaskID").val() )	searchPattern["taskID"] = $("#filterTaskID").val();
-		if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
-		if ( $(".filterFrojectID").val() ) searchPattern["taskProject"] = $(".filterFrojectID").val();
-		if ( $(".filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $(".filterResponsableID").val();
-		if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
-		if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
-		if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);
-		if ( $("#filterStatus4").is(':checked') ) searchPattern["taskStatus"].push(4);
-		if ( $("#filterStatus5").is(':checked') ) searchPattern["taskStatus"].push(5);
-		if ( $("#filterStatus6").is(':checked') ) searchPattern["taskStatus"].push(6);
-
-		$("#filter").modal("hide");
-		refreshList(searchPattern);
-	});
-
-	$(".taskListFilter").live('click', function( e ){
-
-		$.post(base_url + "task/filter/", {
-			form : true
-		},function( response ) {
-			$('#filter').append( response );
-		});
-
-		$("#filter").modal("show");
-	});
+		listFile();
+	}
 });
