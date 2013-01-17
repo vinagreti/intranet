@@ -52,6 +52,10 @@ $(document).ready(function(){
 		refreshList(searchPattern);
 	});
 
+	$(".taskListFilterClean").live('click', function( e ){
+		resetFilter();
+	});
+
 	$(".taskFilterButton").live('click', function( e ){
 
 		searchPattern["taskStatus"] = [];

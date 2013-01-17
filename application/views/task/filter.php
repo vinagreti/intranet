@@ -81,7 +81,9 @@
 	<button type="button" src="#" class="taskFilterButton btn btn-small btn-primary" href="#">Filtrar</button>
 	<button type="button" src="#" class="taskListFilterReset btn btn-small btn-info" href="#">Reset</button>
 	<button type="button" src="#" class="taskListFilterCancel btn btn-small btn-danger" href="#">Cancelar</button>
-	<button type="button" src="#" class="taskListFilterSave btn btn-small btn-warning" href="#">Salvar filtro</button>
+	<button type="button" src="#" class="taskListFilterClean btn btn-small btn-warning" href="#">Limpar filtro</button>
+	<button type="button" src="#" class="taskListFilterSave btn btn-small btn-success" href="#">Salvar filtro</button>
+
 </div>
 
 <script src="<?=base_url()?>assets/js/task/filter.js"></script>
