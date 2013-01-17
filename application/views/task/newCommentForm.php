@@ -1,6 +1,6 @@
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Comentár a tarefa <?=$taskID?></h3>
+<h3>Comentar a tarefa <?=$taskID?></h3>
 </div>
 
 <div class="modal-body">
