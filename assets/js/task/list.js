@@ -1,6 +1,6 @@
 var searchPattern = new Array();
 
-function refreshList(searchPattern){
+function loadList(searchPattern){
 
 	$(".taskList").empty();
 
@@ -12,6 +12,7 @@ function refreshList(searchPattern){
 		taskID : searchPattern["taskID"],
 		taskFather : searchPattern["taskFather"],
 		taskStatus : searchPattern["taskStatus"],
+		taskLink : searchPattern["taskLink"],
 		searchPattern : searchPattern
 	}, function( response ) {
 
@@ -41,7 +42,7 @@ function resetFilter(){
 $(document).ready(function(){
 
 	resetFilter();
-	refreshList(searchPattern);
+	loadList(searchPattern);
 
 
 
@@ -49,7 +50,7 @@ $(document).ready(function(){
 		searchPattern = [];
 		resetFilter();
 		$("#filter").modal("hide");
-		refreshList(searchPattern);
+		loadList(searchPattern);
 	});
 
 	$(".taskListFilterClean").live('click', function( e ){
@@ -64,6 +65,7 @@ $(document).ready(function(){
 		if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
 		if ( $(".filterFrojectID").val() ) searchPattern["taskProject"] = $(".filterFrojectID").val();
 		if ( $(".filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $(".filterResponsableID").val();
+		if ( $("#taskLink").val() )	searchPattern["taskLink"] = $("#taskLink:checked").val();
 		if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
 		if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
 		if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);
@@ -72,7 +74,7 @@ $(document).ready(function(){
 		if ( $("#filterStatus6").is(':checked') ) searchPattern["taskStatus"].push(6);
 
 		$("#filter").modal("hide");
-		refreshList(searchPattern);
+		loadList(searchPattern);
 	});
 
 

@@ -63,7 +63,7 @@ $(document).ready(function(){
 							taskStatus : status,
 							taskID : taskID
 						}, function( e ){
-							refreshList(searchPattern);
+							loadList(searchPattern);
 						});
 
 						$('#tzadiDialogs').modal('hide');
@@ -93,7 +93,7 @@ $(document).ready(function(){
 						taskID : taskID
 					},function( response ) {
 
-						refreshList(searchPattern);
+						loadList(searchPattern);
 
 					});
 
@@ -146,7 +146,7 @@ $(document).ready(function(){
 						taskStatus : 4,
 						taskID : taskID
 					},function( response ) {
-						refreshList(searchPattern);
+						loadList(searchPattern);
 					});
 
 				}

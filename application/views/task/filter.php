@@ -41,6 +41,19 @@
 				<?php } ?>
 			</select>
 
+			<label>Vínculo: </label>
+			<label class="radio inline">
+			<input type="radio" name="taskLink" id="taskLink" value="Vinculada" /> Vinculada
+			</label>
+
+			<label class="radio inline">
+			<input type="radio" name="taskLink" id="taskLink" value="Referenciada" /> Referenciada
+			</label>
+
+			<label class="radio inline">
+			<input type="radio" name="taskLink" checked /> Todas
+			</label>
+
 			<label>Status: </label>
 
 			<label class="checkbox inline">

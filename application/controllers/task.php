@@ -40,6 +40,8 @@ class Task extends MY_Controller {
 		if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
 		if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
 		if(isset($searchPattern["taskStatus"])) $statuses = $searchPattern["taskStatus"];
+		if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
+
 
 		$this->load->model('task/task_model');
 
@@ -87,7 +89,7 @@ class Task extends MY_Controller {
 		if($this->input->post()){
 			if($this->input->post("form")){
 				$this->load->model('task/task_model');
-				$data->tasks = $this->task_model->getAll();
+				$data->tasks = $this->task_model->getAll('taskID');
 				$data->taskID = '';
 				$data->taskTitle = '';
 				$this->load->model('user/user_model');
