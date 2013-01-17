@@ -25,6 +25,7 @@ class Task_Model extends CI_Model {
             'taskResponsableUser'
             );
         $this->db->select($cols);
+        $this->db->order_by('taskStatus, taskID');
         $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
         $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
@@ -66,6 +67,7 @@ class Task_Model extends CI_Model {
             'taskStatusName',
             );
         $this->db->select($cols);
+        $this->db->order_by('taskStatus, taskID');
         $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
         $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
