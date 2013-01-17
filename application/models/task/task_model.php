@@ -66,7 +66,8 @@ class Task_Model extends CI_Model {
             'taskKindName',
             'taskStatusName',
             'deadLineDate',
-            'taskLink'
+            'taskLink',
+            'taskProject'
             );
         $this->db->select($cols);
         $this->db->order_by('taskStatus, taskID');
