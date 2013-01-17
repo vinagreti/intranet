@@ -26,3 +26,5 @@
 		</ul>
 	</li>
 </ul>
+
+	<script src="<?=base_url()?>assets/js/common/topMenu.js"></script>

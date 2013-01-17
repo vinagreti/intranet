@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <html>
 	<head>
@@ -28,6 +27,8 @@
 			padding: 9px 0;
 		}
 		</style>
+		<!-- Loading the JQuery -->
+		<script src="<?=base_url()?>assets/JQuery/jquery.js"></script>
 	</head>
 
 	<body>

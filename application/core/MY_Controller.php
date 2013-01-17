@@ -58,8 +58,7 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['cancel'] = 'private';
 		$methodsPermission['task']['view'] = 'private';
 		$methodsPermission['task']['update'] = 'private';
-		$methodsPermission['task']['createTask'] = 'private';
-		$methodsPermission['task']['createTaskForm'] = 'private';
+		$methodsPermission['task']['newTask'] = 'private';
 		$methodsPermission['task']['comment'] = 'private';
 		$methodsPermission['task']['commentForm'] = 'private';
 		$methodsPermission['task']['listByStatus'] = 'private';
@@ -71,6 +70,7 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['newComment'] = 'private';
 		$methodsPermission['task']['action'] = 'private';
 		$methodsPermission['task']['activity'] = 'private';
+		$methodsPermission['task']['filter'] = 'private';
 
 		// git class permission
 		$methodsPermission['git']['index'] = 'admin';
@@ -105,63 +105,22 @@ class MY_Controller extends CI_Controller {
 
 	}
 
-	public function loadViewWithTemplate($view = 'error/pageNotFound', $data = null, $loadJSFile ) { // this function load the template within the view
-
+	public function loadViewWithTemplate($view = 'error/pageNotFound', $data = null) { // this function load the template within the view
 		$this->load->view("common/topHTML");
-
-		$this->_topMenu();
-
-		$this->_leftMenu($view);
-		
-		$this->load->view($view, $data);
-
-		$this->load->view("common/footer");
-
-		$this->load->view("common/bottomHTML");
-
-		$this->load->view("common/tzadiDialogs");
-
-		$this->load->view("common/topMenuJS");
-
-		if($loadJSFile == true){ 
-
-			$data->view = $view;
-
-			$this->load->view("common/loadCustomJS", $data);
-
-		}
-
-	}
-
-	function loadViewWithJS($view = 'error/pageNotFound', $data = null, $js = false){
-
-		$html = $this->load->view($view, $data, true);
-
-		$javascript = "<script src=".base_url()."assets/js/".$view.".js></script>";
-
-		return $html.$javascript;
-
-	}
-
-	function _topMenu(){
-
 		$this->load->view("common/topMenuStart");
-
 		$this->load->view("common/topMenu");
-
 		$this->load->view("common/topMenuAdmin");
-
 		$this->load->view("common/topMenuEnd");
+		$this->_leftMenu($view);
+		$this->load->view($view, $data);
+		$this->load->view("common/footer");
+		$this->load->view("common/bottomHTML");
+		$this->load->view("common/tzadiDialogs");
 	}
 
 	function _leftMenu($view){
-
 		$view = explode("/", $view);
-
-		$data->rows = array("um item" => "link dele");
-
-		$this->load->view($view[0] . "/leftMenu", $data);
-
+		$this->load->view($view[0] . "/leftMenu");
 	}
 
 	function _setGlobalJsVar(){

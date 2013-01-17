@@ -59,3 +59,12 @@ function globalValidateLenght( min, max, input, message ){
 		return true;
 	}
 }
+
+function globalConfirmAction(message){
+   var retVal = confirm(message);
+   if( retVal == true ){
+	  return true;
+   }else{
+	  return false;
+   }
+}

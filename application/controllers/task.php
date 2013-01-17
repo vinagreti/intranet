@@ -4,10 +4,10 @@ class Task extends MY_Controller {
 
 	public function index()
 	{
-		$this->listAll();
+		$this->listTask();
 	}
 
-	public function listAll()
+	public function listTask()
 	{
 
 		$this->load->model('task/task_model');
@@ -18,7 +18,12 @@ class Task extends MY_Controller {
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
 
-		$this->loadViewWithTemplate('task/list', $data, true);
+		$this->loadViewWithTemplate('task/list', $data);
+	}
+
+	public function filter()
+	{
+		echo $this->load->view('task/filter');
 	}
 
 	public function ajaxSearch(){
@@ -64,7 +69,7 @@ class Task extends MY_Controller {
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
 
-		$this->loadViewWithTemplate('task/view', $data, true);
+		$this->loadViewWithTemplate('task/view', $data);
 	}
 
 	public function update($taskID)
@@ -77,39 +82,32 @@ class Task extends MY_Controller {
 		echo($response);
 	}
 
-	public function createTaskForm()
-	{
-		$this->load->model('task/task_model');
-
-		$data->tasks = $this->task_model->getAll();
-
-		$data->taskID = '';
-
-		$data->taskTitle = '';
-
-		$this->load->model('user/user_model');
-
-		$data->taskResponsableUsers = $this->user_model->getAll();
-
-		$data->taskKinds = $this->task_model->getAllKind();
-
-		$data->taskProjects = $this->task_model->getAllProject();
-
-		$data->projectID = '';
-
-		$data->projectTitle = '';
-
-		echo $this->load->view('task/newTaskDialogForm', $data, true);
-	}
-
-	public function createTask()
-	{
-		$data = $this->input->post();
-		$data['taskCreatorUser'] = $this->session->userdata('userID');
-		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->createTask($data);
-
-		echo $dbResponse;
+	public function newTask() {
+		if($this->input->post()){
+			if($this->input->post("form")){
+				$this->load->model('task/task_model');
+				$data->tasks = $this->task_model->getAll();
+				$data->taskID = '';
+				$data->taskTitle = '';
+				$this->load->model('user/user_model');
+				$data->taskResponsableUsers = $this->user_model->getAll();
+				$data->taskKinds = $this->task_model->getAllKind();
+				$data->taskProjects = $this->task_model->getAllProject();
+				$data->projectID = '';
+				$data->projectTitle = '';
+				$data->date = date('d-m-Y', time());
+				$data->time = date('H:i', time());
+				echo $this->load -> view('task/newTask', $data);		
+			}
+			else {
+				$data = $this->input->post();
+				$data['taskCreatorUser'] = $this->session->userdata('userID');
+				$data['deadLineDate'] = $this->myDatePhpMysql($data['deadLineDate']);
+				$this->load->model('task/task_model');
+				$dbResponse = $this->task_model->createTask($data);
+				echo $dbResponse;
+			}
+		}
 	}
 
 	public function createProjectForm()
@@ -172,7 +170,7 @@ class Task extends MY_Controller {
 				$data->taskID = $this->input->post("taskID");
 				$data->date = date('d-m-Y', time());
 				$data->time = date('H:i', time());
-				echo $this->load->view('task/activity', $data, true);			
+				echo $this->load->view('task/activity', $data, true);		
 			}
 			else {
 				$data = $this->input->post();

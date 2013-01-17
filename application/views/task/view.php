@@ -67,6 +67,11 @@
 							<span class="input-xlarge uneditable-input"><?=$task->taskCreatorName?></span>
 						</div>
 
+						<label class="control-label">DeadLine</label>
+						<div class="controls">
+							<span class="input-xlarge uneditable-input"><?=$task->deadLineDate?></span>
+						</div>
+
 						<label class="control-label" for="taskDesc">Descrição</label>
 
 						<div class="controls">

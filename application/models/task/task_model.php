@@ -22,7 +22,7 @@ class Task_Model extends CI_Model {
             'taskStatus',
             'taskKindName',
             'taskStatusName',
-            'taskResponsableUser'
+            'taskResponsableUser',
             );
         $this->db->select($cols);
         $this->db->order_by('taskStatus, taskID');
@@ -65,6 +65,8 @@ class Task_Model extends CI_Model {
             'taskStatus',
             'taskKindName',
             'taskStatusName',
+            'deadLineDate',
+            'taskLink'
             );
         $this->db->select($cols);
         $this->db->order_by('taskStatus, taskID');
@@ -119,6 +121,7 @@ class Task_Model extends CI_Model {
             'taskStatus',
             'taskResponsableUser',
             'taskCreatorUser',
+            'deadLineDate'
             );
         $this->db->select($cols);
         $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');

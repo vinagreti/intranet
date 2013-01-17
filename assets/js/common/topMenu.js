@@ -1,5 +1,4 @@
-<script type="text/javascript">
-
+$(document).ready(function(){
 	$('.navBarTaskMenu').dropdown();
 	$('.navBarConfigurationMenu').dropdown();
 
@@ -9,44 +8,16 @@
 
 		$('#tzadiDialogs').empty();
 
-		$.post(base_url + "task/createTaskForm", {
-			form : "task/newTaskDialogForm"
+		$.post(base_url + "task/newTask", {
+			form : true
 		},function( response ) {
 			$('#tzadiDialogs').append( response );
+			$('#deadLineTime').clockface();
+			$('#deadLineDate').datepicker();
 		});
 
 		$('#tzadiDialogs').modal('show');
 	})
-
-	$("#saveNewTask").live('click', function( e ){
-		newTaskFather = "";
-		newTaskProject = "";
-
-		taskResponsableUser = $('#taskResponsableUser').val();
-		taskKind = $('#taskKind').val();
-		newTaskTitle = $('#newTaskTitle').val();
-
-		if ( $("#taskLink1").is(':checked') ) taskLink = "Vinculada";
-		if ( $("#taskLink2").is(':checked') ) taskLink = "Referenciada";
-
-		if ( $("#taskSource1").is(':checked') ) newTaskProject = $('#newTaskProject').val();
-		if ( $("#taskSource2").is(':checked') ) {
-			fatherSelect = $('#newTaskFather');
-			newTaskFather = fatherSelect.val();
-			newTaskProject = fatherSelect.find(':selected').attr('projectID');
-		} 
-
-		$.post(base_url + "task/createTask", {
-			taskFather : newTaskFather,
-			taskProject : newTaskProject,
-			taskKind : taskKind,
-			taskResponsableUser : taskResponsableUser,
-			taskTitle : newTaskTitle,
-			taskLink : taskLink			
-		},function( response ) {
-			$('#tzadiDialogs').modal('hide');
-		});
-	});
 
 	$(".taskSource").live('change', function( e ){
 		
@@ -86,5 +57,4 @@
 			$('#tzadiDialogs').modal('hide');
 		});
 	});
-
-</script>
+});
