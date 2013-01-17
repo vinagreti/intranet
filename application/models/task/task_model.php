@@ -65,6 +65,7 @@ class Task_Model extends CI_Model {
             'taskStatus',
             'taskKindName',
             'taskStatusName',
+            'taskLabel',
             'deadLineDate',
             'taskLink',
             'taskProject'

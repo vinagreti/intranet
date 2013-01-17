@@ -59,6 +59,7 @@
 								<a class="rescueButton" taskID="<?=$task->taskID?>" tabindex="-1"  href="#profile"><i class="icon-warning-sign"></i> Resgatar</a>
 							</li>
 							<?php } ?>
+
 							<li>
 								<a class="commentButton" taskID="<?=$task->taskID?>" tabindex="-1"  href="#profile"><i class="icon-comment"></i> Comentar</a>
 							</li>
@@ -75,15 +76,7 @@
 			<td class="center"><small><?=substr($task->taskKindName, 0, 20)?></small></td>
 			<td class="center"><small><a href="<?=base_url()?>task/view/<?=$task->taskFather?>" target="_blank"><?=substr($task->taskLink, 0, 1)?><?=substr($task->taskFather, 0, 11)?></a></small></td>
 			<td class="center"><small><a href="<?=base_url()?>task/project/<?=$task->taskFather?>" target="_blank"><?=substr($task->taskProject, 0, 11)?></a></small></td>
-
-			<?php if ( $task->taskStatus == "1" ) $label = ""; ?>
-			<?php if ( $task->taskStatus == "2" ) $label = "label-inverse"; ?>
-			<?php if ( $task->taskStatus == "3" ) $label = "label-success"; ?>
-			<?php if ( $task->taskStatus == "4" ) $label = "label-warning"; ?>
-			<?php if ( $task->taskStatus == "5" ) $label = "label-important"; ?>
-			<?php if ( $task->taskStatus == "6" ) $label = "label-info"; ?>
-
-			<td class="center "><span class="label <?=$label?>"><small><?=substr($task->taskStatusName, 0, 30)?></small></span></td>
+			<td class="center "><span class="label <?=$task->taskLabel?>"><small><?=substr($task->taskStatusName, 0, 30)?></small></span></td>
 			<td class="center"><small><?=substr($task->deadLineDate, 0, 20)?></small></td>
 		</tr>
 		<?php } ?>
