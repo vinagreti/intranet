@@ -75,7 +75,7 @@
 			<td class="center"><small><?=substr($task->taskResponsableName, 0, 20)?></small></td>
 			<td class="center"><small><?=substr($task->taskKindName, 0, 20)?></small></td>
 			<td class="center"><small><a href="<?=base_url()?>task/view/<?=$task->taskFather?>" target="_blank"><?=substr($task->taskLink, 0, 1)?><?=substr($task->taskFather, 0, 11)?></a></small></td>
-			<td class="center"><small><a href="<?=base_url()?>task/project/<?=$task->taskFather?>" target="_blank"><?=substr($task->taskProject, 0, 11)?></a></small></td>
+			<td class="center"><small><a href="<?=base_url()?>task/project/<?=$task->taskProject?>" target="_blank"><?=substr($task->taskProjectTitle, 0, 8)?></a></small></td>
 			<td class="center "><span class="label <?=$task->taskLabel?>"><small><?=substr($task->taskStatusName, 0, 30)?></small></span></td>
 			<td class="center"><small><?=substr($task->deadLineDate, 0, 20)?></small></td>
 		</tr>
