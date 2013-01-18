@@ -43,11 +43,11 @@
 
 			<label>Vínculo: </label>
 			<label class="radio inline">
-			<input type="radio" name="taskLink" id="taskLink" value="Vinculada" /> Vinculada
+			<input type="radio" name="taskLink" id="taskLink" value="1" /> Vinculada
 			</label>
 
 			<label class="radio inline">
-			<input type="radio" name="taskLink" id="taskLink" value="Referenciada" /> Referenciada
+			<input type="radio" name="taskLink" id="taskLink" value="0" /> Referenciada
 			</label>
 
 			<label class="radio inline">

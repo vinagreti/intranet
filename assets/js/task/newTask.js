@@ -11,8 +11,8 @@ $(document).ready(function(){
 				date = $('#deadLineDate').val();
 				time = $('#deadLineTime').val();
 				deadLineDate = date+" "+ time;
-				if ( $("#taskLink1").is(':checked') ) taskLink = "Vinculada";
-				if ( $("#taskLink2").is(':checked') ) taskLink = "Referenciada";
+				if ( $("#taskLink1").is(':checked') ) taskLink = 1;
+				if ( $("#taskLink2").is(':checked') ) taskLink = 0;
 
 				if ( $("#taskSource1").is(':checked') ) newTaskProject = $('#newTaskProject').val();
 				if ( $("#taskSource2").is(':checked') ) {
