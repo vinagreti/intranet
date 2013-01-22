@@ -9,23 +9,23 @@
 
 				<div class="row">
 					<div class="span6">
-						<input type="text" placeholder="Título" id="newTaskTitle" name="newTaskTitle" class="span6" >
+						<input type="text" placeholder="Título *" id="newTaskTitle" name="newTaskTitle" class="span6" >
 					</div>
 				</div>
 
 			    <div class="row">
 					<div class="span3">
-						Previsão de conclusão *
+						Previsão de conclusão
 					</div>
 					<div class="span3">
-						Tipo: *
+						Tipo:
 					</div>
 			    </div>
 
 				<div class="row">
 					<div class="span3">
-						<input type="text" id="deadLineDate" value="<?=$date?>" data-date-format="dd-mm-yyyy" class="input-small" />
-						<input type="text" id="deadLineTime" value="<?=$time?>" class="input-small" />
+						<input type="text" id="deadLineDate" data-date-format="dd-mm-yyyy" class="input-small" />
+						<input type="text" id="deadLineTime" class="input-small" />
 					</div>
 					<div class="span3">
 						<select  id="taskKind" name="taskKind" data-rel="chosen">
@@ -40,23 +40,24 @@
 				<div class="row">
 					<div class="span6">
 						<label class="radio inline">
-						<input type="radio" name="taskLink" id="taskLink1" value="1" /> Vinculada
+						<input type="radio" name="taskLink" id="taskLink1" value="1" checked /> Vinculada
 						</label>
 
 						<label class="radio inline">
 						<input type="radio" name="taskLink" id="taskLink2" value="2" /> Referenciada
 						</label>
 					</div>
-					<br></br>
+				
 					<div class="span3">
 						<label class="radio inline">
-						<input type="radio" name="taskSource" class="taskSource" id="taskSource1" value="1"> Projeto
+						ao <input type="radio" name="taskSource" class="taskSource" id="taskSource1" value="1"> Projeto
 						</label>
 
 						<label class="radio inline">
-						<input type="radio" name="taskSource" class="taskSource" id="taskSource2" value="2"> Tarefa
+						à <input type="radio" name="taskSource" class="taskSource" id="taskSource2" value="2"> Tarefa
 						</label>
 					</div>
+
 				</div>
 
 				<div class="row">
@@ -90,9 +91,11 @@
 					<div class="span6">
 						<label for="taskResponsableUser" class="control-label">Responsável: *</label>
 						<select class="span6" id="taskResponsableUser" name="taskResponsableUser" data-rel="chosen">
-							<option></option>
+							<option value="<?=$this->session->userdata('userID')?>"> <?=$this->session->userdata('userName')?></option>
 							<?php foreach($taskResponsableUsers as $taskResponsableUser) { ?>
-							<option value="<?=$taskResponsableUser->userID?>"><?=$taskResponsableUser->userName?></option>
+								<?php if ($this->session->userdata('userID') != $taskResponsableUser->userID) { ?>
+									<option value="<?=$taskResponsableUser->userID?>"><?=$taskResponsableUser->userName?></option>
+								<?php } ?>
 							<?php } ?>
 
 						</select>
