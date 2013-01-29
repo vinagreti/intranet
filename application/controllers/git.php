@@ -161,7 +161,7 @@ public function log($repo){
 public function pull($repo, $branch)
 {
 
-	exec("bash ../cron_jobs/git_pull $repo",$output);
+	exec("bash ../cron_jobs/git_pull $repo $branch",$output);
 
 	$this->log($repo);
 
