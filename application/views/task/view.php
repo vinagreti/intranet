@@ -95,7 +95,7 @@
 	<?php foreach($taskComments as $comment) { ?>
 		<div class="alert alert-warning">
 			<p class="muted"><?=$comment->commentAction?> - <?=$comment->commentDate?>	- <?=$comment->userName?></p>
-			<p class="text-info"><?=$comment->comment?></p>
+			<p class="text-info"><?=nl2br($comment->comment)?></p>
 		</div>
 	<?php } ?>
 	

@@ -16,16 +16,8 @@
 			<label>Task father: </label>
 			<input class="span12" type="text" id="filterFatherID" placeholder="Task father" name="filterFatherID">
 
-			<label>Filtro pré-definido: </label>
-			<select class="filterID span12">
-				<option></option>
-				<?php foreach ($taskFilters as $filter) { ?>
-				<option value="<?=$filter->searchPattern?>"><?=$filter->filterTitle?></option>
-				<?php } ?>
-			</select>
-
 			<label>Projeto: </label>
-			<select class="filterFrojectID span12">
+			<select class="span12" id="filterProjectID">
 				<option></option>
 				<?php foreach ($taskProjects as $project) { ?>
 				<option value="<?=$project->projectID?>"><?=$project->projectTitle?></option>
@@ -34,7 +26,7 @@
 
 
 			<label>Responsável: </label>
-			<select class="filterResponsableID span12">
+			<select class="span12" id="filterResponsableID">
 				<option></option>
 				<?php foreach ($users as $user) { ?>
 				<option value="<?=$user->userID?>"><?=$user->userName?></option>
@@ -43,46 +35,46 @@
 
 			<label>Vínculo: </label>
 			<label class="radio inline">
-			<input type="radio" name="taskLink" id="taskLink" value="1" /> Vinculada
+			<input type="radio" name="filterTaskLink" id="filterTaskLink" value="1" /> Vinculada
 			</label>
 
 			<label class="radio inline">
-			<input type="radio" name="taskLink" id="taskLink" value="0" /> Referenciada
+			<input type="radio" name="filterTaskLink" id="filterTaskLink" value="0" /> Referenciada
 			</label>
 
 			<label class="radio inline">
-			<input type="radio" name="taskLink" checked /> Todas
+			<input type="radio" name="filterTaskLink" checked /> Todas
 			</label>
 
 			<label>Status: </label>
 
 			<label class="checkbox inline">
-			  <input id="filterStatus1" type="checkbox">
+			  <input id="filterStatus1" value="1" type="checkbox">
 			  <span class="label"><small>New</small></span>
 			</label>
 
 			<label class="checkbox inline">
-			  <input id="filterStatus2" type="checkbox">
+			  <input id="filterStatus2" value="2" type="checkbox">
 			  <span class="label label-inverse"><small>Rejected</small></span>
 			</label>
 
 			<label class="checkbox inline">
-			  <input id="filterStatus3" type="checkbox">
+			  <input id="filterStatus3" value="3" type="checkbox">
 			  <span class="label label-success"><small>Approved</small></span>
 			</label>
 
 			<label class="checkbox inline">
-			  <input id="filterStatus4" type="checkbox">
+			  <input id="filterStatus4" value="4" type="checkbox">
 			  <span class="label label-warning"><small>On going</small></span>
 			</label>
 
 			<label class="checkbox inline">
-			  <input id="filterStatus5" type="checkbox">
+			  <input id="filterStatus5" value="5" type="checkbox">
 			  <span class="label label-important"><small>Cancelled</small></span>
 			</label>
 
 			<label class="checkbox inline">
-			  <input id="filterStatus6" type="checkbox">
+			  <input id="filterStatus6" value="6" type="checkbox">
 			  <span class="label label-info"><small>Finished</small></span>
 			</label>
 		</fieldset>
@@ -92,11 +84,8 @@
 
 <div class="modal-footer">
 	<button type="button" src="#" class="taskFilterButton btn btn-small btn-primary" href="#">Filtrar</button>
-	<button type="button" src="#" class="taskListFilterReset btn btn-small btn-info" href="#">Reset</button>
 	<button type="button" src="#" class="taskListFilterCancel btn btn-small btn-danger" href="#">Cancelar</button>
 	<button type="button" src="#" class="taskListFilterClean btn btn-small btn-warning" href="#">Limpar filtro</button>
-	<button type="button" src="#" class="taskListFilterSave btn btn-small btn-success" href="#">Salvar filtro</button>
-
 </div>
 
 <script src="<?=base_url()?>assets/js/task/filter.js"></script>

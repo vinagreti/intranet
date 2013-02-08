@@ -1,5 +1,3 @@
-var searchPattern = new Array();
-
 function loadList(searchPattern){
 
 	$(".taskList").empty();
@@ -11,26 +9,38 @@ function loadList(searchPattern){
 		taskProject : searchPattern["taskProject"],
 		taskID : searchPattern["taskID"],
 		taskFather : searchPattern["taskFather"],
-		taskStatus : searchPattern["taskStatus"],
 		taskLink : searchPattern["taskLink"],
-		searchPattern : searchPattern
+		taskStatus1 : searchPattern["taskStatus1"],
+		taskStatus2 : searchPattern["taskStatus2"],
+		taskStatus3 : searchPattern["taskStatus3"],
+		taskStatus4 : searchPattern["taskStatus4"],
+		taskStatus5 : searchPattern["taskStatus5"],
+		taskStatus6 : searchPattern["taskStatus6"],
 	}, function( response ) {
 
 		$(".taskList").empty();
 
 		$(".taskList").append(response);
 
+		//fillFormWothPattern();
 	});
 	
 }
 
+function fillFormWothPattern() {
+	$("#filterTaskID").attr("value", '11');
+	if(searchPattern["taskID"]) $("#filterTaskID").attr("value", searchPattern["taskID"]);
+	if(searchPattern["taskFather"]) $("#taskFatherID").attr("value", searchPattern["taskFather"]);
+	if(searchPattern["taskProject"]) $("#filterProjectID").attr("value", searchPattern["filterProjectID"]);
+	if(searchPattern["taskResponsableUser"]) $("#filterResponsableID").attr("value", searchPattern["taskResponsableUser"]);
+}
 
-function resetFilter(){
-	$("#filterID").attr("value", "");
+function filterReset(){
 	$("#filterTaskID").attr("value", "");
 	$("#filterFatherID").attr("value", "");
-	$(".filterFrojectID").attr("value", "");
-	$(".filterResponsableID").attr("value", "");
+	$("#filterProjectID").attr("value", "");
+	$("#filterResponsableID").attr("value", "");
+	$("#filterLink").attr("checked", false);
 	$("#filterStatus1").attr("checked", false);
 	$("#filterStatus2").attr("checked", false);
 	$("#filterStatus3").attr("checked", false);
@@ -41,39 +51,43 @@ function resetFilter(){
 
 $(document).ready(function(){
 
-	resetFilter();
+	filterReset();
+
 	loadList(searchPattern);
 
-
-
 	$(".taskListFilterReset").live('click', function( e ){
-		searchPattern = [];
-		resetFilter();
-		$("#filter").modal("hide");
+		searchPattern = {};
 		loadList(searchPattern);
 	});
 
 	$(".taskListFilterClean").live('click', function( e ){
-		resetFilter();
+		filterReset();
+	});
+
+	$(".taskFilterRefresh").live('click', function( e ){
+		loadList(searchPattern);
 	});
 
 	$(".taskFilterButton").live('click', function( e ){
 
-		searchPattern["taskStatus"] = [];
-		
-		if ( $("#filterTaskID").val() )	searchPattern["taskID"] = $("#filterTaskID").val();
-		if ( $("#filterFatherID").val() ) searchPattern["taskFather"] = $("#filterFatherID").val();
-		if ( $(".filterFrojectID").val() ) searchPattern["taskProject"] = $(".filterFrojectID").val();
-		if ( $(".filterResponsableID").val() ) searchPattern["taskResponsableUser"] = $(".filterResponsableID").val();
-		if ( $("#taskLink").val() )	searchPattern["taskLink"] = $("#taskLink:checked").val();
-		if ( $("#filterStatus1").is(':checked') ) searchPattern["taskStatus"].push(1);
-		if ( $("#filterStatus2").is(':checked') ) searchPattern["taskStatus"].push(2);
-		if ( $("#filterStatus3").is(':checked') ) searchPattern["taskStatus"].push(3);
-		if ( $("#filterStatus4").is(':checked') ) searchPattern["taskStatus"].push(4);
-		if ( $("#filterStatus5").is(':checked') ) searchPattern["taskStatus"].push(5);
-		if ( $("#filterStatus6").is(':checked') ) searchPattern["taskStatus"].push(6);
+		var searchPatternTemp = {};
+
+		if ( $("#filterTaskID").val() )	searchPatternTemp["taskID"] = $("#filterTaskID").val();
+		if ( $("#filterFatherID").val() ) searchPatternTemp["taskFather"] = $("#filterFatherID").val();
+		if ( $("#filterProjectID").val() ) searchPatternTemp["taskProject"] = $("#filterProjectID").val();
+		if ( $("#filterResponsableID").val() ) searchPatternTemp["taskResponsableUser"] = $("#filterResponsableID").val();
+		if ( $("#filterTaskLink:checked").val() )	searchPatternTemp["taskLink"] = $("#filterTaskLink:checked").val();
+		if ( $("#filterStatus1").is(':checked') ) searchPatternTemp["taskStatus1"] = true;
+		if ( $("#filterStatus2").is(':checked') ) searchPatternTemp["taskStatus2"] = true;
+		if ( $("#filterStatus3").is(':checked') ) searchPatternTemp["taskStatus3"] = true;
+		if ( $("#filterStatus4").is(':checked') ) searchPatternTemp["taskStatus4"] = true;
+		if ( $("#filterStatus5").is(':checked') ) searchPatternTemp["taskStatus5"] = true;
+		if ( $("#filterStatus6").is(':checked') ) searchPatternTemp["taskStatus6"] = true;
+
+		if ( Object.keys(searchPatternTemp).length > 0 ) searchPattern = searchPatternTemp;
 
 		$("#filter").modal("hide");
+
 		loadList(searchPattern);
 	});
 
@@ -98,5 +112,48 @@ $(document).ready(function(){
 		}
 	});
 
+	$(".taskListFilterSave").live('click', function( e ){
 
+		e.preventDefault();
+
+		if ( Object.keys(searchPattern).length == 0 ) alert("Nenhum filtro foi definido");
+		else {
+			if (typeof taskSaveFilter !== 'function') {
+				$.ajax({
+				  type: "POST",
+				  url: base_url + "task/saveFilter/",
+				  data: {
+				  	form : true,
+				  } 
+				}).done(function( response ) {
+					$('#tzadiDialogs').append( response );
+				});
+
+				$('#tzadiDialogs').modal('show');
+
+			} else {
+				$('#tzadiDialogs').modal('show');
+			}
+		}
+	});
+
+	$(".taskListFilterSetDefault").live('click', function( e ){
+		filterID = $(".filterID").val();
+		$.ajax({
+		  type: "POST",
+		  url: base_url + "task/filterSetDefault/",
+		  data: {
+		  	filterID : filterID
+		  } 
+		}).done(function( response ) {
+			alert("O filtro atual agora é seu filtro padrão");
+		});
+	});
+
+	$(".filterID").live('change', function( e ){
+		// Select de escolha do filtro
+		// transforma o valor do select selecionado na variavel searchPattern[filterID] 
+		// recarrega a listagem com o novo searchPattern
+		loadList(window['searchPattern'+$(".filterID").val()]);
+	});
 });

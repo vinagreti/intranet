@@ -90,7 +90,7 @@
 
 <div class="row-fluid">
 	<div class="span12">
-		<div class="dataTables_info" id="DataTables_Table_0_info">Showing 1 to <?=$totalTasks?> of <?=$totalTasks?> entries</div>
+		<div class="dataTables_info" id="DataTables_Table_0_info">Showing 1 to X of X entries</div>
 	</div>
 	<div class="span12 center">
 		<div class="dataTables_paginate paging_bootstrap pagination">

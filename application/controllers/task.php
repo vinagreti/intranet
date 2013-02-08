@@ -8,71 +8,109 @@ class Task extends MY_Controller {
 	}
 
 	public function listTask()
-	{
+	{	
+		$this->load->model("task/task_model");
 
-		$this->load->model('task/task_model');
-		$data->tasks = $this->task_model->getAll();
+		// Busca todos os filtros do usuário e crias as variáveis js para serem utilizados pelo usuario
+		$userID = $this->session->userdata('userID');
+		
+		$data->taskFilters = $this->task_model->getAllFilters($userID);
+			foreach ($data->taskFilters as $filter => $value) {
+				$searchPattern = unserialize($data->taskFilters[$filter]->searchPattern);
+				echo '<script>var searchPattern'.$data->taskFilters[$filter]->filterID.' = '.json_encode($searchPattern).';</script>';
+			}
+
+		// Busca o filtro default do usuário
+		$filter = $this->task_model->getFilterDefault($userID);
+
+		// Se o usuario tiver filtro default, Insere o filtro na variavel
+		// filter->searchPattern, que será lida na view e transformada em uma var javascript
+		if($filter){
+			$searchPatternArray = unserialize($filter->searchPattern);
+			$data->searchPattern = '<script>var searchPattern = '.json_encode($searchPatternArray).';</script>';
+		} else {
+			$data->searchPattern = '<script>var searchPattern = {};</script>';
+		}
 		$this->loadViewWithTemplate('task/list', $data);
 	}
 
 	public function filter()
 	{
 		$this->load->model('task/task_model');
-		$data->taskFilters = $this->task_model->getAllFilters();
 		$data->taskProjects = $this->task_model->getAllProject();
-
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
-
 		echo $this->load->view('task/filter', $data);
-	}
-
-	public function ajaxSearch(){
-
-		$whereParameters = array();
-
-		$statuses = null;
-
-		$searchPattern = $this->input->post();
-
-		if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
-		if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-		if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
-		if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
-		if(isset($searchPattern["taskStatus"])) $statuses = $searchPattern["taskStatus"];
-		if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
-
-
-		$this->load->model('task/task_model');
-
-		$data->tasks = $this->task_model->search($whereParameters, $statuses);
-
-		$data->totalTasks = $this->task_model->getTotal();
-
-		$this->load->view('task/ajaxSearch', $data);
-
 	}
 
 	public function saveFilter()
 	{
-		$searchPattern = serialize($this->input->post());
+		$searchPattern = $this->input->post("searchPattern");
+
+		if($this->input->post("form")){
+			$this->load->view('task/saveFilter');
+		} else {
+			$this->load->model('task/task_model');
+			$filter["filterTitle"] = $this->input->post("filterTitle");
+			$filter["userID"] = $this->session->userdata('userID');
+			$filter["searchPattern"] = serialize($searchPattern);
+
+			if($this->input->post("filterDefault") == true){
+				$filter["default"] = 'true';
+				$data->task = $this->task_model->saveFilterDeafult($filter);
+			} else {
+				$data->task = $this->task_model->saveFilter($filter);
+			}
+		}
+	}
+
+	public function filterSetDefault()
+	{
 		$this->load->model('task/task_model');
-		$data->task = $this->task_model->saveFilter($searchPattern);
+		$filter["filterID"] = $this->input->post("filterID");
+		$data->task = $this->task_model->filterSetDefault($filter);
+
+	}
+
+	public function ajaxSearch(){
+
+		$this->load->model('task/task_model');
+
+		if($this->input->post()){
+			$whereParameters = array();
+			$statuses = array();
+
+			$searchPattern = $this->input->post();
+
+			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
+			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
+			if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
+			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
+			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
+			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
+			if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
+			if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
+			if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
+			if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
+			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
+			if(sizeof($statuses) == 0) $statuses = "";
+
+			$data->tasks = $this->task_model->search($whereParameters, $statuses);
+			$this->load->view('task/ajaxSearch', $data);	
+		} else {
+			$data->tasks = $this->task_model->getAll();
+			$this->load->view('task/ajaxSearch', $data);
+		}
+
 	}
 
 	public function view($taskID)
-	{
-
-		$this->load->model('task/task_model');
+	{	$this->load->model('task/task_model');
 		$data->task = $this->task_model->getByID($taskID);
 		$data->statuses = $this->task_model->getAllStatus();
 		$data->kinds = $this->task_model->getAllKind();
-		$data->taskComments = $this->task_model->getAllCommentByTask($taskID);
-
-		$this->load->model('user/user_model');
-		$data->users = $this->user_model->getAll();
-
-		$this->loadViewWithTemplate('task/view', $data);
+		$data->taskComments = $this->task_model->getAllCommentByTask($taskID);	$this->load->model('user/user_model');
+		$data->users = $this->user_model->getAll();	$this->loadViewWithTemplate('task/view', $data);
 	}
 
 	public function update($taskID)
@@ -81,7 +119,6 @@ class Task extends MY_Controller {
 		if(!$data['taskResponsableUser']) $data['taskResponsableUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$response = $this->task_model->update($taskID, $data);
-
 		echo($response);
 	}
 
@@ -116,7 +153,6 @@ class Task extends MY_Controller {
 	public function createProjectForm()
 	{
 		$data = '';
-
 		echo $this->load->view('task/newProjectDialogForm', $data, true);
 	}
 
@@ -125,14 +161,12 @@ class Task extends MY_Controller {
 		$data = $this->input->post();
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createProject($data);
-
 		echo $dbResponse;
 	}
 
 	public function newCommentForm()
 	{
 		$data->taskID = $this->input->post("taskID");
-
 		echo $this->load->view('task/newCommentForm', $data, true);
 	}
 
@@ -142,7 +176,6 @@ class Task extends MY_Controller {
 		$data['commentUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createComment($data);
-
 		echo $dbResponse;
 	}
 
@@ -186,12 +219,6 @@ class Task extends MY_Controller {
 			}
 		}
 	}
-	
-	public function listByStatus($taskStatus){
-		$this->load->model('task/task_model');
-		$data->tasks = $this->task_model->getAllByStatus($taskStatus);
-		$this->loadViewWithTemplate('task/list', $data);
-	}
 
 	public function comment()
 	{
@@ -199,9 +226,7 @@ class Task extends MY_Controller {
 		$data->taskID = $this->input->post('taskID', true);
 		$data->commentUserID = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->comment($data);
-
-		echo $dbResponse;
+		$dbResponse = $this->task_model->comment($data);	echo $dbResponse;
 	}
 }
 
