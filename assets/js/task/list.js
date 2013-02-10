@@ -155,6 +155,7 @@ $(document).ready(function(){
 		// Select de escolha do filtro
 		// transforma o valor do select selecionado na variavel searchPattern[filterID] 
 		// recarrega a listagem com o novo searchPattern
-		loadList(window['searchPattern'+$(".filterID").val()]);
+		searchPattern = window['searchPattern'+$(".filterID").val()];
+		loadList(searchPattern);
 	});
 });
