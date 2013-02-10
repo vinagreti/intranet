@@ -126,6 +126,7 @@ $(document).ready(function(){
 				  	form : true,
 				  } 
 				}).done(function( response ) {
+					$('#tzadiDialogs').empty();
 					$('#tzadiDialogs').append( response );
 				});
 
