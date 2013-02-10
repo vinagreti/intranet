@@ -9,7 +9,13 @@
 
 				<div class="row">
 					<div class="span6">
-						<input type="text" placeholder="Título *" id="newTaskTitle" name="newTaskTitle" class="span6" >
+						<input type="text" placeholder="Título *" id="newTaskTitle" name="newTaskTitle" class="span6" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="span6">
+						<textarea rows="3" placeholder="Descrição *" id="newTaskDesc" name="newTaskDesc" class="span6"></textarea>
 					</div>
 				</div>
 

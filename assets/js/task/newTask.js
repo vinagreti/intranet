@@ -8,6 +8,7 @@ $(document).ready(function(){
 				taskResponsableUser = $('#taskResponsableUser').val();
 				taskKind = $('#taskKind').val();
 				newTaskTitle = $('#newTaskTitle').val();
+				newTaskDesc = $('#newTaskDesc').val();
 				date = $('#deadLineDate').val();
 				time = $('#deadLineTime').val();
 				deadLineDate = date+" "+ time;
@@ -26,6 +27,7 @@ $(document).ready(function(){
 					taskKind : taskKind,
 					taskResponsableUser : taskResponsableUser,
 					taskTitle : newTaskTitle,
+					taskDesc : newTaskDesc,
 					taskLink : taskLink,
 					deadLineDate: deadLineDate		
 				},function( response ) {
