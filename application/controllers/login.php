@@ -21,7 +21,7 @@ class Login extends CI_Controller {
 		$permission = $this->login_model->checkCredential($email, $password);
 
 		if($permission) {
-			redirect(base_url() . 'dashboard', 'refresh');
+			redirect(base_url() . 'task', 'refresh');
 		}
 		else {
 			redirect(base_url() . 'login', 'refresh');
