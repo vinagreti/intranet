@@ -96,9 +96,12 @@ $(document).ready(function(){
 						loadList(searchPattern);
 
 					});
-
+					$.post(base_url + "task/action", {
+						comment : 'Aprovado',
+						commentTask : taskID,
+						commentAction : 'Aprovar'
+					});
 				}
-
 			});
 
 			/*
@@ -148,7 +151,11 @@ $(document).ready(function(){
 					},function( response ) {
 						loadList(searchPattern);
 					});
-
+					$.post(base_url + "task/action", {
+						comment : 'Iniciado',
+						commentTask : taskID,
+						commentAction : 'Iniciar'
+					});
 				}
 
 			});
