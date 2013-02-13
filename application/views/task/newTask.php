@@ -73,7 +73,7 @@
 							<select class="span6"  id="newTaskFather" name="newTaskFather" data-rel="chosen">
 								<option value="<?=$taskID?>"><?=$taskTitle?></option>
 								<?php foreach($tasks as $task) { ?>
-								<option value="<?=$task->taskID?>" projectID="<?=$task->taskProject?>"><?=$task->taskTitle?></option>
+								<option value="<?=$task->taskID?>" projectID="<?=$task->taskProject?>"><?=$task->taskID?> - <?=substr($task->taskTitle, 0, 60)?></option>
 								<?php } ?>
 
 							</select>				
