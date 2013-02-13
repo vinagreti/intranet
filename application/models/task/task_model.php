@@ -39,7 +39,7 @@ class Task_Model extends CI_Model {
 
     }
 
-    function search($whereParameters, $statuses = null) {
+    function search($whereParameters = null, $statuses = null) {
 
         $cols = array(
             'u.userName  AS taskResponsableName',
@@ -63,8 +63,8 @@ class Task_Model extends CI_Model {
         $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
         $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
-        $this->db->where($whereParameters);
-        $this->db->where_in("taskStatusID", $statuses);
+        if($whereParameters) $this->db->where($whereParameters);
+        if($statuses) $this->db->where_in("taskStatusID", $statuses);
         $query = $this->db->get('tzadiTask t');
         return $query->result();
 

@@ -21,18 +21,8 @@ function loadList(searchPattern){
 		$(".taskList").empty();
 
 		$(".taskList").append(response);
-
-		//fillFormWothPattern();
 	});
 	
-}
-
-function fillFormWothPattern() {
-	$("#filterTaskID").attr("value", '11');
-	if(searchPattern["taskID"]) $("#filterTaskID").attr("value", searchPattern["taskID"]);
-	if(searchPattern["taskFather"]) $("#taskFatherID").attr("value", searchPattern["taskFather"]);
-	if(searchPattern["taskProject"]) $("#filterProjectID").attr("value", searchPattern["filterProjectID"]);
-	if(searchPattern["taskResponsableUser"]) $("#filterResponsableID").attr("value", searchPattern["taskResponsableUser"]);
 }
 
 function filterReset(){
