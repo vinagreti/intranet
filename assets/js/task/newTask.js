@@ -32,6 +32,7 @@ $(document).ready(function(){
 					deadLineDate: deadLineDate		
 				},function( response ) {
 					$('#tzadiDialogs').modal('hide');
+					if(searchPattern["taskStatus1"]) loadList(searchPattern);
 				});
 			});
 		};

@@ -58,7 +58,7 @@ class Task_Model extends CI_Model {
             'taskProject'
             );
         $this->db->select($cols);
-        $this->db->order_by('taskStatus, taskID');
+        $this->db->order_by('taskStatus, taskID desc');
         $this->db->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left');
         $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
