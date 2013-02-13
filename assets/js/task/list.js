@@ -1,9 +1,5 @@
 function loadList(searchPattern){
 
-	$(".taskList").empty();
-
-	$(".taskList").append("</br></br></br></br></br>Carregando...</br></br></br></br></br></br>");
-
 	$.post(base_url+"task/ajaxSearch", {
 		taskResponsableUser : searchPattern["taskResponsableUser"],
 		taskProject : searchPattern["taskProject"],
@@ -17,10 +13,7 @@ function loadList(searchPattern){
 		taskStatus5 : searchPattern["taskStatus5"],
 		taskStatus6 : searchPattern["taskStatus6"],
 	}, function( response ) {
-
-		$(".taskList").empty();
-
-		$(".taskList").append(response);
+		$(".taskList").html(response);
 	});
 	
 }
