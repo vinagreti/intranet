@@ -23,12 +23,10 @@
 			  </div>
 
 				<select class="filterID span11">
+					<option value=''></option>
 					<?php foreach ($taskFilters as $filter) { ?>
-						<?php if($filter->default == 'true') $defaultFilter = '<option value='.$filter->filterID.'>'.$filter->filterTitle.'</option>'; ?>
+						<?php if($filter->default == 'true') echo '<option value='.$filter->filterID.' selected>'.$filter->filterTitle.'</option>'; ?>
 					<?php } ?>
-
-					<?php if($defaultFilter) echo $defaultFilter; else echo "<option value=''>Todas</option>"; ?>
-
 					<?php foreach ($taskFilters as $filter) { ?>
 						<?php if($filter->default != 'true') echo '<option value='.$filter->filterID.'>'.$filter->filterTitle.'</option>'; ?>
 					<?php } ?>

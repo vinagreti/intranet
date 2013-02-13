@@ -25,7 +25,7 @@ function loadList(searchPattern){
 	
 }
 
-function filterReset(){
+function filterClean(){
 	$("#filterTaskID").attr("value", "");
 	$("#filterFatherID").attr("value", "");
 	$("#filterProjectID").attr("value", "");
@@ -41,17 +41,18 @@ function filterReset(){
 
 $(document).ready(function(){
 
-	filterReset();
+	filterClean();
 
 	loadList(searchPattern);
 
 	$(".taskListFilterReset").live('click', function( e ){
+		$(".filterID").val('');
 		searchPattern = {};
 		loadList(searchPattern);
 	});
 
 	$(".taskListFilterClean").live('click', function( e ){
-		filterReset();
+		filterClean();
 	});
 
 	$(".taskFilterRefresh").live('click', function( e ){
@@ -74,7 +75,10 @@ $(document).ready(function(){
 		if ( $("#filterStatus5").is(':checked') ) searchPatternTemp["taskStatus5"] = true;
 		if ( $("#filterStatus6").is(':checked') ) searchPatternTemp["taskStatus6"] = true;
 
-		if ( Object.keys(searchPatternTemp).length > 0 ) searchPattern = searchPatternTemp;
+		if ( Object.keys(searchPatternTemp).length > 0 ) {
+			$(".filterID").val('');
+			searchPattern = searchPatternTemp;
+		}
 
 		$("#filter").modal("hide");
 
@@ -145,7 +149,8 @@ $(document).ready(function(){
 		// Select de escolha do filtro
 		// transforma o valor do select selecionado na variavel searchPattern[filterID] 
 		// recarrega a listagem com o novo searchPattern
-		searchPattern = window['searchPattern'+$(".filterID").val()];
+		if($(".filterID").val()) searchPattern = window['searchPattern'+$(".filterID").val()];
+		else searchPattern = {};
 		loadList(searchPattern);
 	});
 });
