@@ -16,4 +16,10 @@ class User_Model extends CI_Model {
 
     }
 
+    function getByID($userID) {
+    	$this->db->where('userID', $userID);
+        $query = $this->db->get('tzadiUser');
+        $result = $query->result();
+        return $result[0];
+    }
 }

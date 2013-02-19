@@ -140,6 +140,17 @@ class Task extends MY_Controller {
 				echo $this->load -> view('task/newTask', $data);		
 			}
 			else {
+
+				$this->load->model('user/user_model');
+				$userID = $this->input->post('taskResponsableUser');
+				$responsable = $this->user_model->getByID($userID);
+				$to = $responsable->userEmail;
+				$subject = 'New task';
+				$message = '<p>Uma nova tarefa foi criada por<p>';
+				foreach($this->input->post() as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
+
+				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+
 				$data = $this->input->post();
 				$data['taskCreatorUser'] = $this->session->userdata('userID');
 				$data['deadLineDate'] = $this->myDatePhpMysql($data['deadLineDate']);
@@ -176,6 +187,14 @@ class Task extends MY_Controller {
 		$data['commentUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$dbResponse = $this->task_model->createComment($data);
+
+		$responsable = $this->task_model->getTaskResponsable($data['commentTask']);
+		$to = $responsable->userEmail;
+		$subject = 'New comment';
+		$message = '<p>Um novo comentário foi efetuado na tarefa <a href="intranet.tzadi.com/task/view/'.$data['commentTask'].'">'.$data['commentTask'].'</a><p>';
+		foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
+		$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+
 		echo $dbResponse;
 	}
 
@@ -192,6 +211,14 @@ class Task extends MY_Controller {
 				$data['commentUser'] = $this->session->userdata('userID');
 				$this->load->model('task/task_model');
 				$dbResponse = $this->task_model->createComment($data);
+
+				$responsable = $this->task_model->getTaskResponsable($data['commentTask']);
+				$to = $responsable->userEmail;
+				$subject = 'New comment';
+				$message = '<p>Um novo comentário foi efetuado na tarefa <a href="intranet.tzadi.com/task/view/'.$data['commentTask'].'">'.$data['commentTask'].'</a><p>';
+				foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
+				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+
 				echo $dbResponse;
 			}
 		} else {

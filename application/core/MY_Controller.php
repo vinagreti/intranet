@@ -154,6 +154,29 @@ class MY_Controller extends CI_Controller {
 		$totalTime = $diff->format('%y-%m-%d %H:%i:%s');
 		return $totalTime;
 	}
+
+	public function sendGmail($to, $subject, $message) {
+		$config = Array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_port' => 465,
+			'smtp_user' => 'task@tzadi.com',
+			'smtp_pass' => 'Task2010ireland',
+			'mailtype' => 'html',
+			'charset' => 'iso-8859-1',
+			'wordwrap' => TRUE
+		);
+
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+		$this->email->from('task@intranet.tzadi.com');
+		$this->email->to($to);
+		$this->email->subject($subject);
+		$message = '<html><head><meta charset="utf-8"><head>'.$message.'</html>';
+		$this->email->message($message);
+
+		if(!$this->email->send()) echo show_error($this->email->print_debugger());
+	}
 	
 }
 /* End of file */

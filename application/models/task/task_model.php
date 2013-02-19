@@ -224,4 +224,12 @@ class Task_Model extends CI_Model {
 
         return $query;
     }
+
+    function getTaskResponsable($taskID) {
+        $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
+        $this->db->where('taskID', $taskID);
+        $query = $this->db->get('tzadiTask t');
+        $result = $query->result();
+        return $result[0];
+    } 
 }
