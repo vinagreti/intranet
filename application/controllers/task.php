@@ -253,7 +253,17 @@ class Task extends MY_Controller {
 		$data->taskID = $this->input->post('taskID', true);
 		$data->commentUserID = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->comment($data);	echo $dbResponse;
+		$dbResponse = $this->task_model->comment($data);
+		echo $dbResponse;
+	}
+
+
+	public function getUsersLog()
+	{
+		$taskUserIDs = null;
+		$this->load->model('task/task_model');
+		$usersLog = $this->task_model->getUsersLog($taskUserIDs);
+		echo json_encode($usersLog);
 	}
 }
 

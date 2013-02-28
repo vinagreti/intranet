@@ -231,5 +231,23 @@ class Task_Model extends CI_Model {
         $query = $this->db->get('tzadiTask t');
         $result = $query->result();
         return $result[0];
-    } 
+    }
+
+    public function getUsersLog($taskUserIDs = null)
+    {
+        $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
+        $this->db->select(array(
+            'taskID',
+            'taskStatus',
+            'taskStatusName',
+            'taskResponsableUser',
+            'userName as taskResponsableName'
+            ));
+        $this->db->order_by('taskStatus');
+        $this->db->where_in('taskResponsableUser', $taskUserIDs);
+        $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
+        $query = $this->db->get('tzadiTask t');
+        $result = $query->result();
+        return $result;
+    }
 }

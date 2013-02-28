@@ -9,7 +9,6 @@ class MY_Controller extends CI_Controller {
 		parent::__construct();
 
 		$this->_checkUserPermission();
-		$this->_setGlobalJsVar();
 
 	}
 
@@ -72,6 +71,7 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['activity'] = 'private';
 		$methodsPermission['task']['filter'] = 'private';
 		$methodsPermission['task']['filterSetDefault'] = 'private';
+		$methodsPermission['task']['getUsersLog'] = 'private';
 
 		// git class permission
 		$methodsPermission['git']['index'] = 'admin';
@@ -122,12 +122,6 @@ class MY_Controller extends CI_Controller {
 	function _leftMenu($view){
 		$view = explode("/", $view);
 		$this->load->view($view[0] . "/leftMenu");
-	}
-
-	function _setGlobalJsVar(){
-		echo '<script type="text/javascript">
-    			var base_url = "'.base_url().'";
-			</script>';
 	}
 
 	// Esta função pega uma string de data e transforma da data do php

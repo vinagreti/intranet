@@ -29,6 +29,10 @@
 		</style>
 		<!-- Loading the JQuery -->
 		<script src="<?=base_url()?>assets/JQuery/jquery.js"></script>
+
+		<script type="text/javascript">
+    		var base_url = "<?=base_url()?>" ;
+		</script>
 	</head>
 
 	<body>
