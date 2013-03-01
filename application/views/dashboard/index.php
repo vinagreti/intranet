@@ -8,14 +8,23 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
 
-		$.getJSON(base_url + "task/getUsersLog", function( e ) {
+	function getUsersTaskLog(taskUserIDs) {
+		// solicitando para aplicação task o log de tarefas dos usuários definidos em taskUserIDs
+		$.post(base_url + "task/getUsersLog", {
+			taskUserIDs: taskUserIDs
+		}, function( e ) {
 			total = e.length;
 
-			taskUsers = {};
-			taskStatuses = {};
-			headers = ["Usuário", 'total'];
+			var taskUsers = {},
+				taskStatuses = {},
+				userData = [],
+				data = [],
+				headers = ["Usuário", 'total'],
+				status,
+				statusName,
+				user,
+				name;
 
 			$.each( e , function(index, userTask) {
 				status = userTask.taskStatus;
@@ -41,21 +50,29 @@
 				taskUsers[user]['statuses'][status]++;
 			});
 
-			data = [headers];
+			// agrupando os arrays para serem interpretados pelo google chart
+			data.push(headers);
 			$.each( taskUsers , function(index, user) {
+				// criando o array de cada usuário para incluir no array data
 				userData = [];
 				userData = [user.name, Number(user.totalTasks)];
-				console.log(user.statuses);
 					$.each( user.statuses , function(index, total) {
 						userData.push(Number(total));
 					});
 				data.push(userData);
 			});
 
-			console.log(data);
-			
 			drawChart( data , total );
-		});
+		}, "json");
+	}
+
+	$(document).ready(function(){
+
+		// definindo os usuários que terão o log exibido
+		var taskUserIDs = [];
+
+		// solicitando os dados dos usuarios
+		getUsersTaskLog(taskUserIDs)
 	});
 </script>
 

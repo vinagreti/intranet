@@ -235,7 +235,6 @@ class Task_Model extends CI_Model {
 
     public function getUsersLog($taskUserIDs = null)
     {
-        $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->select(array(
             'taskID',
             'taskStatus',
@@ -243,9 +242,10 @@ class Task_Model extends CI_Model {
             'taskResponsableUser',
             'userName as taskResponsableName'
             ));
-        $this->db->order_by('taskStatus');
-        $this->db->where_in('taskResponsableUser', $taskUserIDs);
+        $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
+        if ($taskUserIDs) $this->db->where_in('taskResponsableUser', $taskUserIDs);
+        $this->db->order_by('taskStatus');
         $query = $this->db->get('tzadiTask t');
         $result = $query->result();
         return $result;

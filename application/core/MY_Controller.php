@@ -115,8 +115,8 @@ class MY_Controller extends CI_Controller {
 		$this->_leftMenu($view);
 		$this->load->view($view, $data);
 		$this->load->view("common/footer");
-		$this->load->view("common/bottomHTML");
 		$this->load->view("common/tzadiDialogs");
+		$this->load->view("common/bottomHTML");
 	}
 
 	function _leftMenu($view){

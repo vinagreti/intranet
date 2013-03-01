@@ -260,7 +260,7 @@ class Task extends MY_Controller {
 
 	public function getUsersLog()
 	{
-		$taskUserIDs = null;
+		$taskUserIDs = $this->input->post("taskUserIDs");
 		$this->load->model('task/task_model');
 		$usersLog = $this->task_model->getUsersLog($taskUserIDs);
 		echo json_encode($usersLog);
