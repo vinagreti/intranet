@@ -83,9 +83,11 @@ class Task_Model extends CI_Model {
             'taskStatus',
             'taskResponsableUser',
             'taskCreatorUser',
-            'deadLineDate'
+            'deadLineDate',
+            'projectTitle'
             );
         $this->db->select($cols);
+        $this->db->join('tzadiTaskProject tp', 't.taskProject = tp.projectID', 'left');
         $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
         $this->db->join('tzadiUser u2', 'u2.userID = t.taskCreatorUser', 'left');
         $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');

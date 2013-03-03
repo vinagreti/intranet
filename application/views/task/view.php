@@ -62,6 +62,11 @@
 							</select>
 						</div>
 
+						<label class="control-label">Projeto</label>
+						<div class="controls">
+							<span class="input-xlarge uneditable-input"><?=$task->projectTitle?></span>
+						</div>
+
 						<label class="control-label">Criado por</label>
 						<div class="controls">
 							<span class="input-xlarge uneditable-input"><?=$task->taskCreatorName?></span>
