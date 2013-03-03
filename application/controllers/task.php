@@ -142,20 +142,22 @@ class Task extends MY_Controller {
 			else {
 
 				$this->load->model('user/user_model');
-				$userID = $this->input->post('taskResponsableUser');
-				$responsable = $this->user_model->getByID($userID);
-				$to = $responsable->userEmail;
-				$subject = 'New task';
-				$message = '<p>Uma nova tarefa foi criada por<p>';
-				foreach($this->input->post() as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
-
-				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
 
 				$data = $this->input->post();
 				$data['taskCreatorUser'] = $this->session->userdata('userID');
 				$data['deadLineDate'] = $this->myDatePhpMysql($data['deadLineDate']);
 				$this->load->model('task/task_model');
 				$dbResponse = $this->task_model->createTask($data);
+
+				$userID = $this->input->post('taskResponsableUser');
+				$responsable = $this->user_model->getByID($userID);
+				$to = $responsable->userEmail;
+				$subject = 'Task ' . $dbResponse;
+				$message = '<p>Uma nova tarefa foi criada por<p>';
+				foreach($this->input->post() as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
+
+				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+
 				echo $dbResponse;
 			}
 		}
@@ -190,7 +192,7 @@ class Task extends MY_Controller {
 
 		$responsable = $this->task_model->getTaskResponsable($data['commentTask']);
 		$to = $responsable->userEmail;
-		$subject = 'New comment';
+		$subject = 'Task ' . $data['commentTask'];
 		$message = '<p>Um novo comentário foi efetuado na tarefa <a href="intranet.tzadi.com/task/view/'.$data['commentTask'].'">'.$data['commentTask'].'</a><p>';
 		foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
 		$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
@@ -214,7 +216,7 @@ class Task extends MY_Controller {
 
 				$responsable = $this->task_model->getTaskResponsable($data['commentTask']);
 				$to = $responsable->userEmail;
-				$subject = 'New comment';
+				$subject = 'Task ' . $data['commentTask'];
 				$message = '<p>Um novo comentário foi efetuado na tarefa <a href="intranet.tzadi.com/task/view/'.$data['commentTask'].'">'.$data['commentTask'].'</a><p>';
 				foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
 				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
@@ -229,7 +231,7 @@ class Task extends MY_Controller {
 	public function activity()
 	{
 		if($this->input->post()){
-			if($data->taskID = $this->input->post("form")){
+			if($this->input->post("form")){
 				$data->taskID = $this->input->post("taskID");
 				$data->date = date('d-m-Y', time());
 				$data->time = date('H:i', time());
@@ -242,6 +244,14 @@ class Task extends MY_Controller {
 				$data['activityEnd'] =  $this->myDatePhpMysql($data['activityEnd']);
 				$this->load->model('task/task_model');
 				$dbResponse = $this->task_model->registerActivity($data);
+
+				$responsable = $this->task_model->getTaskResponsable($data['activityTask']);
+				$to = $responsable->userEmail;
+				$subject = 'Task ' . $data['activityTask'];
+				$message = '<p>Uma nova atividade foi registrada na tarefa <a href="intranet.tzadi.com/task/view/'.$data['activityTask'].'">'.$data['activityTask'].'</a><p>';
+				foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
+				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+
 				echo $dbResponse;
 			}
 		}

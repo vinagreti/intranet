@@ -166,7 +166,7 @@ class MY_Controller extends CI_Controller {
 		$this->email->from('task@intranet.tzadi.com');
 		$this->email->to($to);
 		$this->email->subject($subject);
-		$message = '<html><head><meta charset="utf-8"><head>'.$message.'</html>';
+		$message = '<html><head><meta charset="utf-8"></head><body>'.$message.'</body></html>';
 		$this->email->message($message);
 
 		if(!$this->email->send()) echo show_error($this->email->print_debugger());

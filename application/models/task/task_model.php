@@ -118,7 +118,8 @@ class Task_Model extends CI_Model {
     }
 
     function createTask($data) {
-        $query = $this->db->insert('tzadiTask', $data);
+        $this->db->insert('tzadiTask', $data);
+        $query = $this->db->insert_id();
         return $query;
     }
 
