@@ -19,6 +19,29 @@ $(document).ready(function(){
 		$('#tzadiDialogs').modal('show');
 	})
 
+	// The topMenu calc button
+	$(".calcButton").live('click', function( e ){
+		if (typeof taskCalc !== 'function') {
+			taskCalc = function taskSaveFilter(){
+				e.preventDefault();
+
+				$('#tzadiCalc').empty();
+
+				$.post(base_url + "calc", {
+					form : true
+				},function( response ) {
+					$('#tzadiCalc').append( response );
+				});
+
+				$('#tzadiCalc').modal('show');
+			}
+
+			taskCalc();
+		} else {
+			$('#tzadiCalc').modal('show');
+		}		
+	})
+
 	$(".taskSource").live('change', function( e ){
 		
 		$(".linkSelect").show();

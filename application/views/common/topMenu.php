@@ -28,4 +28,15 @@
 	</li>
 </ul>
 
+</ul>
+<ul class="nav">
+	<li class="dropdown">
+		<a class="navBarToolsMenu" data-toggle="dropdown" href="#" rel="tooltip" title="Tarefas">
+			Tools <i class="icon-chevron-down"></i>
+		</a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<li><a tabindex="-1" href="#" class="calcButton">Calculadora</a></li>
+		</ul>
+	</li>
+</ul>
 	<script src="<?=base_url()?>assets/js/common/topMenu.js"></script>
