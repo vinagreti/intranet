@@ -253,4 +253,13 @@ class Task_Model extends CI_Model {
         $result = $query->result();
         return $result;
     }
+
+    public function userActivities($activityUser)
+    {
+        $this->db->where('activityUser', $activityUser);
+        $this->db->order_by("activityEnd", "desc");
+        $query = $this->db->get('tzadiTaskActivity');
+        $result = $query->result();
+        return $result;
+    }
 }

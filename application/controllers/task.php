@@ -275,6 +275,15 @@ class Task extends MY_Controller {
 		$usersLog = $this->task_model->getUsersLog($taskUserIDs);
 		echo json_encode($usersLog);
 	}
+
+	public function userActivities($activityUser = null)
+	{
+		if( ! $activityUser) $activityUser = $this->session->userdata('userID');
+		$this->load->model('task/task_model');
+		$data->userLog = $this->task_model->userActivities($activityUser);
+		$data->activityUser = $activityUser;
+		$this->loadViewWithTemplate("task/userActivities", $data);
+	}
 }
 
 /* End of file*/

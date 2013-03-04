@@ -23,6 +23,7 @@
 			<li><a tabindex="-1" href="#" class="newProjectButton">Novo Projeto</a></li>
 			<li class="divider"></li>
 			<li><a tabindex="-1" href="<?=base_url()?>task">Listar Tarefas</a></li>
+			<li><a href="<?=base_url()?>task/userActivities">Histórico de atividades</a></li>
 		</ul>
 	</li>
 </ul>
