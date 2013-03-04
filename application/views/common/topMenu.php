@@ -2,18 +2,15 @@
 	<li <?php if($this->router->class == 'dashboard'){ echo 'class="active"';}?> >
 		<a href="<?=base_url()?>dashboard" rel="tooltip" title="Dashboard">Dash</a>
 	</li>
-</ul>
-<ul class="nav">
+
 	<li <?php if($this->router->class == 'git'){ echo 'class="active"';}?> >
 		<a href="<?=base_url()?>git" rel="tooltip" title="Git features">Git</a>
 	</li>
-</ul>
-<ul class="nav">
+
 	<li <?php if($this->router->class == 'gp'){ echo 'class="active"';}?> >
 		<a href="<?=base_url()?>gp" rel="tooltip" title="Boas práticas">GP</a>
 	</li>
-</ul>
-<ul class="nav">
+
 	<li class="dropdown <?php if($this->router->class == 'task'){ echo 'active';}?>">
 		<a class="navBarTaskMenu" data-toggle="dropdown" href="#" rel="tooltip" title="Tarefas">
 			Task <i class="icon-chevron-down"></i>
@@ -26,10 +23,7 @@
 			<li><a href="<?=base_url()?>task/userActivities">Histórico de atividades</a></li>
 		</ul>
 	</li>
-</ul>
 
-</ul>
-<ul class="nav">
 	<li class="dropdown">
 		<a class="navBarToolsMenu" data-toggle="dropdown" href="#" rel="tooltip" title="Tarefas">
 			Tools <i class="icon-chevron-down"></i>
@@ -39,4 +33,5 @@
 		</ul>
 	</li>
 </ul>
-	<script src="<?=base_url()?>assets/js/common/topMenu.js"></script>
+
+<script src="<?=base_url()?>assets/js/common/topMenu.js"></script>

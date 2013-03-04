@@ -37,7 +37,7 @@
 				</div>
 			</td>
 			<td align=center><div onclick="Percent();">
-				<a class="btn btn-large btn-block">0/0</a>
+				<a class="btn btn-large btn-block">%</a>
 				</div>
 			</td>
 		</tr>
