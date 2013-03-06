@@ -4,7 +4,15 @@ class Task extends MY_Controller {
 
 	public function index()
 	{
-		$this->listTask();
+		$this->load->model("task/task_model");
+		$data->filters = $this->task_model->getAllFilters($this->session->userdata('userID'));
+		$this->loadViewWithTemplate('task/search', $data);
+	}
+
+	public function loadFilters() {
+		$this->load->model("task/task_model");
+		$searchPatterns = $this->task_model->getAllFilters($this->session->userdata('userID'));
+		echo json_encode($searchPatterns);
 	}
 
 	public function listTask()
@@ -41,6 +49,34 @@ class Task extends MY_Controller {
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
 		echo $this->load->view('task/filter', $data);
+	}
+
+	public function search()
+	{
+		$post = $this->input->post();
+		$firstRow = $post['firstRow'];
+		$numRows = $post['numRows'];
+
+		if(isset($post['filterID'])) {
+			$filterID = $post['filterID'];
+			$this->load->model('task/task_model');
+			$this->task_model->getFilterSearchPattern();
+			$data->tasks = $this->task_model->getAllByFilterID($firstRow, $filterID);
+			$data->total = $this->task_model->getAllByFilterIDCount();
+			echo json_encode($data);
+		}
+		else if(isset($post['searchPattern'])) {
+			$this->load->model('task/task_model');
+			$data->tasks = $this->task_model->getAll($firstRow);
+			$data->total = $this->task_model->getAllCount();
+			echo json_encode($data);
+		}
+		else {
+			$this->load->model('task/task_model');
+			$data->tasks = $this->task_model->getAll($firstRow, $numRows);
+			$data->total = $this->task_model->getAllCount();
+			echo json_encode($data);
+		}
 	}
 
 	public function saveFilter()

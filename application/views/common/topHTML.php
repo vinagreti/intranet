@@ -26,6 +26,20 @@
 		.sidebar-nav {
 			padding: 9px 0;
 		}
+		.loading
+		{
+			display:none;
+			position: fixed;
+			z-index: 1000;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			background: rgba( 255, 255, 255, .8 ) 
+				url("<?=base_url()?>assets/img/loading.gif")
+				50% 50% 
+				no-repeat;
+		}
 		</style>
 		<!-- Loading the JQuery -->
 		<script src="<?=base_url()?>assets/JQuery/jquery.js"></script>

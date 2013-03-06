@@ -73,6 +73,8 @@ class MY_Controller extends CI_Controller {
 		$methodsPermission['task']['filterSetDefault'] = 'private';
 		$methodsPermission['task']['getUsersLog'] = 'private';
 		$methodsPermission['task']['userActivities'] = 'private';
+		$methodsPermission['task']['search'] = 'private';
+		$methodsPermission['task']['loadFilters'] = 'private';
 
 		// git class permission
 		$methodsPermission['git']['index'] = 'admin';
