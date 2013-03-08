@@ -45,16 +45,11 @@ var insertRow = function (task) {
 	$(".listBody").append(listRow);	
 }
 
-var getTasks = function ( e ){
+var getTasks = function ( filterData ){
+
 	$('.loading').show();
 
-	filter = { };
-	filter['firstRow'] = $('.listBody tr').length;
-	filter['numRows'] = e.numRows;
-	if ( typeof e.filter == "number") filter['filterID'] = e.filter;
-	else if ( typeof e.filter == "object") filter['searchPattern'] = e.filter;
-	
-	$.post(base_url+"task/search", filter, function( e ) {
+	$.post(base_url+"task/search", filterData, function( e ) {
 		if( e ) {
 			$(".total").text( e.total );
 			$.each( e.tasks , function(index, task) {
@@ -77,45 +72,56 @@ var reCountRows = function () {
 	return totalRows;
 }
 
-var firstLoad = function () {
-	data = { numRows : 10 }
-	getTasks(data); // função que popula a tabela de tarefas
-}
-
 var reSortTable = function () {
   var resort = true;
   $("table").trigger("update", [resort]);
 }
 
 $(document).ready(function(){
+	
+	var filterData = { 
+		'numRows' : 10,
+		'filter' : 'all',
+		'firstRow' : 0
+	};
+	getTasks(filterData);
 
-	firstLoad();
+	$(".refreshList").live('click', function( e ){
+		filterData['firstRow'] = 0;
+		filterData['numRows'] = $('.listBody tr').length;
+		$(".listBody").empty();	
+		getTasks(filterData); // função que popula a tabela de tarefas
+	});
+
+	$(".showAllTasks").live('click', function( e ){
+		filterData = { 
+			'numRows' : 10,
+			'filter' : 'all',
+			'firstRow' : 0
+		}
+		$(".listBody").empty();
+		getTasks(filterData); // função que popula a tabela de tarefas
+	});
 
 	$("table").tablesorter(); 
 
 	$("#showMore").live("click", function(){
-		data = { numRows : 10 }
-		getTasks(data);
+		filterData['numRows'] = 10 ;
+		filterData['firstRow'] = $('.listBody tr').length;
+		getTasks(filterData);
 	});
 
 	$("#showAll").live("click", function(){
-		data = { numRows : 18446744073709551615 }
-		getTasks(data);
-	});
-
-	$(".taskListFilterReset").live('click', function( e ){
-		$(".filterID").val('');
-		searchPattern = {};
-		loadList(searchPattern);
+		filterData['numRows'] = 18446744073709551615 ;
+		filterData['firstRow'] = $('.listBody tr').length;
+		getTasks(filterData);
 	});
 
 	$(".taskListFilterClean").live('click', function( e ){
 		filterClean();
 	});
 
-	$(".taskFilterRefresh").live('click', function( e ){
-		loadList(searchPattern);
-	});
+
 
 	$(".taskFilterButton").live('click', function( e ){
 

@@ -34,27 +34,42 @@ class Task extends CI_Controller {
 		$post = $this->input->post();
 		$firstRow = $post['firstRow'];
 		$numRows = $post['numRows'];
+		$filter = $post['filter'];
 
-		if(isset($post['filterID'])) {
-			$filterID = $post['filterID'];
+		if ($filter == 'all') {
 			$this->load->model('task/task_model');
-			$this->task_model->getFilterSearchPattern();
-			$data->tasks = $this->task_model->getAllByFilterID($firstRow, $filterID);
-			$data->total = $this->task_model->getAllByFilterIDCount();
+			$data->tasks = $this->task_model->getAll($firstRow, $numRows);
+			$data->total = $this->task_model->getAllCount();
 			echo json_encode($data);
-		}
-		else if(isset($post['searchPattern'])) {
+		} else if ( is_integer( $filter ) ) {
+			$whereParameters = array();
+			$statuses = array();
+			$this->load->model('task/task_model');
+			$filter = $this->task_model->getFilterByID($post['filterID']);
+			$searchPattern = unserialize($filter->searchPattern);
+			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
+			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
+			if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
+			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
+			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
+			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
+			if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
+			if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
+			if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
+			if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
+			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
+			if(sizeof($statuses) == 0) $statuses = "";
+
+			$data->tasks = $this->task_model->search($whereParameters, $statuses);
+			$data->total = 10;
+			echo json_encode($data);
+		}	else if ( is_array( $filter ) ) {
 			$this->load->model('task/task_model');
 			$data->tasks = $this->task_model->getAll($firstRow);
 			$data->total = $this->task_model->getAllCount();
 			echo json_encode($data);
 		}
-		else {
-			$this->load->model('task/task_model');
-			$data->tasks = $this->task_model->getAll($firstRow, $numRows);
-			$data->total = $this->task_model->getAllCount();
-			echo json_encode($data);
-		}
+
 	}
 
 	public function saveFilter()
@@ -86,11 +101,11 @@ class Task extends CI_Controller {
 
 	}
 
-	public function ajaxSearch(){
+	public function ajaxSearch($searchPattern = null){
 
 		$this->load->model('task/task_model');
 
-		if($this->input->post()){
+		if($this->input->post()){ var_dump($searchPattern);
 			$whereParameters = array();
 			$statuses = array();
 
@@ -111,6 +126,24 @@ class Task extends CI_Controller {
 
 			$data->tasks = $this->task_model->search($whereParameters, $statuses);
 			$this->load->view('task/ajaxSearch', $data);	
+		} else if ($searchPattern != null) {
+			$whereParameters = array();
+			$statuses = array();
+			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
+			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
+			if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
+			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
+			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
+			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
+			if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
+			if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
+			if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
+			if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
+			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
+			if(sizeof($statuses) == 0) $statuses = "";
+
+			return $this->task_model->search($whereParameters, $statuses);
+
 		} else {
 			$data->tasks = $this->task_model->getAll();
 			$this->load->view('task/ajaxSearch', $data);

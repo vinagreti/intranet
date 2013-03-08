@@ -288,4 +288,11 @@ function getProjectName($project) {
     $resultado = $this->db->get('tzadiTaskProject')->result();
     return $resultado[0];
 }
+
+function getFilterByID($filter) {
+    $this->db->select("searchPattern");
+    $this->db->where('filterID', $filter);
+    $resultado = $this->db->get('tzadiTaskFilter')->result();
+    return $resultado[0];
+}
 }
