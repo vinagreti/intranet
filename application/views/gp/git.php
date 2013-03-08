@@ -1,4 +1,4 @@
-<h1>Boas práticas no trabalho com git</h1>
+<h3>Boas práticas no trabalho com git</h3>
 
 <p>Para execução dos comandos deste guia, você deverá ter uma ssh-key com
 acesso ao repositório no qual está trabalhando.</p>

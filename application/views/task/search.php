@@ -1,5 +1,11 @@
 <div class="row-fluid">
-	<h3>Tarefas</h3>
+	<h3>Tarefas 
+		<?php if($this->session->userdata('userProject') > 0) {
+			echo 'do projeto ' . $this->session->userdata('userProjectName');
+		} else {
+			echo "de todos os projetos";
+		} ?>
+	</h3>
 </div>
 
 <div class="row-fluid"> <!-- inicio filtro -->

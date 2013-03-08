@@ -1,7 +1,7 @@
 <div class="box">
 
 	<div data-original-title="" class="box-header">
-		<h2></i><span class="break"></span>Tarefa <?=$task->taskID?></h2>
+		<h3></i><span class="break"></span>Tarefa <?=$task->taskID?></h3>
 	</div>
 
 	<div class="box-content">
