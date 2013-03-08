@@ -45,7 +45,7 @@
 				name = userTask.taskResponsableName;
 				status = userTask.taskStatus;
 				if ( ! taskUsers[user] ) {
-					taskUsers[user] = [];
+					taskUsers[user] = {};
 					taskUsers[user]['totalTasks'] = 1;
 					taskUsers[user]['name'] = name;
 					taskUsers[user]['statuses'] = jQuery.extend(true, {}, taskStatuses);

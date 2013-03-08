@@ -109,7 +109,7 @@
 </div>
 
 		<style type="text/css">
-			body .modal {
+			body #tzadiCalc {
 			    /* new custom width */
 			    width: 400px;
 			    /* must be half of the width, minus scrollbar on the left (30px) */
