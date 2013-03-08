@@ -94,16 +94,16 @@
           </ul>
           <ul class="nav">
 
-            <li <?php if($this->router->class == 'git'){ echo 'class="active"';}?> >
-              <a href="<?=base_url()?>git" rel="tooltip" title="Git"><i class="icon-github icon-large icon-white"></i></a>
-            </li>
-
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Dashboard"><i class="icon-signal icon-large icon-white"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>dashboard" rel="tooltip" title="Estatísticas">Estatísticas</a></li>
                 <li><a href="<?=base_url()?>dashboard/apacheInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
               </ul>
+            </li>
+            
+            <li <?php if($this->router->class == 'git'){ echo 'class="active"';}?> >
+              <a href="<?=base_url()?>git" rel="tooltip" title="Git"><i class="icon-github icon-large icon-white"></i></a>
             </li>
 
             <li class="dropdown">

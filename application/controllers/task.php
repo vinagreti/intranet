@@ -7,12 +7,10 @@ class Task extends CI_Controller {
 		$this->load->model("task/task_model");
 		$data->filters = $this->task_model->getAllFilters($this->session->userdata('userID'));
 		$content = $this->load->view('task/search', $data, true);
-
 		$data = array(
 			'page_title' => 'Tarefas',
 			'content' => $content
 			);
-
 		$this->parser->parse('template', $data);
 	}
 
@@ -20,33 +18,6 @@ class Task extends CI_Controller {
 		$this->load->model("task/task_model");
 		$searchPatterns = $this->task_model->getAllFilters($this->session->userdata('userID'));
 		echo json_encode($searchPatterns);
-	}
-
-	public function listTask()
-	{	
-		$this->load->model("task/task_model");
-
-		// Busca todos os filtros do usuário e crias as variáveis js para serem utilizados pelo usuario
-		$userID = $this->session->userdata('userID');
-		
-		$data->taskFilters = $this->task_model->getAllFilters($userID);
-			foreach ($data->taskFilters as $filter => $value) {
-				$searchPattern = unserialize($data->taskFilters[$filter]->searchPattern);
-				echo '<script>var searchPattern'.$data->taskFilters[$filter]->filterID.' = '.json_encode($searchPattern).';</script>';
-			}
-
-		// Busca o filtro default do usuário
-		$filter = $this->task_model->getFilterDefault($userID);
-
-		// Se o usuario tiver filtro default, Insere o filtro na variavel
-		// filter->searchPattern, que será lida na view e transformada em uma var javascript
-		if($filter){
-			$searchPatternArray = unserialize($filter->searchPattern);
-			$data->searchPattern = '<script>var searchPattern = '.json_encode($searchPatternArray).';</script>';
-		} else {
-			$data->searchPattern = '<script>var searchPattern = {};</script>';
-		}
-		$this->loadViewWithTemplate('task/list', $data);
 	}
 
 	public function filter()
