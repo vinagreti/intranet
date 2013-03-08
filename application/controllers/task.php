@@ -13,7 +13,7 @@ class Task extends CI_Controller {
 			'content' => $content
 			);
 
-		$this->parser->parse('common/template', $data);
+		$this->parser->parse('template', $data);
 	}
 
 	public function loadFilters() {

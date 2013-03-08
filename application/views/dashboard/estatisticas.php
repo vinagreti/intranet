@@ -1,11 +1,10 @@
-<div class="span10">
-	<div class="row-fluid">
-		<h2>Bem vindo ao dashboard!</h2>
-	</div>
-	<div class="row-fluid">
-		<div id="chart_div" style="height: 300px;"></div>
-	</div>
+<div class="row-fluid">
+	<h2>Estatísticas do projeto tal</h2>
 </div>
+<div class="row-fluid">
+	<div id="chart_div" style="height: 300px;"></div>
+</div>
+
 
 <script type="text/javascript">
 

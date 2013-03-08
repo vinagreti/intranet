@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Git extends MY_Controller {
+class Git extends CI_Controller {
 
 	public function index()
 	{
@@ -45,7 +45,14 @@ public function listRepositories()
 
 	$data->repos = $formated_output;
 
-	$this->loadViewWithTemplate('git/repos', $data, false);
+	$content = $this->load->view('git/repos', $data, true);
+
+	$data = array(
+		'page_title' => 'Tarefas',
+		'content' => $content
+		);
+
+	$this->parser->parse('template', $data);
 
 }
 /*
@@ -147,8 +154,14 @@ public function log($repo){
 
 	$data->history = $history;
 
+	$content = $this->load->view('git/log', $data, true);
 
-	$this->loadViewWithTemplate('git/log', $data, false);
+	$data = array(
+		'page_title' => 'Tarefas',
+		'content' => $content
+		);
+
+	$this->parser->parse('template', $data);
 }
 /*
 |--------------------------------------------------------------------------

@@ -7,12 +7,10 @@
 		<form>
 			<fieldset>
 				<div class="input-prepend">
-					<div class="btn-group">
-						<button class="openSearchForm btn">
-							<i class="icon-search"></i>
-						</button>
-					</div>
-					<select id="selectFilters" class="span11">
+					<button class="openSearchForm btn">
+						<i class="icon-search"></i>
+					</button>
+					<select id="selectFilters">
 						<option></option>
 						<?php foreach($filters as $filter) { ?>
 						<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
@@ -39,18 +37,18 @@
 </div><!-- fim do indicador de total -->
 
 <div class="row-fluid"> <!-- inicio da tabela -->
-	<table class="table table-hover table-condensed">
+	<table class="table table-hover table-condensed tablesorter">
 		<thead>
 			<tr>
-				<th><small>Nº </small></th>
-				<th><small>Ação</small></th>
-				<th><small>Título</small></th>
-				<th><small>Responsável</small></th>
-				<th><small>Tipo</small></th>
-				<th><abbr title="Tarefa Pai"><small>TP</small></abbr></th>
-				<th><small>Projeto</small></th>
-				<th><small>Status</small></th>
-				<th><small>Vencimento</small></th>
+				<th class="header">Nº <i class="icon-sort"></i></th>
+				<th { sorter: false} >Ação</i></th>
+				<th class="header">Título <i class="icon-sort"></i></th>
+				<th class="header">Responsável <i class="icon-sort"></i></th>
+				<th class="header">Tipo <i class="icon-sort"></i></th>
+				<th class="header"><abbr title="Tarefa Pai">TP <i class="icon-sort"></abbr></th>
+				<th class="header">Projeto <i class="icon-sort"></i></th>
+				<th class="header">Status <i class="icon-sort"></i></th>
+				<th class="header">Vencimento <i class="icon-sort"></i></th>
 			</tr>
 		</thead>
 		<tbody class="listBody"></tbody>

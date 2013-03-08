@@ -11,35 +11,38 @@
   <!-- Le styles -->
   <link href="<?=base_url()?>assets/bootstrap/css/bootstrap.css" rel="stylesheet">
   <style type="text/css">
-  body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-  }
-  .sidebar-nav {
-    padding: 9px 0;
-  }
-  @media (max-width: 980px) {
-    /* Enable use of floated navbar text */
-    .navbar-text.pull-right {
-      float: none;
-      padding-left: 5px;
-      padding-right: 5px;
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
     }
-  }
-  .loading
-  {
-    display:none;
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba( 255, 255, 255, .8 ) 
-      url("<?=base_url()?>assets/img/loading.gif")
-      50% 50% 
-      no-repeat;
-  }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+    @media (max-width: 980px) {
+      /* Enable use of floated navbar text */
+      .navbar-text.pull-right {
+        float: none;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+    .loading
+    {
+      display:none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba( 255, 255, 255, .8 ) 
+        url("<?=base_url()?>assets/img/loading.gif")
+        50% 50% 
+        no-repeat;
+    }
+    th.header { 
+        cursor: pointer; 
+    }
   </style>
   <!-- Loading the JQuery -->
   <script src="<?=base_url()?>assets/JQuery/jquery.js"></script>
@@ -99,7 +102,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Dashboard"><i class="icon-signal icon-large icon-white"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>dashboard" rel="tooltip" title="Estatísticas">Estatísticas</a></li>
-                <li><a href="<?=base_url()?>dashboard/serverInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
+                <li><a href="<?=base_url()?>dashboard/apacheInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
               </ul>
             </li>
 
@@ -130,7 +133,15 @@
         </div><!-- container-fluid -->
       </div><!-- navbar-inner -->
     </div><!-- navbar -->
+
+
+
     <div class="container">
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="globalAlert"></div>
+        </div>
+      </div>
       {content}
       <hr>
       <footer>
@@ -142,7 +153,6 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<?=base_url()?>assets/js/global.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-transition.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-alert.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-modal.js"></script>
@@ -159,7 +169,14 @@
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-daterangepicker-date.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-datepicker.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-clockface.js"></script>
+    <script type="text/javascript" src="<?=base_url()?>assets/jQuery/jquery.tablesorter.min.js"></script> 
+
+    <!-- Cusom JS -->
+    <script src="<?=base_url()?>assets/js/global.js"></script>
     <script src="<?=base_url()?>assets/js/common/topMenu.js"></script>
+
+
+    <!-- Dialogs -->
     <div class="modal hide fade" id="tzadiDialogs"></div>
     <div class="modal hide fade" id="tzadiCalc" tabindex="-1"></div>
     <div class="loading"></div>

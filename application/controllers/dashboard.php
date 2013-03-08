@@ -17,24 +17,20 @@ class Dashboard extends CI_Controller {
 			'content' => $content
 			);
 
-		$this->parser->parse('common/template', $data);
+		$this->parser->parse('template', $data);
 	}
 
 	public function apacheInfo()
 	{
 		$data->serverInfo = $_SERVER;
-		$this->loadViewWithTemplate('dashboard/serverInfo', $data, false);
-
-		$this->load->model("task/task_model");
-		$data->filters = $this->task_model->getAllFilters($this->session->userdata('userID'));
-		$content = $this->load->view('task/search', $data, true);
+		$content = $this->load->view('dashboard/serverInfo', $data, true);
 
 		$data = array(
 			'page_title' => 'Tarefas',
 			'content' => $content
 			);
 
-		$this->parser->parse('common/template', $data);
+		$this->parser->parse('template', $data);
 	}
 }
 

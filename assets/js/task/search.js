@@ -55,7 +55,6 @@ var getTasks = function ( e ){
 	else if ( typeof e.filter == "object") filter['searchPattern'] = e.filter;
 	
 	$.post(base_url+"task/search", filter, function( e ) {
-		console.log(e);
 		if( e ) {
 			$(".total").text( e.total );
 			$.each( e.tasks , function(index, task) {
@@ -63,6 +62,7 @@ var getTasks = function ( e ){
 			});
 		}
 		reCountRows();
+		reSortTable();
 		$('.loading').hide();
 	}, "json");
 }
@@ -79,14 +79,20 @@ var reCountRows = function () {
 
 var firstLoad = function () {
 	data = { numRows : 10 }
-	getTasks(data); // função que popula o select com os filtros padrão do usuário
+	getTasks(data); // função que popula a tabela de tarefas
+}
+
+var reSortTable = function () {
+  var resort = true;
+  $("table").trigger("update", [resort]);
 }
 
 $(document).ready(function(){
 
-console.log($(".actionSelect").clone().html());
 	firstLoad();
-	
+
+	$("table").tablesorter(); 
+
 	$("#showMore").live("click", function(){
 		data = { numRows : 10 }
 		getTasks(data);
@@ -169,7 +175,7 @@ console.log($(".actionSelect").clone().html());
 				  type: "POST",
 				  url: base_url + "task/saveFilter/",
 				  data: {
-				  	form : true,
+				  	form : true
 				  } 
 				}).done(function( response ) {
 					$('#tzadiDialogs').empty();
