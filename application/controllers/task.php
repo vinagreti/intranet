@@ -124,7 +124,13 @@ class Task extends CI_Controller {
 		$data->statuses = $this->task_model->getAllStatus();
 		$data->kinds = $this->task_model->getAllKind();
 		$data->taskComments = $this->task_model->getAllCommentByTask($taskID);	$this->load->model('user/user_model');
-		$data->users = $this->user_model->getAll();	$this->loadViewWithTemplate('task/view', $data);
+		$data->users = $this->user_model->getAll();
+		$content = $this->load->view('task/view', $data, true);
+		$data = array(
+			'page_title' => 'Tarefas',
+			'content' => $content
+			);
+		$this->parser->parse('template', $data);
 	}
 
 	public function update($taskID)
@@ -305,7 +311,12 @@ class Task extends CI_Controller {
 		$this->load->model('task/task_model');
 		$data->userLog = $this->task_model->userActivities($activityUser);
 		$data->activityUser = $activityUser;
-		$this->loadViewWithTemplate("task/userActivities", $data);
+		$content = $this->load->view('task/userActivities', $data, true);
+		$data = array(
+			'page_title' => 'Tarefas',
+			'content' => $content
+			);
+		$this->parser->parse('template', $data);
 	}
 }
 

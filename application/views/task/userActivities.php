@@ -1,43 +1,42 @@
-<div class="span10">
-	<div class="row-fluid">
-		<h2><?=$this->session->userdata('userName')?></h2>
-	</div>
-	<div class="row-fluid">
-		<div id="chart_div" style="height: 300px;"></div>
-	</div>
-	<div class="row-fluid">
-	</br>
-		<h2>Histórico de atividades</h2>
-	</div>
-	<div class="row-fluid">
-		<table class="table table-hover table-condensed table-striped">
-			<thead>
-				<tr>
-					<th><small>activityID </small></th>
-					<th><small>activityStart</small></th>
-					<th><small>activityEnd</small></th>
-					<th><small>activityComment</small></th>
-					<th><small>activityTask</small></th>
-					<th><abbr title="Tarefa Pai"><small>activityDate</small></abbr></th>
-					<th><small>activityUser</small></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach($userLog as $activity){ ?>
-				<tr>
-					<td class="span1"><small><?=$activity->activityID?></small></td>
-					<td class="span1"><small><?=date("d-m-y H:i" , strtotime($activity->activityStart))?></small></td>
-					<td class="span1"><small><?=date("d-m-y H:i" , strtotime($activity->activityEnd))?></small></td>
-					<td class="span5"><small><?=$activity->activityComment?></small></td>
-					<td class="span1"><a href="<?=base_url()?>task/view/<?=$activity->activityTask?>" target="_blank"><small><?=$activity->activityTask?></small></a></td>
-					<td class="span1"><small><?=date("d-m-y H:i" , strtotime($activity->activityDate))?></small></td>
-					<td class="span1"><small><?=$activity->activityUser?></small></td>
-				</tr>
-				<?php } ?>
-			</tbody>
-		</table>
-	</div>
+<div class="row-fluid">
+	<h2><?=$this->session->userdata('userName')?></h2>
 </div>
+<div class="row-fluid">
+	<div id="chart_div" style="height: 300px;"></div>
+</div>
+<div class="row-fluid">
+</br>
+	<h2>Histórico de atividades</h2>
+</div>
+<div class="row-fluid">
+	<table class="table table-hover table-condensed table-striped">
+		<thead>
+			<tr>
+				<th><small>activityID </small></th>
+				<th><small>activityStart</small></th>
+				<th><small>activityEnd</small></th>
+				<th><small>activityComment</small></th>
+				<th><small>activityTask</small></th>
+				<th><abbr title="Tarefa Pai"><small>activityDate</small></abbr></th>
+				<th><small>activityUser</small></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($userLog as $activity){ ?>
+			<tr>
+				<td class="span1"><small><?=$activity->activityID?></small></td>
+				<td class="span1"><small><?=date("d-m-y H:i" , strtotime($activity->activityStart))?></small></td>
+				<td class="span1"><small><?=date("d-m-y H:i" , strtotime($activity->activityEnd))?></small></td>
+				<td class="span5"><small><?=$activity->activityComment?></small></td>
+				<td class="span1"><a href="<?=base_url()?>task/view/<?=$activity->activityTask?>" target="_blank"><small><?=$activity->activityTask?></small></a></td>
+				<td class="span1"><small><?=date("d-m-y H:i" , strtotime($activity->activityDate))?></small></td>
+				<td class="span1"><small><?=$activity->activityUser?></small></td>
+			</tr>
+			<?php } ?>
+		</tbody>
+	</table>
+</div>
+
 
 <script type="text/javascript">
 

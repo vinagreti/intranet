@@ -4,16 +4,16 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		$this->estatisticas();
+		$this->dash();
 	}
 
-	public function estatisticas()
+	public function dash()
 	{
 		$data->serverInfo = $_SERVER;
 		$content = $this->load->view('dashboard/estatisticas', $data, true);
 
 		$data = array(
-			'page_title' => 'Tarefas',
+			'page_title' => 'Dashboard',
 			'content' => $content
 			);
 
@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 		$content = $this->load->view('dashboard/serverInfo', $data, true);
 
 		$data = array(
-			'page_title' => 'Tarefas',
+			'page_title' => 'Dash - Apache conf',
 			'content' => $content
 			);
 

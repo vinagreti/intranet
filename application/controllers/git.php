@@ -48,7 +48,7 @@ public function listRepositories()
 	$content = $this->load->view('git/repos', $data, true);
 
 	$data = array(
-		'page_title' => 'Tarefas',
+		'page_title' => 'Git - Repositórios',
 		'content' => $content
 		);
 
@@ -157,7 +157,7 @@ public function log($repo){
 	$content = $this->load->view('git/log', $data, true);
 
 	$data = array(
-		'page_title' => 'Tarefas',
+		'page_title' => "Git - $repo log",
 		'content' => $content
 		);
 
