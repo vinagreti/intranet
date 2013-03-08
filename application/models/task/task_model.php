@@ -72,6 +72,8 @@ $this->db->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left');
 $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
 $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
 $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
+$userProjectID = $this->session->userdata('userProject');
+if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
 if($whereParameters) $this->db->where($whereParameters);
 if($statuses) $this->db->where_in("taskStatusID", $statuses);
 $query = $this->db->get('tzadiTask t');
@@ -272,12 +274,13 @@ return $result;
 
 public function userActivities($activityUser)
 {
-    $userProjectID = $this->session->userdata('userProject');
-    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
+$userProjectID = $this->session->userdata('userProject');
+if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
 
+$this->db->join('tzadiTask t', 't.taskID = ta.activityTask', 'left');
 $this->db->where('activityUser', $activityUser);
 $this->db->order_by("activityEnd", "desc");
-$query = $this->db->get('tzadiTaskActivity');
+$query = $this->db->get('tzadiTaskActivity ta');
 $result = $query->result();
 return $result;
 }
