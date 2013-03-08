@@ -101,7 +101,7 @@
                 <li><a href="<?=base_url()?>dashboard/apacheInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
               </ul>
             </li>
-            
+
             <li <?php if($this->router->class == 'git'){ echo 'class="active"';}?> >
               <a href="<?=base_url()?>git" rel="tooltip" title="Git"><i class="icon-github icon-large icon-white"></i></a>
             </li>
@@ -169,7 +169,7 @@
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-daterangepicker-date.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-datepicker.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-clockface.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>assets/jQuery/jquery.tablesorter.min.js"></script> 
+    <script type="text/javascript" src="<?=base_url()?>assets/JQuery/jquery.tablesorter.min.js"></script> 
 
     <!-- Cusom JS -->
     <script src="<?=base_url()?>assets/js/global.js"></script>
