@@ -79,7 +79,26 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="brand" href="<?=base_url()?>">Intranet</a>
+
+        <span class="brand dropdown">
+          Projeto:
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Selecione outro projeto">
+            <?php
+              if($this->session->userdata('userProject') > 0) {
+                echo $this->session->userdata('userProjectName');
+              } else {
+                echo "Todos";
+              }
+            ?>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" id='0' class="projectSelect">Todos</a></li>
+            <?php foreach($this->session->userdata('userProjects') as $project) { ?>
+              <li><a href="#" id='<?=$project->projectID?>' class="projectSelect"><?=$project->projectTitle?></a></li>
+            <?php } ?>
+          </ul>
+        </span>
+
         <div class="nav-collapse collapse">
           <ul class="nav pull-right">  
             <li class="dropdown pull-right">
@@ -88,7 +107,7 @@
                 <li><a tabindex="-1"  href="#profile">Perfil</a></li>
                 <li><a tabindex="-1"  href="#configuracoes">Configurações</a></li>
                 <li class="divider"></li>
-                <li><a tabindex="-1"  href="<?=base_url()?>logout">Logout</a></li>
+                <li><a tabindex="-1"  href="<?=base_url()?>user/logout">Logout</a></li>
               </ul>
             </li>
           </ul>

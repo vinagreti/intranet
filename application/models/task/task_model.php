@@ -32,6 +32,10 @@ function getAll( $firstRow = 0, $numRows = 10 ) {
     $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
     $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
     $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
+
+    $userProjectID = $this->session->userdata('userProject');
+    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
+
     $query = $this->db->get('tzadiTask t');
 
     return $query->result();
@@ -39,6 +43,8 @@ function getAll( $firstRow = 0, $numRows = 10 ) {
 }
 
 function getAllCount() {
+    $userProjectID = $this->session->userdata('userProject');
+    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
     return $this->db->count_all_results('tzadiTask');
 }
 
@@ -244,6 +250,10 @@ return $result[0];
 
 public function getUsersLog($taskUserIDs = null)
 {
+
+    $userProjectID = $this->session->userdata('userProject');
+    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
+
 $this->db->select(array(
 'taskID',
 'taskStatus',
@@ -262,10 +272,20 @@ return $result;
 
 public function userActivities($activityUser)
 {
+    $userProjectID = $this->session->userdata('userProject');
+    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
+
 $this->db->where('activityUser', $activityUser);
 $this->db->order_by("activityEnd", "desc");
 $query = $this->db->get('tzadiTaskActivity');
 $result = $query->result();
 return $result;
+}
+
+function getProjectName($project) {
+    $this->db->select("projectTitle");
+    $this->db->where('projectID', $project);
+    $resultado = $this->db->get('tzadiTaskProject')->result();
+    return $resultado[0];
 }
 }

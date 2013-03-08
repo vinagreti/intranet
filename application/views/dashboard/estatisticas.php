@@ -1,5 +1,11 @@
 <div class="row-fluid">
-	<h2>Estatísticas do projeto tal</h2>
+	<h2>Estatísticas 
+		<?php if($this->session->userdata('userProject') > 0) {
+			echo 'do projeto ' . $this->session->userdata('userProjectName');
+		} else {
+			echo "de todos os projetos";
+		} ?>
+	</h2>
 </div>
 <div class="row-fluid">
 	<div id="chart_div" style="height: 300px;"></div>

@@ -1,6 +1,15 @@
 $(document).ready(function(){
-	$('.navBarTaskMenu').dropdown();
-	$('.navBarConfigurationMenu').dropdown();
+
+// botão para alterar o projeto em que está trabalhando
+	$(".projectSelect").live('click', function( e ){
+		project = $(this).attr('id');
+		$.post(base_url + "user/ChangeProject", {
+			project : project
+		},function( e ) {
+			console.log( e );
+			document.location.reload()
+		});
+	});
 
 // The topMenu add task button functions
 	$(".newTaskButton").live('click', function( e ){
@@ -42,21 +51,7 @@ $(document).ready(function(){
 		}		
 	})
 
-	$(".taskSource").live('change', function( e ){
-		
-		$(".linkSelect").show();
-
-		if ( $("#taskSource1").is(':checked') ){
-			$(".projectSelect").show();
-			$(".taskSelect").hide();
-		} 
-		if ( $("#taskSource2").is(':checked') ) {
-			$(".projectSelect").hide();
-			$(".taskSelect").show();			
-		}
-	});
-
-// The topMenu add demand button functions
+// The topMenu add project button functions
 	$(".newProjectButton").live('click', function( e ){
 
 		e.preventDefault();
@@ -72,6 +67,7 @@ $(document).ready(function(){
 		$('#tzadiDialogs').modal('show');
 	});
 
+// save new project button - should be in te new project js file
 	$("#saveNewProject").live('click', function( e ){
 		newProjectTitle = $('#newProjectTitle').val();
 		$.post(base_url + "task/createProject", {
