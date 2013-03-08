@@ -6,7 +6,6 @@ $(document).ready(function(){
 		$.post(base_url + "user/ChangeProject", {
 			project : project
 		},function( e ) {
-			console.log( e );
 			document.location.reload()
 		});
 	});
