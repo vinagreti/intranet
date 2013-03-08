@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Gp extends MY_Controller {
+class Gp extends CI_Controller {
 
 	public function index()
 	{
@@ -9,8 +9,15 @@ class Gp extends MY_Controller {
 
 	public function git()
 	{
-		$data = '';
-		$this->loadViewWithTemplate('gp/git', $data, false);
+    $data = '';
+    $content = $this->load->view('gp/git', $data, true);
+
+    $data = array(
+      'page_title' => 'Boas práticas - GIT',
+      'content' => $content
+      );
+
+    $this->parser->parse('common/template', $data);
 	}
 
 }

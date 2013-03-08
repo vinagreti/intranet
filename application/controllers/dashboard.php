@@ -1,35 +1,40 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-		$data->serverInfo = $_SERVER;
-		$this->loadViewWithTemplate('dashboard/index', $data, false);
+		$this->estatisticas();
 	}
 
-	public function serverInfo()
+	public function estatisticas()
+	{
+		$data->serverInfo = $_SERVER;
+		$content = $this->load->view('dashboard/estatisticas', $data, true);
+
+		$data = array(
+			'page_title' => 'Tarefas',
+			'content' => $content
+			);
+
+		$this->parser->parse('common/template', $data);
+	}
+
+	public function apacheInfo()
 	{
 		$data->serverInfo = $_SERVER;
 		$this->loadViewWithTemplate('dashboard/serverInfo', $data, false);
-	}
 
-	public function phpInfo()
-	{
-		$data->serverInfo = $_SERVER;
-		$this->loadViewWithTemplate('dashboard/serverInfo', $data, false);
-	}
+		$this->load->model("task/task_model");
+		$data->filters = $this->task_model->getAllFilters($this->session->userdata('userID'));
+		$content = $this->load->view('task/search', $data, true);
 
-	public function gitInfo()
-	{
-		$data->serverInfo = $_SERVER;
-		$this->loadViewWithTemplate('dashboard/serverInfo', $data, false);
-	}
+		$data = array(
+			'page_title' => 'Tarefas',
+			'content' => $content
+			);
 
-	public function mysqlInfo()
-	{
-		$data->serverInfo = $_SERVER;
-		$this->loadViewWithTemplate('dashboard/serverInfo', $data, false);
+		$this->parser->parse('common/template', $data);
 	}
 }
 

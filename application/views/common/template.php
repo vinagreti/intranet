@@ -68,7 +68,7 @@
   <link rel="shortcut icon" href="<?=base_url()?>assets/bootstrap/ico/favicon.png">
 </head>
 <body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar <?php if (ENVIRONMENT == "production") echo "navbar-inverse"; ?> navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -80,7 +80,7 @@
         <div class="nav-collapse collapse">
           <ul class="nav pull-right">  
             <li class="dropdown pull-right">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-large icon-white"></i> <?=$this->session->userdata('userName')?></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-large icon-white"></i> <?=$this->session->userdata('userName')?></a>
               <ul class="dropdown-menu">
                 <li><a tabindex="-1"  href="#profile">Perfil</a></li>
                 <li><a tabindex="-1"  href="#configuracoes">Configurações</a></li>
@@ -96,7 +96,7 @@
             </li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Dashboard"><i class="icon-signal icon-large icon-white"></i></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Dashboard"><i class="icon-signal icon-large icon-white"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>dashboard" rel="tooltip" title="Estatísticas">Estatísticas</a></li>
                 <li><a href="<?=base_url()?>dashboard/serverInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
@@ -104,20 +104,20 @@
             </li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Boas práticas"><i class="icon-lightbulb icon-large icon-white"></i></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Boas práticas"><i class="icon-lightbulb icon-large icon-white"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>gp" rel="tooltip" title="Boas práticas com git"><i class="icon-file"></i> Git</a></li>
               </ul>
             </li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ferramentas"><i class="icon-wrench icon-large icon-white"></i></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ferramentas"><i class="icon-wrench icon-large icon-white"></i></a>
               <ul class="dropdown-menu">
                 <li><a tabindex="-1" href="#" class="calcButton">Calculadora</a></li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Tarefas"><i class="icon-time icon-large icon-white"></i></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Tarefas"><i class="icon-ok icon-large icon-white"></i></a>
               <ul class="dropdown-menu">
                 <li><a tabindex="-1" href="#" class="newTaskButton">Nova Tarefa</a></li>
                 <li><a tabindex="-1" href="#" class="newProjectButton">Novo Projeto</a></li>
@@ -134,7 +134,8 @@
       {content}
       <hr>
       <footer>
-        <p>{footer}</p>
+        <p class="pull-left">&copy; <a target="_blank" href="http://tzadi.com">Tzadi.com</a> 2013</p>
+        <p class="pull-right">Powered by: <a target="_blank" href="http://tzadi.com">Tzadi</a></p>
       </footer>
     </div><!--/.fluid-container-->
 
@@ -158,5 +159,9 @@
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-daterangepicker-date.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-datepicker.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-clockface.js"></script>
+    <script src="<?=base_url()?>assets/js/common/topMenu.js"></script>
+    <div class="modal hide fade" id="tzadiDialogs"></div>
+    <div class="modal hide fade" id="tzadiCalc" tabindex="-1"></div>
+    <div class="loading"></div>
 </body>
 </html>

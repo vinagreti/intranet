@@ -13,15 +13,34 @@ var filterClean = function (){
 }
 
 var insertRow = function (task) {
-	row = '<td class="center"><small>'+task.taskID+'</small></td>';
-	row += '<td>'+ $(".actionSelect").clone().html() +'</td>';
-	row += '<td class="center"><small><a href="task/view/taskID" target="_blank" rel="tooltip" title="'+task.taskTitle+'">'+task.taskTitle+'</a></small></td>';
-	row += '<td class="center"><small>'+task.taskResponsableName.split(" ")[0]+'</small></td>';
-	row += '<td class="center"><small>'+task.taskKindName+'</small></td>';
-	row += '<td class="center"><small><a href="task/view/taskFather" target="_blank" rel="tooltip" title="link?"><span class="label"><small>'+task.taskFather+'</small></span></a></small></td>';
-	row += '<td class="center"><small><a href="task/project/taskProject" target="_blank">'+task.taskProjectTitle+'</a></small></td>';
-	row += '<td class="center "><span class="label taskLabel"><small>'+task.taskStatusName+'</small></span></td>';
-	row += '<td class="center"><small>'+task.deadLineDate+'</small></td>';
+
+	if (task.taskTitle.length > 100) taskTitle = task.taskTitle.substring(0,100)+"...";
+	else taskTitle = task.taskTitle;
+
+			if(task.taskLink == 1) {
+				label = 'label-important'; link = "Vinculada à tarefa "+task.taskFather;
+			} else { 
+				label = 'label-info'; link = "Referenciada à tarefa "+task.taskFather; 
+			}
+			
+			if(task.taskFather == 0) { 
+				if(task.taskLink == 1) { 
+					link = "Vinculo direto com o projeto "+task.taskProjectTitle; 
+				} else { 
+					link = "Referência direta ao projeto "+task.taskProjectTitle; 
+				}
+			}
+
+
+	row = '<td class="center" rel="tooltip" title="Número da tarefa"><small>'+task.taskID+'</small></td>';
+	row += '<td rel="tooltip" title="Opções de interação com a tarefa">'+ $(".actionSelect").clone().html() +'</td>';
+	row += '<td class="center"><small><a href="task/view/'+task.taskID+'" target="_blank" rel="tooltip" title="'+task.taskTitle+'">'+ taskTitle +'</a></small></td>';
+	row += '<td class="center" rel="tooltip" title="Responsável pela tarefa"><small>'+task.taskResponsableName.split(" ")[0]+'</small></td>';
+	row += '<td class="center" rel="tooltip" title="Tipo de tarefa"><small>'+task.taskKindName+'</small></td>';
+	row += '<td class="center"><small><a href="task/view/'+task.taskFather+'" target="_blank" rel="tooltip" title="'+link+'"><span class="label '+label+'"><small>'+task.taskFather+'</small></span></a></small></td>';
+	row += '<td class="center" rel="tooltip" title="Projeto"><small><a href="task/project/'+task.taskProject+'" target="_blank">'+task.taskProjectTitle+'</a></small></td>';
+	row += '<td class="center" rel="tooltip" title="Status da tarefa"><span class="label ' + task.taskLabel + '"><small>'+task.taskStatusName+'</small></span></td>';
+	row += '<td class="center" rel="tooltip" title="Vencimento"><small>'+task.deadLineDate+'</small></td>';
 	listRow = '<tr>'+row+'</tr>';
 	$(".listBody").append(listRow);	
 }

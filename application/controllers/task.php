@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Task extends MY_Controller {
+class Task extends CI_Controller {
 
 	public function index()
 	{
@@ -9,9 +9,8 @@ class Task extends MY_Controller {
 		$content = $this->load->view('task/search', $data, true);
 
 		$data = array(
-			'page_title' => 'task - lista',
-			'content' => $content,
-			'footer' => 'Tzadi'
+			'page_title' => 'Tarefas',
+			'content' => $content
 			);
 
 		$this->parser->parse('common/template', $data);
@@ -181,7 +180,7 @@ class Task extends MY_Controller {
 				$data->projectTitle = '';
 				$data->date = date('d-m-Y', time());
 				$data->time = date('H:i', time());
-				echo $this->load -> view('task/newTask', $data);		
+				echo $this->load->view('task/newTask', $data);		
 			}
 			else {
 
@@ -189,7 +188,8 @@ class Task extends MY_Controller {
 
 				$data = $this->input->post();
 				$data['taskCreatorUser'] = $this->session->userdata('userID');
-				$data['deadLineDate'] = $this->myDatePhpMysql($data['deadLineDate']);
+				$date = date_create($data['deadLineDate']);
+				$data['deadLineDate'] = date_format($date, 'Y-m-d H:i:s');
 				$this->load->model('task/task_model');
 				$dbResponse = $this->task_model->createTask($data);
 
@@ -200,7 +200,15 @@ class Task extends MY_Controller {
 				$message = '<p>Uma nova tarefa foi criada por<p>';
 				foreach($this->input->post() as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
 
-				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+				$this->load->library('email', $config);
+				$this->email->set_newline("\r\n");
+				$this->email->from('task@intranet.tzadi.com');
+				$this->email->to($to);
+				$this->email->subject(utf8_decode($subject));
+				$message = '<html><head><meta charset="utf-8"></head><body>'.$message.'</body></html>';
+				$this->email->message(utf8_decode($message));
+
+				if(!$this->email->send()) echo show_error($this->email->print_debugger());
 
 				echo $dbResponse;
 			}
