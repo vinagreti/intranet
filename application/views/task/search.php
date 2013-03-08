@@ -1,71 +1,72 @@
-<div class="span10">
+<div class="row-fluid">
+	<div class="span12">
 
-	<div class="row-fluid">
-		<h3>Tarefas</h3>
-	</div>
-	
-	<div class="row-fluid">
+		<div class="row-fluid">
+			<h3>Tarefas</h3>
+		</div>
+		
+		<div class="row-fluid"> <!-- inicio filtro -->
+			<div class="span4">
+				<form>
+					<fieldset>
+						<div class="input-prepend">
+							<div class="btn-group">
+								<button class="openSearchForm btn">
+									<i class="icon-search"></i>
+								</button>
+							</div>
 
-		<div class="span4">
-			<form>
-				<fieldset>
-					<div class="input-prepend">
-						<div class="btn-group">
-							<button class="openSearchForm btn">
-								<i class="icon-search"></i>
-							</button>
+							<select id="selectFilters" class="span11">
+								<option></option>
+								<?php foreach($filters as $filter) { ?>
+									<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
+										<?=$filter->filterTitle?>
+									</option>
+								<?php } ?>
+							</select>
 						</div>
-						<select id="selectFilters" class="span11">
-							<option></option>
-							<?php foreach($filters as $filter) { ?>
-								<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
-									<?=$filter->filterTitle?>
-								</option>
-							<?php } ?>
-						</select>
-					</div>
-				</fieldset>
-			</form>
-		</div>
+					</fieldset>
+				</form>
+			</div>
 
-		<div class="span5">
-			<a class="refreshList btn btn-info" href="#" rel="tooltip" title="Atualizar lista"><i class="icon-refresh icon-white"></i></a>
-			<a class='saveCurrentSearch btn btn-success' rel="tooltip" title="Salvar filtro atual"><i class="icon-download-alt icon-white"></i></a>
-			<a class='setSearchAsDefault btn btn-warning' rel="tooltip" title="Tornar filtro padrão"><i class="icon-star icon-white"></i></a>
-			<a class="showAllTasks btn btn-danger" href="#" rel="tooltip" title="Listar tudo"><i class="icon-remove icon-white"></i></a>
-		</div>
+			<div class="span5">
+				<a class="refreshList btn btn-info" href="#" rel="tooltip" title="Atualizar lista"><i class="icon-refresh icon-white"></i></a>
+				<a class='saveCurrentSearch btn btn-success' rel="tooltip" title="Salvar filtro atual"><i class="icon-download-alt icon-white"></i></a>
+				<a class='setSearchAsDefault btn btn-warning' rel="tooltip" title="Tornar filtro padrão"><i class="icon-star icon-white"></i></a>
+				<a class="showAllTasks btn btn-danger" href="#" rel="tooltip" title="Listar tudo"><i class="icon-remove icon-white"></i></a>
+			</div>
+		</div> <!-- fim do filtro -->
+		
+		<div class="row-fluid"> <!-- inicio do total de tarefas retornadas -->
+			<div class="span12">
+				<p class="text-warning">Foram localizadas <b class="total"></b> tarefas</p>
+			</div>
+		</div><!-- fim do total -->
 
-	</div>
-	
-	<div class="row-fluid">
-			<div>Foram localizadas <b class="total"></b> tarefas</div>
-	</div><!--/row-fluid-->
+		<div class="row-fluid"> <!-- inicio da tabela -->
+			<table class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th><small>Nº </small></th>
+						<th><small>Ação</small></th>
+						<th><small>Título</small></th>
+						<th><small>Responsável</small></th>
+						<th><small>Tipo</small></th>
+						<th><abbr title="Tarefa Pai"><small>TP</small></abbr></th>
+						<th><small>Projeto</small></th>
+						<th><small>Status</small></th>
+						<th><small>Vencimento</small></th>
+					</tr>
+				</thead>
 
-	<div class="row-fluid">
-		<table class="table table-hover table-condensed">
-			<thead>
-				<tr>
-					<th><small>ID </small></th>
-					<th><small>Ação</small></th>
-					<th><small>Título</small></th>
-					<th><small>Responsável</small></th>
-					<th><small>Tipo</small></th>
-					<th><abbr title="Tarefa Pai"><small>TP</small></abbr></th>
-					<th><small>Projeto</small></th>
-					<th><small>Status</small></th>
-					<th><small>Vencimento</small></th>
-				</tr>
-			</thead>
+				<tbody class="listBody">
 
-			<tbody class="listBody">
+				</tbody>
 
-			</tbody>
+			</table>  
+		</div> <!-- fim da tabela -->
 
-		</table>  
-	</div>
-
-	<div class="actionSelect hide">
-		<td class="center">
+		<div class="actionSelect hide">
 			<ul class="nav">
 				<li class="dropdown">
 					<a class="actionButton" data-toggle="dropdown" href="#"><i class="icon-chevron-down"></i></a>
@@ -113,26 +114,29 @@
 					</ul>
 				</li>
 			</ul>
-		</td>
-	</div>
-
-	<div class="row-fluid">
-		<div class="span12 pager">
-			<div>Mostrando <b class="loaded">10</b> de <b class="total"></b> tarefas</div>
 		</div>
-		
-		<div class="span12" id="paginationButtons">	
-			<div class="span6">
-				<a id="showMore" class="btn btn-large btn-block">Mais</a>
-			</div>
-			<div class="span6">
-				<a id="showAll" class="btn btn-large btn-block">Tudo</a>
-			</div>
-		</div>
-	</div><!--/row-fluid-->
 
-</div><!--/span10-->
-
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="row-fluid">
+					<div class="span12">
+						<p class="text-center text-warning">Mostrando <b class="loaded">10</b> de <b class="total"></b> tarefas</p>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span12" id="paginationButtons">	
+						<div class="span6">
+							<a id="showMore" class="btn btn-success btn-large btn-block">Próximas 10</a>
+						</div>
+						<div class="span6">
+							<a id="showAll" class="btn btn-info btn-large btn-block">Todas</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/row-fluid-->
+	</div><!--/span12-->
+</di>
 
 
 <div id="filteDialogr" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="Filtro" aria-hidden="true"></div>

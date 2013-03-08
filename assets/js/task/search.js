@@ -15,7 +15,7 @@ var filterClean = function (){
 var insertRow = function (task) {
 	row = '<td class="center"><small>'+task.taskID+'</small></td>';
 	row += '<td>'+ $(".actionSelect").clone().html() +'</td>';
-	row += '<td class="center"><small><a href="task/view/taskID" target="_blank" rel="tooltip" title="titulo">'+task.taskTitle+'</a></small></td>';
+	row += '<td class="center"><small><a href="task/view/taskID" target="_blank" rel="tooltip" title="'+task.taskTitle+'">'+task.taskTitle+'</a></small></td>';
 	row += '<td class="center"><small>'+task.taskResponsableName.split(" ")[0]+'</small></td>';
 	row += '<td class="center"><small>'+task.taskKindName+'</small></td>';
 	row += '<td class="center"><small><a href="task/view/taskFather" target="_blank" rel="tooltip" title="link?"><span class="label"><small>'+task.taskFather+'</small></span></a></small></td>';
@@ -65,6 +65,7 @@ var firstLoad = function () {
 
 $(document).ready(function(){
 
+console.log($(".actionSelect").clone().html());
 	firstLoad();
 	
 	$("#showMore").live("click", function(){

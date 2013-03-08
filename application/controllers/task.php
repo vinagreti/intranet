@@ -6,7 +6,15 @@ class Task extends MY_Controller {
 	{
 		$this->load->model("task/task_model");
 		$data->filters = $this->task_model->getAllFilters($this->session->userdata('userID'));
-		$this->loadViewWithTemplate('task/search', $data);
+		$content = $this->load->view('task/search', $data, true);
+
+		$data = array(
+			'page_title' => 'task - lista',
+			'content' => $content,
+			'footer' => 'Tzadi'
+			);
+
+		$this->parser->parse('common/template', $data);
 	}
 
 	public function loadFilters() {
