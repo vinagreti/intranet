@@ -40,15 +40,15 @@
 	<table class="table table-hover table-condensed tablesorter">
 		<thead>
 			<tr>
-				<th class="header">Nº <i class="icon-sort"></i></th>
-				<th { sorter: false} >Ação</i></th>
-				<th class="header">Título <i class="icon-sort"></i></th>
-				<th class="header">Responsável <i class="icon-sort"></i></th>
-				<th class="header">Tipo <i class="icon-sort"></i></th>
-				<th class="header"><abbr title="Tarefa Pai">TP <i class="icon-sort"></abbr></th>
-				<th class="header">Projeto <i class="icon-sort"></i></th>
-				<th class="header">Status <i class="icon-sort"></i></th>
-				<th class="header">Vencimento <i class="icon-sort"></i></th>
+				<th class="header {sorter: 'int'}">Nº <i class="icon-sort"></i></th>
+				<th class="{ sorter: false}" >Ação</i></th>
+				<th class="header {sorter: 'text'}">Título <i class="icon-sort"></i></th>
+				<th class="header {sorter: 'text'}">Responsável <i class="icon-sort"></i></th>
+				<th class="header {sorter: 'text'}">Tipo <i class="icon-sort"></i></th>
+				<th class="header {sorter: 'int'}"><abbr title="Tarefa Pai">TP <i class="icon-sort"></abbr></th>
+				<th class="header {sorter: 'text'}">Projeto <i class="icon-sort"></i></th>
+				<th class="header {sorter: 'text'}">Status <i class="icon-sort"></i></th>
+				<th class="header {sorter: 'date'}">Vencimento <i class="icon-sort"></i></th>
 			</tr>
 		</thead>
 		<tbody class="listBody"></tbody>
