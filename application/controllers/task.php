@@ -41,11 +41,11 @@ class Task extends CI_Controller {
 			$data->tasks = $this->task_model->getAll($firstRow, $numRows);
 			$data->total = $this->task_model->getAllCount();
 			echo json_encode($data);
-		} else if ( is_integer( $filter ) ) {
+		} else if ( is_numeric( $filter ) ) {
 			$whereParameters = array();
 			$statuses = array();
 			$this->load->model('task/task_model');
-			$filter = $this->task_model->getFilterByID($post['filterID']);
+			$filter = $this->task_model->getFilterByID($filter);
 			$searchPattern = unserialize($filter->searchPattern);
 			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
 			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];

@@ -18,11 +18,11 @@
 					</button>
 					<select id="selectFilters">
 						<option></option>
-						<?php foreach($filters as $filter) { ?>
-						<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
-						<?=$filter->filterTitle?>
-						</option>
-						<?php } ?>
+							<?php foreach($filters as $filter) { ?>
+								<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
+									<?=$filter->filterTitle?>
+								</option>
+							<?php } ?>
 					</select>
 				</div>
 			</fieldset>

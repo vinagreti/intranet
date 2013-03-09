@@ -117,11 +117,18 @@ $(document).ready(function(){
 		getTasks(filterData);
 	});
 
-	$(".taskListFilterClean").live('click', function( e ){
-		filterClean();
+	$("#selectFilters").live('change', function( e ){
+		filterData['numRows'] = 10 ;
+		filterData['firstRow'] = 0;
+		filterData['filter'] = $("#selectFilters").val();
+		$(".listBody").empty();
+		getTasks(filterData);
 	});
 
 
+	$(".taskListFilterClean").live('click', function( e ){
+		filterClean();
+	});
 
 	$(".taskFilterButton").live('click', function( e ){
 
@@ -207,14 +214,5 @@ $(document).ready(function(){
 		}).done(function( response ) {
 			alert("O filtro atual agora é seu filtro padrão");
 		});
-	});
-
-	$(".filterID").live('change', function( e ){
-		// Select de escolha do filtro
-		// transforma o valor do select selecionado na variavel searchPattern[filterID] 
-		// recarrega a listagem com o novo searchPattern
-		if($(".filterID").val()) searchPattern = window['searchPattern'+$(".filterID").val()];
-		else searchPattern = {};
-		loadList(searchPattern);
 	});
 });
