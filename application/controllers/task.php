@@ -39,11 +39,11 @@ class Task extends CI_Controller {
 		if ( $filter == 'first' ) {
 
 			$this->load->model('task/task_model');
-			if($this->task_model->getFilterDefault($this->session->userdata('userID'))){
+			$filterDefault = $this->task_model->getFilterDefault($this->session->userdata('userID'));
+			if( $filterDefault ){
 				$whereParameters = array();
 				$statuses = array();
-				$filter = $this->task_model->getFilterDefault($this->session->userdata('userID'));
-				$searchPattern = unserialize($filter->searchPattern);
+				$searchPattern = unserialize($filterDefault->searchPattern);
 				if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
 				if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
 				if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
@@ -60,7 +60,11 @@ class Task extends CI_Controller {
 				$data->tasks = $this->task_model->search($whereParameters, $statuses);
 				$data->total = 10;
 				echo json_encode($data);
-			} else { $filter == 'all'; }
+			} else {
+				$data->tasks = $this->task_model->getAll($firstRow, $numRows);
+				$data->total = $this->task_model->getAllCount();
+				echo json_encode($data);
+			} 
 
 		}	else if ($filter == 'all') {
 			$this->load->model('task/task_model');
