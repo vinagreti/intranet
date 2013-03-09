@@ -220,7 +220,7 @@ function saveFilterDeafult($searchPattern) {
 
 $userID = $this->session->userdata('userID');
 
-$this->db->set("default", "false");
+$this->db->set("default", 0);
 $this->db->where("userID", $userID);
 $this->db->update('tzadiTaskFilter');
 
@@ -234,11 +234,11 @@ function filterSetDefault($filter) {
 
 $userID = $this->session->userdata('userID');
 
-$this->db->set("default", "false");
+$this->db->set("default", 0);
 $this->db->where("userID", $userID);
 $this->db->update('tzadiTaskFilter');
 
-$this->db->set("default", "true");
+$this->db->set("default", 1);
 $this->db->where($filter);
 $query = $this->db->update('tzadiTaskFilter');
 

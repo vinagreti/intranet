@@ -1,36 +1,22 @@
-var filterClean = function (){
-	$("#filterTaskID").attr("value", "");
-	$("#filterFatherID").attr("value", "");
-	$("#filterProjectID").attr("value", "");
-	$("#filterResponsableID").attr("value", "");
-	$("#filterLink").attr("checked", false);
-	$("#filterStatus1").attr("checked", false);
-	$("#filterStatus2").attr("checked", false);
-	$("#filterStatus3").attr("checked", false);
-	$("#filterStatus4").attr("checked", false);
-	$("#filterStatus5").attr("checked", false);
-	$("#filterStatus6").attr("checked", false);
-}
-
-var insertRow = function (task) {
+var insertRow = function (task) { // insere linha na tabela
 
 	if (task.taskTitle.length > 100) taskTitle = task.taskTitle.substring(0,100)+"...";
 	else taskTitle = task.taskTitle;
 
-			if(task.taskLink == 1) {
-				label = 'label-important'; link = "Vinculada à tarefa "+task.taskFather;
-			} else { 
-				label = 'label-info'; link = "Referenciada à tarefa "+task.taskFather; 
-			}
-			
-			if(task.taskFather == 0) { 
-				if(task.taskLink == 1) { 
-					link = "Vinculo direto com o projeto "+task.taskProjectTitle; 
-				} else { 
-					link = "Referência direta ao projeto "+task.taskProjectTitle; 
-				}
-			}
+	// Define o label e o tooltip do link de tarefa pai.
+	if(task.taskLink == 1) {
+		label = 'label-important'; link = "Vinculada à tarefa "+task.taskFather;
+	} else { 
+		label = 'label-info'; link = "Referenciada à tarefa "+task.taskFather; 
+	}
 
+	if(task.taskFather == 0) { 
+		if(task.taskLink == 1) { 
+			link = "Vinculo direto com o projeto "+task.taskProjectTitle; 
+		} else { 
+			link = "Referência direta ao projeto "+task.taskProjectTitle; 
+		}
+	}
 
 	row = '<td class="center" rel="tooltip" title="Número da tarefa"><small>'+task.taskID+'</small></td>';
 	row += '<td rel="tooltip" title="Opções de interação com a tarefa">'+ $(".actionSelect").clone().html() +'</td>';
@@ -45,7 +31,7 @@ var insertRow = function (task) {
 	$(".listBody").append(listRow);	
 }
 
-var getTasks = function ( filterData ){
+var getTasks = function ( filterData ){ // solicita dados ao servidor
 
 	$('.loading').show();
 
@@ -62,7 +48,7 @@ var getTasks = function ( filterData ){
 	}, "json");
 }
 
-var reCountRows = function () {
+var reCountRows = function () { // conta quantas tarefas existem na tabela e atualiza os indicadores superior e inferior
 	totalRows = $('.listBody tr').length;
 	$(".loaded").text( totalRows );
 	loaded = $(".loaded").text();
@@ -72,46 +58,46 @@ var reCountRows = function () {
 	return totalRows;
 }
 
-var reSortTable = function () {
+var reSortTable = function () { // reaplica a ordenação na tabela. Usado para adição com ajax
   var resort = true;
   $("table").trigger("update", [resort]);
 }
 
-$(document).ready(function(){
+$(document).ready(function(){ 
 	
 	var filterData = { 
 		'numRows' : 10,
 		'filter' : 'first',
 		'firstRow' : 0
 	};
-	getTasks(filterData);
+	getTasks(filterData); // popula a tabela pela primeira vez.
 
-	$(".refreshList").live('click', function( e ){
+	$(".refreshList").live('click', function( e ){ // atualiza a lista
 		filterData['firstRow'] = 0;
 		filterData['numRows'] = $('.listBody tr').length;
 		$(".listBody").empty();	
 		getTasks(filterData); // função que popula a tabela de tarefas
 	});
 
-	$(".showAllTasks").live('click', function( e ){
+	$(".showAllTasks").live('click', function( e ){ // mostra todas as tarefas do projeto
 		filterData = { 
 			'numRows' : 10,
 			'filter' : 'all',
 			'firstRow' : 0
 		}
-		$(".listBody").empty();
+		$(".listBody").empty(); // remove o conteudo atual da tabela
 		getTasks(filterData); // função que popula a tabela de tarefas
 	});
 
-	$("table").tablesorter(); 
+	$("table").tablesorter(); // faz a tabela ficar ordenável
 
-	$("#showMore").live("click", function(){
+	$("#showMore").live("click", function(){ // mostra as proximas 10 tarefas
 		filterData['numRows'] = 10 ;
 		filterData['firstRow'] = $('.listBody tr').length;
 		getTasks(filterData);
 	});
 
-	$("#showAll").live("click", function(){
+	$("#showAll").live("click", function(){ // mostra todas as ocorrencias de uma busca. Sem paginar de 10 em 10
 		filterData['numRows'] = 18446744073709551615 ;
 		filterData['firstRow'] = $('.listBody tr').length;
 		getTasks(filterData);
@@ -125,56 +111,17 @@ $(document).ready(function(){
 		getTasks(filterData);
 	});
 
-
-	$(".taskListFilterClean").live('click', function( e ){
-		filterClean();
-	});
-
-	$(".taskFilterButton").live('click', function( e ){
-
-		var searchPatternTemp = {};
-
-		if ( $("#filterTaskID").val() )	searchPatternTemp["taskID"] = $("#filterTaskID").val();
-		if ( $("#filterFatherID").val() ) searchPatternTemp["taskFather"] = $("#filterFatherID").val();
-		if ( $("#filterProjectID").val() ) searchPatternTemp["taskProject"] = $("#filterProjectID").val();
-		if ( $("#filterResponsableID").val() ) searchPatternTemp["taskResponsableUser"] = $("#filterResponsableID").val();
-		if ( $("#filterTaskLink:checked").val() )	searchPatternTemp["taskLink"] = $("#filterTaskLink:checked").val();
-		if ( $("#filterStatus1").is(':checked') ) searchPatternTemp["taskStatus1"] = true;
-		if ( $("#filterStatus2").is(':checked') ) searchPatternTemp["taskStatus2"] = true;
-		if ( $("#filterStatus3").is(':checked') ) searchPatternTemp["taskStatus3"] = true;
-		if ( $("#filterStatus4").is(':checked') ) searchPatternTemp["taskStatus4"] = true;
-		if ( $("#filterStatus5").is(':checked') ) searchPatternTemp["taskStatus5"] = true;
-		if ( $("#filterStatus6").is(':checked') ) searchPatternTemp["taskStatus6"] = true;
-
-		if ( Object.keys(searchPatternTemp).length > 0 ) {
-			$(".filterID").val('');
-			searchPattern = searchPatternTemp;
-		}
-
-		$("#filter").modal("hide");
-
-		loadList(searchPattern);
-	});
-
-
-	$(".taskListFilter").live('click', function( e ){
-		if (typeof listFile !== 'function') {
-			listFile = function listFile(){
-				$('#filter').empty();
-
-				$.post(base_url + "task/filter/", {
-					form : true
-				},function( response ) {
-					$('#filter').append( response );
-				});
-
-				$("#filter").modal("show");
-			};
-			
-			listFile();
-		} else {
-			$("#filter").modal("show");
-		}
+	$(".setSearchAsDefault").live('click', function( e ){
+		filterID = $("#selectFilters").val();
+		$.ajax({
+		  type: "POST",
+		  url: base_url + "task/filterSetDefault/",
+		  data: {
+		  	filterID : filterID
+		  } 
+		}).done(function( response ) {
+			alert("O filtro atual agora é seu filtro padrão");
+		});
 	});
 
 	$(".taskListFilterSave").live('click', function( e ){
@@ -201,18 +148,5 @@ $(document).ready(function(){
 				$('#tzadiDialogs').modal('show');
 			}
 		}
-	});
-
-	$(".taskListFilterSetDefault").live('click', function( e ){
-		filterID = $(".filterID").val();
-		$.ajax({
-		  type: "POST",
-		  url: base_url + "task/filterSetDefault/",
-		  data: {
-		  	filterID : filterID
-		  } 
-		}).done(function( response ) {
-			alert("O filtro atual agora é seu filtro padrão");
-		});
 	});
 });
