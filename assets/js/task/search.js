@@ -81,7 +81,7 @@ $(document).ready(function(){
 	
 	var filterData = { 
 		'numRows' : 10,
-		'filter' : 'all',
+		'filter' : 'first',
 		'firstRow' : 0
 	};
 	getTasks(filterData);

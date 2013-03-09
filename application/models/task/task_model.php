@@ -186,11 +186,14 @@ return $query->result();
 }
 
 function getFilterDefault($userID) {
-$where = array("userID" => $userID, "default" => 'true');
-$this->db->where($where);
-$query = $this->db->get('tzadiTaskFilter');
-if (  $query->row(0)  ) return $query->row(0);
-else return false;
+    $where = array(
+        "userID" => $userID,
+        "default" => 1
+        );
+    $this->db->where($where);
+    $query = $this->db->get('tzadiTaskFilter');
+    if (  $query->row(0)  ) return $query->row(0);
+    else return false;
 }
 
 function getAllFilters($userID = false) {
