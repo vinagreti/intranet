@@ -35,12 +35,11 @@ function getAll( $data ) {
     $userProjectID = $this->session->userdata('userProject');
     if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
 
-    $temp1 = clone $this->db;
-    $temp1->limit($data->numRows, $data->firstRow);
-    $temp2 = clone $this->db;
+    $temp = clone $this->db;
+    $this->db->limit($data->numRows, $data->firstRow);
 
-    $query->tasks = $temp1->get()->result();
-    $query->total = $temp2->count_all_results();
+    $query->tasks = $this->db->get()->result();
+    $query->total = $temp->count_all_results();
 
     return $query;
 }
@@ -74,12 +73,11 @@ function search( $data ) {
     if($data->whereParameters) $this->db->where($data->whereParameters);
     if($data->statuses) $this->db->where_in("taskStatusID", $data->statuses);
 
-    $temp1 = clone $this->db;
-    $temp1->limit($data->numRows, $data->firstRow);
-    $temp2 = clone $this->db;
+    $temp = clone $this->db;
+    $this->db->limit($data->numRows, $data->firstRow);
 
-    $query->tasks = $temp1->get()->result();
-    $query->total = $temp2->count_all_results();
+    $query->tasks = $this->db->get()->result();
+    $query->total = $temp->count_all_results();
 
     return $query;
 

@@ -126,54 +126,6 @@ class Task extends CI_Controller {
 
 	}
 
-	public function ajaxSearch($searchPattern = null){
-
-		$this->load->model('task/task_model');
-
-		if($this->input->post()){ var_dump($searchPattern);
-			$whereParameters = array();
-			$statuses = array();
-
-			$searchPattern = $this->input->post();
-
-			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
-			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
-			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
-			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
-			if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
-			if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
-			if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
-			if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
-			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
-			if(sizeof($statuses) == 0) $statuses = "";
-
-			$data->tasks = $this->task_model->search($whereParameters, $statuses);
-			$this->load->view('task/ajaxSearch', $data);	
-		} else if ($searchPattern != null) {
-			$whereParameters = array();
-			$statuses = array();
-			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
-			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
-			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
-			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
-			if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
-			if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
-			if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
-			if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
-			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
-			if(sizeof($statuses) == 0) $statuses = "";
-
-			return $this->task_model->search($whereParameters, $statuses);
-
-		} else {
-			$data->tasks = $this->task_model->getAll();
-			$this->load->view('task/ajaxSearch', $data);
-		}
-
-	}
-
 	public function view($taskID)
 	{	$this->load->model('task/task_model');
 		$data->task = $this->task_model->getByID($taskID);
@@ -202,7 +154,10 @@ class Task extends CI_Controller {
 		if($this->input->post()){
 			if($this->input->post("form")){
 				$this->load->model('task/task_model');
-				$data->tasks = $this->task_model->getAll('taskID');
+				$temp->firstRow = 0;
+				$temp->numRows = 18446744073709551615;
+				$tasks = $this->task_model->getAll($temp);
+				$data->tasks = $tasks->tasks;
 				$data->taskID = '';
 				$data->taskTitle = '';
 				$this->load->model('user/user_model');
