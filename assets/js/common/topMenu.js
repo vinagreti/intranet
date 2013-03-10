@@ -37,7 +37,7 @@ $(document).ready(function(){
 	// The topMenu calc button
 	$(".calcButton").live('click', function( e ){
 		if (typeof taskCalc !== 'function') {
-			taskCalc = function taskSaveFilter(){
+			taskCalc = function (){
 				e.preventDefault();
 
 				$('#tzadiCalc').empty();
