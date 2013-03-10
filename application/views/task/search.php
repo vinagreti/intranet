@@ -13,9 +13,9 @@
 		<form>
 			<fieldset>
 				<div class="input-prepend">
-					<button src="#" class="openSearchForm btn">
+					<a class="openSearchForm btn" href="#">
 						<i class="icon-search"></i>
-					</button>
+					</a>
 					<select id="selectFilters">
 						<option value="0">Tudo...</option>
 							<?php foreach($filters as $filter) { ?>
