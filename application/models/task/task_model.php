@@ -9,7 +9,7 @@ parent::__construct();
 
 }
 
-function getAll( $firstRow = 0, $numRows = 10 ) {
+function getAll( $data ) {
     $this->db
         ->select('u.userName  AS taskResponsableName')
         ->select('p.projectTitle  AS taskProjectTitle')
@@ -36,7 +36,7 @@ function getAll( $firstRow = 0, $numRows = 10 ) {
     if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
 
     $temp1 = clone $this->db;
-    $temp1->limit($numRows, $firstRow);
+    $temp1->limit($data->numRows, $data->firstRow);
     $temp2 = clone $this->db;
 
     $query->tasks = $temp1->get()->result();
@@ -45,7 +45,7 @@ function getAll( $firstRow = 0, $numRows = 10 ) {
     return $query;
 }
 
-function search($whereParameters = null, $statuses = null) {
+function search( $data ) {
 
     $this->db
     ->select('u.userName  AS taskResponsableName')
@@ -69,14 +69,13 @@ function search($whereParameters = null, $statuses = null) {
     ->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left')
     ->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
 
-
     $userProjectID = $this->session->userdata('userProject');
     if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
-    if($whereParameters) $this->db->where($whereParameters);
-    if($statuses) $this->db->where_in("taskStatusID", $statuses);
+    if($data->whereParameters) $this->db->where($data->whereParameters);
+    if($data->statuses) $this->db->where_in("taskStatusID", $data->statuses);
 
     $temp1 = clone $this->db;
-    //$temp1->limit($numRows, $firstRow);
+    $temp1->limit($data->numRows, $data->firstRow);
     $temp2 = clone $this->db;
 
     $query->tasks = $temp1->get()->result();

@@ -13,7 +13,7 @@
 		<form>
 			<fieldset>
 				<div class="input-prepend">
-					<button class="openSearchForm btn">
+					<button src="#" class="openSearchForm btn">
 						<i class="icon-search"></i>
 					</button>
 					<select id="selectFilters">

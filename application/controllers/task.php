@@ -29,72 +29,76 @@ class Task extends CI_Controller {
 		echo $this->load->view('task/filter', $data);
 	}
 
+	function mountSearchPattern($searchPattern){
+		$data->whereParameters = array();
+		$data->statuses = array();
+		if(isset($searchPattern["taskID"])) $data->whereParameters["taskID"] = $searchPattern["taskID"];
+		if(isset($searchPattern["taskFather"])) $data->whereParameters["taskFather"] = $searchPattern["taskFather"];
+		if(isset($searchPattern["taskProject"])) $data->whereParameters["taskProject"] = $searchPattern["taskProject"];
+		if(isset($searchPattern["taskResponsableUser"])) $data->whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
+		if(isset($searchPattern["taskLink"])) $data->whereParameters["taskLink"] = $searchPattern["taskLink"];
+		if(isset($searchPattern["taskStatus1"])) array_push($data->statuses , 1);
+		if(isset($searchPattern["taskStatus2"])) array_push($data->statuses , 2);
+		if(isset($searchPattern["taskStatus3"])) array_push($data->statuses , 3);
+		if(isset($searchPattern["taskStatus4"])) array_push($data->statuses , 4);
+		if(isset($searchPattern["taskStatus5"])) array_push($data->statuses , 5);
+		if(isset($searchPattern["taskStatus6"])) array_push($data->statuses , 6);
+		if(sizeof($data->statuses) == 0) $data->statuses = "";
+		return $data;
+	}
+
 	public function search()
 	{
 		$post = $this->input->post();
 		$firstRow = $post['firstRow'];
 		$numRows = $post['numRows'];
 		$filter = $post['filter'];
-
 		$this->load->model('task/task_model');
 
 		if ( $filter == 'first' ) {
-
-			$filterDefault = $this->task_model->getFilterDefault($this->session->userdata('userID'));
-
-			if( $filterDefault ){
-				$whereParameters = array();
-				$statuses = array();
-				$searchPattern = unserialize($filterDefault->searchPattern);
-				if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
-				if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-				if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
-				if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
-				if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
-				if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
-				if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
-				if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
-				if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
-				if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
-				if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
-				if(sizeof($statuses) == 0) $statuses = "";
-
-				$data = $this->task_model->search($whereParameters, $statuses);
+			$filter = $this->task_model->getFilterDefault($this->session->userdata('userID'));
+			if( $filter ){
+				$searchPattern = unserialize($filter->searchPattern);
+				$data = $this->mountSearchPattern($searchPattern);
+				$data->firstRow = $firstRow;
+				$data->numRows = $numRows;
+				$data = $this->task_model->search($data);
+				
 				echo json_encode($data);
+
 			} else {
-				$data = $this->task_model->getAll($firstRow, $numRows);
-				echo json_encode($data);
-			} 
+				$data->firstRow = $firstRow;
+				$data->numRows = $numRows;
+				$data = $this->task_model->getAll($data);
 
+				echo json_encode($data);
+
+			} 
 		}	else if ($filter == 'all') {
-			$data = $this->task_model->getAll($firstRow, $numRows);
+			$data->firstRow = $firstRow;
+			$data->numRows = $numRows;
+			$data = $this->task_model->getAll($data);
+
 			echo json_encode($data);
+
 		} else if ( is_numeric( $filter ) ) {
-			$whereParameters = array();
-			$statuses = array();
 			$filter = $this->task_model->getFilterByID($filter);
 			$searchPattern = unserialize($filter->searchPattern);
-			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
-			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-			if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
-			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
-			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
-			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
-			if(isset($searchPattern["taskStatus2"])) array_push($statuses , 2);
-			if(isset($searchPattern["taskStatus3"])) array_push($statuses , 3);
-			if(isset($searchPattern["taskStatus4"])) array_push($statuses , 4);
-			if(isset($searchPattern["taskStatus5"])) array_push($statuses , 5);
-			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
-			if(sizeof($statuses) == 0) $statuses = "";
+			$data = $this->mountSearchPattern($searchPattern);
+			$data->firstRow = $firstRow;
+			$data->numRows = $numRows;
+			$data = $this->task_model->search($data);
 
-			$data = $this->task_model->search($whereParameters, $statuses);
 			echo json_encode($data);
+
 		}	else if ( is_array( $filter ) ) {
-			$this->load->model('task/task_model');
-			$data = $this->task_model->getAll($firstRow);
+			$data = $this->mountSearchPattern($filter);
+			$data->firstRow = $firstRow;
+			$data->numRows = $numRows;
+			$data = $this->task_model->search($data);
+
 			echo json_encode($data);
 		}
-
 	}
 
 	public function saveFilter()
