@@ -104,11 +104,21 @@ $(document).ready(function(){
 	});
 
 	$("#selectFilters").live('change', function( e ){
-		filterData['numRows'] = 10 ;
-		filterData['firstRow'] = 0;
-		filterData['filter'] = $("#selectFilters").val();
-		$(".listBody").empty();
-		getTasks(filterData);
+		if($("#selectFilters").val() != 0) {
+			filterData['numRows'] = 10 ;
+			filterData['firstRow'] = 0;
+			filterData['filter'] = $("#selectFilters").val();
+			$(".listBody").empty();
+			getTasks(filterData);
+		} else {
+			filterData = { 
+				'numRows' : 10,
+				'filter' : 'all',
+				'firstRow' : 0
+			}
+			$(".listBody").empty(); // remove o conteudo atual da tabela
+			getTasks(filterData); // função que popula a tabela de tarefas
+		}
 	});
 
 	$(".setSearchAsDefault").live('click', function( e ){

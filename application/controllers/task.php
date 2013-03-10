@@ -36,10 +36,12 @@ class Task extends CI_Controller {
 		$numRows = $post['numRows'];
 		$filter = $post['filter'];
 
+		$this->load->model('task/task_model');
+
 		if ( $filter == 'first' ) {
 
-			$this->load->model('task/task_model');
 			$filterDefault = $this->task_model->getFilterDefault($this->session->userdata('userID'));
+
 			if( $filterDefault ){
 				$whereParameters = array();
 				$statuses = array();
@@ -57,24 +59,19 @@ class Task extends CI_Controller {
 				if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
 				if(sizeof($statuses) == 0) $statuses = "";
 
-				$data->tasks = $this->task_model->search($whereParameters, $statuses);
-				$data->total = 10;
+				$data = $this->task_model->search($whereParameters, $statuses);
 				echo json_encode($data);
 			} else {
-				$data->tasks = $this->task_model->getAll($firstRow, $numRows);
-				$data->total = $this->task_model->getAllCount();
+				$data = $this->task_model->getAll($firstRow, $numRows);
 				echo json_encode($data);
 			} 
 
 		}	else if ($filter == 'all') {
-			$this->load->model('task/task_model');
-			$data->tasks = $this->task_model->getAll($firstRow, $numRows);
-			$data->total = $this->task_model->getAllCount();
+			$data = $this->task_model->getAll($firstRow, $numRows);
 			echo json_encode($data);
 		} else if ( is_numeric( $filter ) ) {
 			$whereParameters = array();
 			$statuses = array();
-			$this->load->model('task/task_model');
 			$filter = $this->task_model->getFilterByID($filter);
 			$searchPattern = unserialize($filter->searchPattern);
 			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
@@ -90,13 +87,11 @@ class Task extends CI_Controller {
 			if(isset($searchPattern["taskStatus6"])) array_push($statuses , 6);
 			if(sizeof($statuses) == 0) $statuses = "";
 
-			$data->tasks = $this->task_model->search($whereParameters, $statuses);
-			$data->total = 10;
+			$data = $this->task_model->search($whereParameters, $statuses);
 			echo json_encode($data);
 		}	else if ( is_array( $filter ) ) {
 			$this->load->model('task/task_model');
-			$data->tasks = $this->task_model->getAll($firstRow);
-			$data->total = $this->task_model->getAllCount();
+			$data = $this->task_model->getAll($firstRow);
 			echo json_encode($data);
 		}
 

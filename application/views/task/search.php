@@ -17,7 +17,7 @@
 						<i class="icon-search"></i>
 					</button>
 					<select id="selectFilters">
-						<option></option>
+						<option value="0">Tudo...</option>
 							<?php foreach($filters as $filter) { ?>
 								<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
 									<?=$filter->filterTitle?>

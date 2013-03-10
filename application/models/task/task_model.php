@@ -10,74 +10,79 @@ parent::__construct();
 }
 
 function getAll( $firstRow = 0, $numRows = 10 ) {
-    $this->db->select(array(
-    'u.userName  AS taskResponsableName',
-    'p.projectTitle  AS taskProjectTitle',
-    'taskID',
-    'taskFather',
-    'taskTitle',
-    'taskDesc',
-    'taskKind',
-    'taskStatus',
-    'taskKindName',
-    'taskStatusName',
-    'taskLabel',
-    'deadLineDate',
-    'taskLink',
-    'taskProject'
-    ));
-    $this->db->limit($numRows, $firstRow);
-    $this->db->order_by('taskID');
-    $this->db->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left');
-    $this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
-    $this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
-    $this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
+    $this->db
+        ->select('u.userName  AS taskResponsableName')
+        ->select('p.projectTitle  AS taskProjectTitle')
+        ->select('taskID')
+        ->select('taskFather')
+        ->select('taskTitle')
+        ->select('taskDesc')
+        ->select('taskKind')
+        ->select('taskStatus')
+        ->select('taskKindName')
+        ->select('taskStatusName')
+        ->select('taskLabel')
+        ->select('deadLineDate')
+        ->select('taskLink')
+        ->select('taskProject')
+        ->from('tzadiTask t')
+        ->order_by('taskID')
+        ->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left')
+        ->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left')
+        ->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left')
+        ->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
 
     $userProjectID = $this->session->userdata('userProject');
     if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
 
-    $query = $this->db->get('tzadiTask t');
+    $temp1 = clone $this->db;
+    $temp1->limit($numRows, $firstRow);
+    $temp2 = clone $this->db;
 
-    return $query->result();
+    $query->tasks = $temp1->get()->result();
+    $query->total = $temp2->count_all_results();
 
-}
-
-function getAllCount() {
-    $userProjectID = $this->session->userdata('userProject');
-    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
-    return $this->db->count_all_results('tzadiTask');
+    return $query;
 }
 
 function search($whereParameters = null, $statuses = null) {
 
-$cols = array(
-'u.userName  AS taskResponsableName',
-'p.projectTitle  AS taskProjectTitle',
-'taskID',
-'taskFather',
-'taskTitle',
-'taskDesc',
-'taskKind',
-'taskStatus',
-'taskKindName',
-'taskStatusName',
-'taskLabel',
-'deadLineDate',
-'taskLink',
-'taskProject'
-);
-$this->db->select($cols);
-$this->db->order_by('taskStatus, taskID desc');
-$this->db->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left');
-$this->db->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left');
-$this->db->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left');
-$this->db->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
-$userProjectID = $this->session->userdata('userProject');
-if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
-if($whereParameters) $this->db->where($whereParameters);
-if($statuses) $this->db->where_in("taskStatusID", $statuses);
-$query = $this->db->get('tzadiTask t');
-return $query->result();
+    $this->db
+    ->select('u.userName  AS taskResponsableName')
+    ->select('p.projectTitle  AS taskProjectTitle')
+    ->select('taskID')
+    ->select('taskFather')
+    ->select('taskTitle')
+    ->select('taskDesc')
+    ->select('taskKind')
+    ->select('taskStatus')
+    ->select('taskKindName')
+    ->select('taskStatusName')
+    ->select('taskLabel')
+    ->select('deadLineDate')
+    ->select('taskLink')
+    ->select('taskProject')
+    ->from('tzadiTask t')
+    ->order_by('taskStatus, taskID desc')
+    ->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left')
+    ->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left')
+    ->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left')
+    ->join('tzadiTaskStatus ts', 'ts.taskStatusID = t.taskStatus', 'left');
+
+
+    $userProjectID = $this->session->userdata('userProject');
+    if ($userProjectID > 0) $this->db->where('taskProject', $userProjectID);
+    if($whereParameters) $this->db->where($whereParameters);
+    if($statuses) $this->db->where_in("taskStatusID", $statuses);
+
+    $temp1 = clone $this->db;
+    //$temp1->limit($numRows, $firstRow);
+    $temp2 = clone $this->db;
+
+    $query->tasks = $temp1->get()->result();
+    $query->total = $temp2->count_all_results();
+
+    return $query;
 
 }
 
