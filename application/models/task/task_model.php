@@ -195,41 +195,47 @@ function getFilterDefault($userID) {
         "default" => 1
         );
     $this->db->where($where);
+    $filterProject = $this->session->userdata('userProject');
+    if ($filterProject > 0) $this->db->where('filterProject', $filterProject);
     $query = $this->db->get('tzadiTaskFilter');
     if (  $query->row(0)  ) return $query->row(0);
     else return false;
 }
 
 function getAllFilters($userID = false) {
-$this->db->select(array(
-"default",
-"filterID",
-"filterTitle"
-));
-$this->db->where("userID", $userID);
-$this->db->order_by("filterTitle");
-$query = $this->db->get('tzadiTaskFilter');
-return $query->result();
+    $this->db->select(array(
+    "default",
+    "filterID",
+    "filterTitle"
+    ));
+    $filterProject = $this->session->userdata('userProject');
+    if ($filterProject > 0) $this->db->where('filterProject', $filterProject);
+    $this->db->where("userID", $userID);
+    $this->db->order_by("filterTitle");
+    $query = $this->db->get('tzadiTaskFilter');
+    return $query->result();
 }    
 
 function saveFilter($searchPattern) {
-
+$searchPattern["filterProject"] = $this->session->userdata('userProject');
 $searchPattern["userID"] = $this->session->userdata('userID');
-$query = $this->db->insert('tzadiTaskFilter', $searchPattern);
+$this->db->insert('tzadiTaskFilter', $searchPattern);
+$query = $this->db->insert_id();
 
 return $query;
 }
 
-function saveFilterDeafult($searchPattern) {
+function saveFilterDeafult($filter) {
 
 $userID = $this->session->userdata('userID');
-
 $this->db->set("default", 0);
 $this->db->where("userID", $userID);
 $this->db->update('tzadiTaskFilter');
 
-$searchPattern["userID"] = $userID;
-$query = $this->db->insert('tzadiTaskFilter', $searchPattern);
+$filter["userID"] = $userID;
+$filter["default"] = 1;
+$this->db->insert('tzadiTaskFilter', $filter);
+$query = $this->db->insert_id();
 
 return $query;
 }

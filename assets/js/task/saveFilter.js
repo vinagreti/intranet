@@ -3,9 +3,9 @@ $(document).ready(function(){
 		taskSaveFilter = function taskSaveFilter(){
 
 			$(".saveFilter").live('click', function( e ){
-				filterDefault = "";
+				filterDefault = 0;
 				filterTitle = $(".filterTitle").val();
-				if ( $("#filterDefault").is(':checked') ) filterDefault = true;
+				if ( $("#filterDefault").is(':checked') ) filterDefault = 1;
 
 				$.ajax({
 				  type: "POST",
@@ -15,7 +15,12 @@ $(document).ready(function(){
 				  	filterTitle : filterTitle,
 				  	filterDefault : filterDefault
 				  } 
-				}).done(function( response ) {
+				}).done(function( id ) {
+			    $('#selectFilters').append($('<option/>', { 
+			        value: id,
+			        text : filterTitle,
+			        selected : true
+			    }));
 					$('#tzadiDialogs').modal('hide');
 				});
 			});

@@ -16,15 +16,6 @@
 			<label>Task father: </label>
 			<input class="span12" type="text" id="filterFatherID" placeholder="Task father" name="filterFatherID">
 
-			<label>Projeto: </label>
-			<select class="span12" id="filterProjectID">
-				<option></option>
-				<?php foreach ($taskProjects as $project) { ?>
-				<option value="<?=$project->projectID?>"><?=$project->projectTitle?></option>
-				<?php } ?>
-			</select>
-
-
 			<label>Responsável: </label>
 			<select class="span12" id="filterResponsableID">
 				<option></option>

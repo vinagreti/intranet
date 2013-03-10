@@ -22,8 +22,6 @@ class Task extends CI_Controller {
 
 	public function filter()
 	{
-		$this->load->model('task/task_model');
-		$data->taskProjects = $this->task_model->getAllProject();
 		$this->load->model('user/user_model');
 		$data->users = $this->user_model->getAll();
 		echo $this->load->view('task/filter', $data);
@@ -34,7 +32,6 @@ class Task extends CI_Controller {
 		$data->statuses = array();
 		if(isset($searchPattern["taskID"])) $data->whereParameters["taskID"] = $searchPattern["taskID"];
 		if(isset($searchPattern["taskFather"])) $data->whereParameters["taskFather"] = $searchPattern["taskFather"];
-		if(isset($searchPattern["taskProject"])) $data->whereParameters["taskProject"] = $searchPattern["taskProject"];
 		if(isset($searchPattern["taskResponsableUser"])) $data->whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
 		if(isset($searchPattern["taskLink"])) $data->whereParameters["taskLink"] = $searchPattern["taskLink"];
 		if(isset($searchPattern["taskStatus1"])) array_push($data->statuses , 1);
@@ -103,21 +100,20 @@ class Task extends CI_Controller {
 
 	public function saveFilter()
 	{
-		$searchPattern = $this->input->post("searchPattern");
-
 		if($this->input->post("form")){
 			$this->load->view('task/saveFilter');
 		} else {
+			$searchPattern = $this->input->post("searchPattern");
 			$this->load->model('task/task_model');
 			$filter["filterTitle"] = $this->input->post("filterTitle");
 			$filter["userID"] = $this->session->userdata('userID');
 			$filter["searchPattern"] = serialize($searchPattern);
-
-			if($this->input->post("filterDefault") == true){
-				$filter["default"] = 'true';
-				$data->task = $this->task_model->saveFilterDeafult($filter);
+			if($this->input->post("filterDefault")){
+				$id = $this->task_model->saveFilterDeafult($filter);
+				echo json_encode($id); 
 			} else {
-				$data->task = $this->task_model->saveFilter($filter);
+				$id = $this->task_model->saveFilter($filter);
+				echo json_encode($id); 
 			}
 		}
 	}
@@ -142,7 +138,6 @@ class Task extends CI_Controller {
 
 			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
 			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-			if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
 			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
 			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
 			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);
@@ -160,7 +155,6 @@ class Task extends CI_Controller {
 			$statuses = array();
 			if(isset($searchPattern["taskID"])) $whereParameters["taskID"] = $searchPattern["taskID"];
 			if(isset($searchPattern["taskFather"])) $whereParameters["taskFather"] = $searchPattern["taskFather"];
-			if(isset($searchPattern["taskProject"])) $whereParameters["taskProject"] = $searchPattern["taskProject"];
 			if(isset($searchPattern["taskResponsableUser"])) $whereParameters["taskResponsableUser"] = $searchPattern["taskResponsableUser"];
 			if(isset($searchPattern["taskLink"])) $whereParameters["taskLink"] = $searchPattern["taskLink"];
 			if(isset($searchPattern["taskStatus1"])) array_push($statuses , 1);

@@ -9,30 +9,23 @@
 </div>
 
 <div class="row-fluid"> <!-- inicio filtro -->
-	<div class="span4"> <!-- inicio seletor de filtro padrão -->
+	<div class="span3"> <!-- inicio seletor de filtro padrão -->
 		<form>
-			<fieldset>
-				<div class="input-prepend">
-					<a class="openSearchForm btn" href="#">
-						<i class="icon-search"></i>
-					</a>
-					<select id="selectFilters">
-						<option value="0">Tudo...</option>
-							<?php foreach($filters as $filter) { ?>
-								<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
-									<?=$filter->filterTitle?>
-								</option>
-							<?php } ?>
-					</select>
-				</div>
-			</fieldset>
+			<select id="selectFilters" class="span12">
+				<option value="0">Tudo...</option>
+					<?php foreach($filters as $filter) { ?>
+						<option value="<?=$filter->filterID?>" <?php if($filter->default) echo 'selected';?>>
+							<?=$filter->filterTitle?>
+						</option>
+					<?php } ?>
+			</select>
 		</form>
 	</div> <!-- fim seletor de filtro padrão -->
-	<div class="span5"> <!-- inicio botões -->
+	<div class="span9"> <!-- inicio botões -->
+		<a class="openSearchForm btn" href="#"><i class="icon-search"></i></a>
 		<a class="refreshList btn btn-info" href="#" rel="tooltip" title="Atualizar lista"><i class="icon-refresh icon-white"></i></a>
 		<a class='saveCurrentSearch btn btn-success' rel="tooltip" title="Salvar filtro atual"><i class="icon-download-alt icon-white"></i></a>
 		<a class='setSearchAsDefault btn btn-warning' rel="tooltip" title="Tornar filtro padrão"><i class="icon-star icon-white"></i></a>
-		<a class="showAllTasks btn btn-danger" href="#" rel="tooltip" title="Listar tudo"><i class="icon-remove icon-white"></i></a>
 	</div> <!-- fim botões -->
 </div> <!-- fim do filtro -->
 
@@ -46,15 +39,15 @@
 	<table class="table table-hover table-condensed tablesorter">
 		<thead>
 			<tr>
-				<th class="header {sorter: 'int'}">Nº <i class="icon-sort"></i></th>
-				<th class="{ sorter: false}" >Ação</i></th>
-				<th class="header {sorter: 'text'}">Título <i class="icon-sort"></i></th>
-				<th class="header {sorter: 'text'}">Responsável <i class="icon-sort"></i></th>
-				<th class="header {sorter: 'text'}">Tipo <i class="icon-sort"></i></th>
-				<th class="header {sorter: 'int'}"><abbr title="Tarefa Pai">TP <i class="icon-sort"></abbr></th>
-				<th class="header {sorter: 'text'}">Projeto <i class="icon-sort"></i></th>
-				<th class="header {sorter: 'text'}">Status <i class="icon-sort"></i></th>
-				<th class="header {sorter: 'date'}">Vencimento <i class="icon-sort"></i></th>
+				<th class="header">Nº</th>
+				<th class="header">Ação</th>
+				<th class="header">Título</th>
+				<th class="header">Responsável</th>
+				<th class="header">Tipo</th>
+				<th class="header"><abbr title="Tarefa Pai">TP</th>
+				<th class="header">Projeto</th>
+				<th class="header">Status</th>
+				<th class="header">Vencimento</th>
 			</tr>
 		</thead>
 		<tbody class="listBody"></tbody>

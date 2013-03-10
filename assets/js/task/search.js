@@ -1,4 +1,6 @@
-$(document).ready(function(){ 
+var searchPattern = {};
+
+$(document).ready(function(){
 	
 	var filterData = { 
 		'numRows' : 10,
@@ -11,16 +13,6 @@ $(document).ready(function(){
 		filterData['firstRow'] = 0;
 		filterData['numRows'] = $('.listBody tr').length;
 		$(".listBody").empty();	
-		getTasks(filterData); // função que popula a tabela de tarefas
-	});
-
-	$(".showAllTasks").live('click', function( e ){ // mostra todas as tarefas do projeto
-		filterData = { 
-			'numRows' : 10,
-			'filter' : 'all',
-			'firstRow' : 0
-		}
-		$(".listBody").empty(); // remove o conteudo atual da tabela
 		getTasks(filterData); // função que popula a tabela de tarefas
 	});
 
@@ -99,7 +91,6 @@ $(document).ready(function(){
 
 		if ( $("#filterTaskID").val() )	searchPatternTemp["taskID"] = $("#filterTaskID").val();
 		if ( $("#filterFatherID").val() ) searchPatternTemp["taskFather"] = $("#filterFatherID").val();
-		if ( $("#filterProjectID").val() ) searchPatternTemp["taskProject"] = $("#filterProjectID").val();
 		if ( $("#filterResponsableID").val() ) searchPatternTemp["taskResponsableUser"] = $("#filterResponsableID").val();
 		if ( $("#filterTaskLink:checked").val() )	searchPatternTemp["taskLink"] = $("#filterTaskLink:checked").val();
 		if ( $("#filterStatus1").is(':checked') ) searchPatternTemp["taskStatus1"] = true;
@@ -125,7 +116,7 @@ $(document).ready(function(){
 		getTasks(filterData); // função que popula a tabela de tarefas
 	});
 
-	$(".taskListFilterSave").live('click', function( e ){
+	$(".saveCurrentSearch").live('click', function( e ){
 
 		e.preventDefault();
 
@@ -221,7 +212,6 @@ var reSortTable = function () { // reaplica a ordenação na tabela. Usado para 
 var filterClean = function (){
 	$("#filterTaskID").attr("value", "");
 	$("#filterFatherID").attr("value", "");
-	$("#filterProjectID").attr("value", "");
 	$("#filterResponsableID").attr("value", "");
 	$("#filterLink").attr("checked", false);
 	$("#filterStatus1").attr("checked", false);
