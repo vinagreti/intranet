@@ -12,20 +12,27 @@ $(document).ready(function(){
 
 // The topMenu add task button functions
 	$(".newTaskButton").live('click', function( e ){
-		e.preventDefault();
+		if (typeof newTaskForm !== 'function') {
+			newTaskForm = function (){
+				e.preventDefault();
 
-		$('#tzadiDialogs').empty();
+				$('#tzadiDialogs').empty();
 
-		$.post(base_url + "task/newTask", {
-			form : true
-		},function( response ) {
-			$('#tzadiDialogs').append( response );
-			$('#deadLineTime').clockface();
-			$('#deadLineDate').datepicker();
-		});
+				$.post(base_url + "task/newTask", {
+					form : true
+				},function( response ) {
+					$('#tzadiDialogs').append( response );
+					$('#deadLineTime').clockface();
+					$('#deadLineDate').datepicker();
+				});
+				$('#tzadiDialogs').modal('show');
+			}
 
-		$('#tzadiDialogs').modal('show');
-	})
+			newTaskForm();
+		} else {
+			$('#tzadiDialogs').modal('show');
+		}		
+	});
 
 	// The topMenu calc button
 	$(".calcButton").live('click', function( e ){

@@ -155,7 +155,7 @@ class Task extends CI_Controller {
 			if($this->input->post("form")){
 				$this->load->model('task/task_model');
 				$temp->firstRow = 0;
-				$temp->numRows = 18446744073709551615;
+				$temp->numRows = "18446744073709551615";
 				$tasks = $this->task_model->getAll($temp);
 				$data->tasks = $tasks->tasks;
 				$data->taskID = '';

@@ -10,6 +10,7 @@ parent::__construct();
 }
 
 function getAll( $data ) {
+
     $this->db
         ->select('u.userName  AS taskResponsableName')
         ->select('p.projectTitle  AS taskProjectTitle')
@@ -40,6 +41,7 @@ function getAll( $data ) {
 
     $query->tasks = $this->db->get()->result();
     $query->total = $temp->count_all_results();
+    unset($temp);
 
     return $query;
 }
@@ -78,7 +80,7 @@ function search( $data ) {
 
     $query->tasks = $this->db->get()->result();
     $query->total = $temp->count_all_results();
-
+    unset($temp);
     return $query;
 
 }

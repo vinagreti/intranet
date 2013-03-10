@@ -68,7 +68,7 @@
 
 				<div class="row">
 					<div class="span6">
-						<div class="taskSelect hide">
+						<div class="newTaskTaskSelect hide">
 							</br>
 							<select class="span6"  id="newTaskFather" name="newTaskFather" data-rel="chosen">
 								<option value="<?=$taskID?>"><?=$taskTitle?></option>
@@ -79,7 +79,7 @@
 							</select>				
 						</div>
 
-						<div class="projectSelect hide">
+						<div class="newTaskProjectSelect hide">
 							</br>
 							<select class="span6"  id="newTaskProject" name="newTaskProject" data-rel="chosen">
 								<option value="<?=$projectID?>"><?=$projectTitle?></option>

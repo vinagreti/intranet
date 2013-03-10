@@ -1,4 +1,17 @@
 $(document).ready(function(){
+
+	$(".taskSource").live('change', function( e ){
+		
+		if ( $("#taskSource1").is(':checked') ){
+			$(".newTaskProjectSelect").show();
+			$(".newTaskTaskSelect").hide();
+		} 
+		if ( $("#taskSource2").is(':checked') ) {
+			$(".newTaskProjectSelect").hide();
+			$(".newTaskTaskSelect").show();			
+		}
+	});
+
 	if (typeof newTask !== 'function') {
 		newTask = function newTask(){
 			$("#saveNewTask").live('click', function( e ){
