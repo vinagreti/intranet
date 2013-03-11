@@ -69,13 +69,13 @@
 
 	<h3 class="title">Bem vindo à Intranet da Tzadi</h3>
 
-	<form method="post" action="<?=base_url()?>user/submitLogin" class="form-horizontal form-signin">
+	<form class="form-horizontal form-signin">
 
-		<h4 class="form-signin-heading">Forneça seu email e senha</h4>
+		<h4 class="form-signin-heading">Por favor, identifique-se</h4>
 
 		<input type="text" class="input-block-level" placeholder="Email" id="email" name="email">
 		<input type="password" class="input-block-level" placeholder="Senha" id="password" name="password">
-		<button class="btn btn-large btn-primary" type="submit">Entrar</button>
+		<a class="btn btn-large btn-primary" id="submitLogin">Entrar</a>
 
 	</form>
 
@@ -85,18 +85,21 @@
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="<?=base_url()?>assets/JQuery/jquery.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-transition.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-alert.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-modal.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-dropdown.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-scrollspy.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-tab.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-tooltip.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-popover.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-button.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-collapse.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-carousel.js"></script>
-  <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-typeahead.js"></script>
-
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#submitLogin").live("click", function() {
+        $.post("<?=base_url()?>user/submitLogin", {
+          email : $("#email").val(),
+          password : $("#password").val()
+        }, function( e ) {
+          if( e ) {
+            http_referer = window.location = "<?=$this->session->flashdata('HTTP_REFERER')?>";
+            if (http_referer) window.location = "<?=base_url()?>" + http_referer;
+            else window.location = "<?=base_url()?>task";
+          }
+        }, "json");
+      });
+    });
+  </script>
   </body>
   </html>

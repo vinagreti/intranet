@@ -1,21 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Error extends MY_Controller {
+class Error extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('error/accessDenyed');
+		$this->permission();
 	}
 
-	public function accessDenyed()
+	public function permission()
 	{
-		$this->load->view('error/accessDenyed');
-	}
-
-	public function pageNotFound()
-	{
-		$this->load->view('error/pageNotFound');
+		$conteudo = $this->load->view('error/permission', "", true);
+		$data = array(
+			'page_title' => 'Permissão negada',
+			'content' => $conteudo);
+		$this->parser->parse('template', $data);
 	}
 }
 
-/* End of file*/
+/* End of file Error.php */

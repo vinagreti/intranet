@@ -2,6 +2,13 @@
 
 class Dashboard extends CI_Controller {
 
+  public function __construct() {
+    parent::__construct();
+    $permissionData['methodLevel'] = array('projectMember', 'admin');
+    $permissionData['methodName'] = 'Task - Sistema de tarefas da tzadi';
+    $this->permission->allow($permissionData);
+  }
+
 	public function index()
 	{
 		$this->dash();
@@ -22,6 +29,10 @@ class Dashboard extends CI_Controller {
 
 	public function apacheInfo()
 	{
+    $permissionData['methodLevel'] = array('admin');
+    $permissionData['methodName'] = 'Dashboard - Apache info';
+		$this->permission->allow($permissionData);
+
 		$data->serverInfo = $_SERVER;
 		$content = $this->load->view('dashboard/serverInfo', $data, true);
 

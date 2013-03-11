@@ -4,10 +4,11 @@ class User extends CI_Controller {
 
 	public function index()
 	{
+		$this->login();
+	}
 
-		if($this->session->userdata('userLevel') != 'public') redirect(base_url() . 'task', 'refresh');	
-		else $this->load->view('user/login');
-
+	public function login(){
+		$this->load->view('user/login');
 	}
 
 	public function submitLogin()
@@ -19,12 +20,7 @@ class User extends CI_Controller {
 		$this->load->model('user/user_model');
 		$permission = $this->user_model->checkCredential($email, $password);
 
-		if($permission) {
-			redirect(base_url() . 'task', 'refresh');
-		}
-		else {
-			redirect(base_url() . 'user', 'refresh');
-		}
+echo json_encode('value');
 
 	}
 

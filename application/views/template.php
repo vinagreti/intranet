@@ -102,7 +102,7 @@
         <div class="nav-collapse collapse">
           <ul class="nav pull-right">  
             <li class="dropdown pull-right">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-large icon-white"></i> <?=$this->session->userdata('userName')?></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-large"></i> <?=$this->session->userdata('userName')?></a>
               <ul class="dropdown-menu">
                 <li><a tabindex="-1"  href="#profile">Perfil</a></li>
                 <li><a tabindex="-1"  href="#configuracoes">Configurações</a></li>
@@ -114,7 +114,7 @@
           <ul class="nav">
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Dashboard"><i class="icon-signal icon-large icon-white"></i> Dash</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Dashboard"><i class="icon-signal icon-large"></i> Dash</a>
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>dashboard" rel="tooltip" title="Estatísticas">Estatísticas</a></li>
                 <li><a href="<?=base_url()?>dashboard/apacheInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
@@ -122,24 +122,24 @@
             </li>
 
             <li <?php if($this->router->class == 'git'){ echo 'class="active"';}?> >
-              <a href="<?=base_url()?>git" rel="tooltip" title="Git"><i class="icon-github icon-large icon-white"></i> Git</a>
+              <a href="<?=base_url()?>git" rel="tooltip" title="Git"><i class="icon-github icon-large"></i> Git</a>
             </li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Boas práticas"><i class="icon-lightbulb icon-large icon-white"></i> SOS</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Boas práticas"><i class="icon-lightbulb icon-large"></i> SOS</a>
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>gp" rel="tooltip" title="Boas práticas com git"><i class="icon-file"></i> Git</a></li>
               </ul>
             </li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ferramentas"><i class="icon-wrench icon-large icon-white"></i> Tools</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ferramentas"><i class="icon-wrench icon-large"></i> Tools</a>
               <ul class="dropdown-menu">
                 <li><a tabindex="-1" href="#" class="calcButton">Calculadora</a></li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Tarefas"><i class="icon-ok icon-large icon-white"></i> Task</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Tarefas"><i class="icon-ok icon-large"></i> Task</a>
               <ul class="dropdown-menu">
                 <li><a tabindex="-1" href="#" class="newTaskButton">Nova Tarefa</a></li>
                 <li><a tabindex="-1" href="#" class="newProjectButton">Novo Projeto</a></li>

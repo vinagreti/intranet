@@ -1,1 +1,0 @@
-echo 'deu erro - arquivo core.php na view erro - controller my controller, loadviewwithtemplate'

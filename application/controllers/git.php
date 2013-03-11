@@ -2,6 +2,13 @@
 
 class Git extends CI_Controller {
 
+  public function __construct() {
+    parent::__construct();
+    $data['methodLevel'] = array('admin');
+    $data['methodName'] = 'GIT - Sistema de versionamento da tzadi';
+    $this->permission->allow($data);
+  }
+  
 	public function index()
 	{
 		$this->listRepositories();

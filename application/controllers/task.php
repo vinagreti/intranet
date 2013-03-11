@@ -2,6 +2,14 @@
 
 class Task extends CI_Controller {
 
+  public function __construct() {
+  	// define os tipos de usuarios que podem acessar a classe Task
+    parent::__construct();
+    $data['methodLevel'] = array('projectMember', 'admin');
+    $data['methodName'] = 'Sistema de tarefas';
+    $this->permission->allow($data);
+  }
+
 	public function index()
 	{
 		$this->load->model("task/task_model");

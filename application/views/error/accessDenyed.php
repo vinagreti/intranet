@@ -1,1 +1,0 @@
-Voce não tem permissão para acessar esta página. Criar um redirect pra pagina de erro e parar script.
