@@ -197,6 +197,7 @@
 
     <!-- Dialogs -->
     <div class="modal hide fade" id="tzadiDialogs"></div>
+    <div class="modal hide fade" id="tzadiTaskForm"></div>
     <div class="modal hide fade" id="tzadiCalc" tabindex="-1"></div>
     <div class="modal hide fade" id="filter" tabindex="-1"></div>
     <div class="loading"></div>

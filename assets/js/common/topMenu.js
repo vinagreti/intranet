@@ -16,21 +16,21 @@ $(document).ready(function(){
 			newTaskForm = function (){
 				e.preventDefault();
 
-				$('#tzadiDialogs').empty();
+				$('#tzadiTaskForm').empty();
 
 				$.post(base_url + "task/newTask", {
 					form : true
 				},function( response ) {
-					$('#tzadiDialogs').append( response );
+					$('#tzadiTaskForm').append( response );
 					$('#deadLineTime').clockface();
 					$('#deadLineDate').datepicker();
 				});
-				$('#tzadiDialogs').modal('show');
+				$('#tzadiTaskForm').modal('show');
 			}
 
 			newTaskForm();
 		} else {
-			$('#tzadiDialogs').modal('show');
+			$('#tzadiTaskForm').modal('show');
 		}		
 	});
 
