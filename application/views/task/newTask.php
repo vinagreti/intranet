@@ -5,111 +5,79 @@
 
 	<div class="modal-body">
 		<div class="row-fluid">
-			<div class="span6">
+			<div class="span12">
 
-				<div class="row">
-					<div class="span6">
-						<input type="text" placeholder="Título *" id="newTaskTitle" name="newTaskTitle" class="span6" />
+				<input type="text" placeholder="Título *" id="newTaskTitle" name="newTaskTitle" class="input-block-level" />
+				<textarea rows="3" placeholder="Descrição *" id="newTaskDesc" name="newTaskDesc" class="input-block-level" ></textarea>
+
+	      <div>
+	        <select id="taskResponsableUser" name="taskResponsableUser" data-rel="chosen" class="input-block-level" >
+	          <option value="<?=$this->session->userdata('userID')?>"> <?=$this->session->userdata('userName')?></option>
+	          <?php foreach($taskResponsableUsers as $taskResponsableUser) { ?>
+	            <?php if ($this->session->userdata('userID') != $taskResponsableUser->userID) { ?>
+	              <option value="<?=$taskResponsableUser->userID?>"><?=$taskResponsableUser->userName?></option>
+	            <?php } ?>
+	          <?php } ?>
+	        </select>
+	      </div>
+
+				<div class="row-fluid">
+					<div class="span5">
+			      <input type="text" id="deadLineDate" data-date-format="dd-mm-yyyy" class="input-small" />
+			      <input type="text" id="deadLineTime" class="input-small" />
+					</div>
+
+					<div class="span7">
+			      <select  id="taskKind" name="taskKind" data-rel="chosen" class="input-block-level">
+			        <option>Tipo da tarefa...</option>
+			        <?php foreach($taskKinds as $taskKind) { ?>
+			        <option value="<?=$taskKind->taskKindID?>"><?=$taskKind->taskKindName?></option>
+			        <?php } ?>
+			      </select>
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="span6">
-						<textarea rows="3" placeholder="Descrição *" id="newTaskDesc" name="newTaskDesc" class="span6"></textarea>
-					</div>
+				<div>
+		      <label class="radio inline">
+		      <input type="radio" name="taskLink" id="taskLink1" value="1" checked /> Vinculada
+		      </label>
+		      <label class="radio inline">
+		      <input type="radio" name="taskLink" id="taskLink2" value="2" /> Referenciada
+		      </label>
 				</div>
 
-			    <div class="row">
-					<div class="span3">
-						Previsão de conclusão
-					</div>
-					<div class="span3">
-						Tipo:
-					</div>
-			    </div>
-
-				<div class="row">
-					<div class="span3">
-						<input type="text" id="deadLineDate" data-date-format="dd-mm-yyyy" class="input-small" />
-						<input type="text" id="deadLineTime" class="input-small" />
-					</div>
-					<div class="span3">
-						<select  id="taskKind" name="taskKind" data-rel="chosen">
-							<option></option>
-							<?php foreach($taskKinds as $taskKind) { ?>
-							<option value="<?=$taskKind->taskKindID?>"><?=$taskKind->taskKindName?></option>
-							<?php } ?>
-						</select>
-					</div>
+				<div>
+		      <label class="radio inline">
+		      ao <input type="radio" name="taskSource" class="taskSource" id="taskSource1" value="1"> Projeto
+		      </label>
+		      <label class="radio inline">
+		      à <input type="radio" name="taskSource" class="taskSource" id="taskSource2" value="2"> Tarefa
+		      </label>
+		      <br></br>
 				</div>
 
-				<div class="row">
-					<div class="span6">
-						<label class="radio inline">
-						<input type="radio" name="taskLink" id="taskLink1" value="1" checked /> Vinculada
-						</label>
+      	<div class="newTaskTaskSelect hide">
+          <select id="newTaskFather" name="newTaskFather" data-rel="chosen" class="input-block-level">
+            <option value="<?=$taskID?>"><?=$taskTitle?></option>
+            <?php foreach($tasks as $task) { ?>
+            <option value="<?=$task->taskID?>" projectID="<?=$task->taskProject?>"><?=$task->taskID?> - <?=substr($task->taskTitle, 0, 60)?></option>
+            <?php } ?>
 
-						<label class="radio inline">
-						<input type="radio" name="taskLink" id="taskLink2" value="2" /> Referenciada
-						</label>
-					</div>
-				
-					<div class="span3">
-						<label class="radio inline">
-						ao <input type="radio" name="taskSource" class="taskSource" id="taskSource1" value="1"> Projeto
-						</label>
+          </select>       
+        </div>
 
-						<label class="radio inline">
-						à <input type="radio" name="taskSource" class="taskSource" id="taskSource2" value="2"> Tarefa
-						</label>
-					</div>
+        <div class="newTaskProjectSelect hide">
+          <select id="newTaskProject" name="newTaskProject" data-rel="chosen" class="input-block-level">
+            <option value="<?=$projectID?>"><?=$projectTitle?></option>
+            <?php foreach($taskProjects as $project) { ?>
+            <option value="<?=$project->projectID?>"><?=$project->projectTitle?></option>
+            <?php } ?>
+          </select>
+        </div>
 
-				</div>
-
-				<div class="row">
-					<div class="span6">
-						<div class="newTaskTaskSelect hide">
-							</br>
-							<select class="span6"  id="newTaskFather" name="newTaskFather" data-rel="chosen">
-								<option value="<?=$taskID?>"><?=$taskTitle?></option>
-								<?php foreach($tasks as $task) { ?>
-								<option value="<?=$task->taskID?>" projectID="<?=$task->taskProject?>"><?=$task->taskID?> - <?=substr($task->taskTitle, 0, 60)?></option>
-								<?php } ?>
-
-							</select>				
-						</div>
-
-						<div class="newTaskProjectSelect hide">
-							</br>
-							<select class="span6"  id="newTaskProject" name="newTaskProject" data-rel="chosen">
-								<option value="<?=$projectID?>"><?=$projectTitle?></option>
-								<?php foreach($taskProjects as $project) { ?>
-								<option value="<?=$project->projectID?>"><?=$project->projectTitle?></option>
-								<?php } ?>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				</br>
-
-				<div class="row">
-					<div class="span6">
-						<label for="taskResponsableUser" class="control-label">Responsável: *</label>
-						<select class="span6" id="taskResponsableUser" name="taskResponsableUser" data-rel="chosen">
-							<option value="<?=$this->session->userdata('userID')?>"> <?=$this->session->userdata('userName')?></option>
-							<?php foreach($taskResponsableUsers as $taskResponsableUser) { ?>
-								<?php if ($this->session->userdata('userID') != $taskResponsableUser->userID) { ?>
-									<option value="<?=$taskResponsableUser->userID?>"><?=$taskResponsableUser->userName?></option>
-								<?php } ?>
-							<?php } ?>
-
-						</select>
-					</div>
-				</div>
-			</div><!--span12 end -->
-		</div><!--modal-body row end -->
-	</div>
+			</div> <!-- span12 end -->
+		</div> <!-- row-fluid end -->
+	</div><!--modal-body row end -->
 
 	<div class="modal-footer">
 		<a href="#" class="btn btn-primary" id="saveNewTask">Criar</a>

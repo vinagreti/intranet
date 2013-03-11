@@ -44,7 +44,7 @@ $(document).ready(function(){
 					taskLink : taskLink,
 					deadLineDate: deadLineDate		
 				},function( response ) {
-					$('#tzadiDialogs').modal('hide');
+					$('#tzadiTaskForm').modal('hide');
 					if(searchPattern["taskStatus1"]) loadList(searchPattern);
 				});
 			});

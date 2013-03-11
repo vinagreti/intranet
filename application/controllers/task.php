@@ -196,7 +196,7 @@ class Task extends CI_Controller {
 				$message = '<p>Uma nova tarefa foi criada por<p>';
 				foreach($this->input->post() as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
 
-				$this->load->library('email', $config);
+				$this->load->library('email');
 				$this->email->set_newline("\r\n");
 				$this->email->from('task@intranet.tzadi.com');
 				$this->email->to($to);
