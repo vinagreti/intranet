@@ -18,12 +18,9 @@ function globalAlert(kind, message, alertDiv){
 	$(alertDiv).append(alert);
 	$(".alert").fadeIn('slow');
 
-	if(alertDiv == ".globalAlert"){
-		setTimeout(function() {
-			$(".alert").fadeOut('slow');
-		}, 5000 );
-
-	}
+	setTimeout(function() {
+		$(".alert").fadeOut('slow');
+	}, 5000 );
 }
 
 function globalValidateInput(kind, input, message){
