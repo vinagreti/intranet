@@ -14,10 +14,6 @@ $(document).ready(function(){
 		$(".newTaskTaskSelect").show();			
 	});
 
-	$("#test").live('click', function( e ){
-		console.log($('#newTaskFather').find(':selected').attr('project'));
-	});
-
 	if (typeof newTask !== 'function') {
 		newTask = function newTask(){
 			$("#saveNewTask").live('click', function( e ){
@@ -34,7 +30,7 @@ $(document).ready(function(){
 				} 
 
 				var valid = true;
-				console.log(taskFather);
+				
 				valid = valid && globalValidateLenght(1, 65535, $('#newTaskTitle').val(), 'Favor definir o título da tarefa');
 				valid = valid && globalValidateLenght(1, 65535, $('#taskKind').val(), 'Favor definir o tipo da tarefa');
 				valid = valid && globalValidateLenght(1, 65535, $('#deadLineDate').val(), 'Favor definir o deadline da tarefa');
@@ -52,7 +48,7 @@ $(document).ready(function(){
 						deadLineDate: $('#deadLineDate').val()		
 					},function( response ) {
 						$('#tzadiTaskForm').modal('hide');
-						$("#saveNewTask").button('reset')
+						$("#saveNewTask").button('reset');
 					});
 				} else {
 					$("#saveNewTask").button('reset');

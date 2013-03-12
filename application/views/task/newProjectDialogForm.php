@@ -4,6 +4,7 @@
 	</div>
 
 	<div class="modal-body">
+		<div class="globalModalAlert" id="modalAlert"></div>
 
 	<form class="form-vertical">
 		<label for="newProjectTitle" class="control-label">Título *</label>

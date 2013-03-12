@@ -73,11 +73,22 @@ $(document).ready(function(){
 
 // save new project button - should be in te new project js file
 	$("#saveNewProject").live('click', function( e ){
-		newProjectTitle = $('#newProjectTitle').val();
-		$.post(base_url + "task/createProject", {
-			projectTitle : newProjectTitle
-		},function( response ) {
-			$('#tzadiDialogs').modal('hide');
-		});
+
+		$("#saveNewProject").button('loading');
+
+		var valid = true;
+		valid = valid && globalValidateLenght(1, 65535, $('#newProjectTitle').val(), 'Favor definir o título do Projeto');
+
+		if ( valid ) {
+			$.post(base_url + "task/createProject", {
+				projectTitle : $('#newProjectTitle').val()
+			},function( response ) {
+				$('#tzadiDialogs').modal('hide');
+				$("#saveNewProject").button('reset');
+			});
+		} else {
+			$("#saveNewProject").button('reset');
+		}
+
 	});
 });
