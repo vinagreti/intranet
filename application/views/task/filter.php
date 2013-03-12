@@ -79,4 +79,18 @@
 	<button type="button" src="#" class="taskListFilterClean btn btn-small btn-warning" href="#">Limpar filtro</button>
 </div>
 
-<script src="<?=base_url()?>assets/js/task/filter.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	if (typeof taskFilter !== 'function') {
+		taskFilter = function taskFilter(){
+
+			$(".taskListFilterCancel").live('click', function( e ){
+				$("#filter").modal("hide");
+			});
+		};
+		
+		taskFilter();
+	}
+
+});
+</script>

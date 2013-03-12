@@ -214,7 +214,7 @@ class Task extends CI_Controller {
 	public function createProjectForm()
 	{
 		$data = '';
-		echo $this->load->view('task/newProjectDialogForm', $data, true);
+		echo $this->load->view('task/newProjectForm', $data, true);
 	}
 
 	public function createProject()
