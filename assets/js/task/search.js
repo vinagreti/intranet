@@ -120,7 +120,7 @@ $(document).ready(function(){
 
 		e.preventDefault();
 
-		if ( Object.keys(searchPattern).length == 0 ) alert("Nenhum filtro foi definido");
+		if ( Object.keys(searchPattern).length == 0 ) alert("Nenhum novo filtro foi definido");
 		else {
 			if (typeof taskSaveFilter !== 'function') {
 				$.ajax({
