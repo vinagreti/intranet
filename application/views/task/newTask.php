@@ -4,6 +4,7 @@
 	</div>
 
 	<div class="modal-body">
+    <div class="globalModalAlert" id="modalAlert"></div>
 		<div class="row-fluid">
 			<div class="span12">
 
@@ -25,7 +26,7 @@
 
 					<div class="span6">
 			      <select  id="taskKind" name="taskKind" data-rel="chosen" class="input-block-level">
-			        <option>Tipo da tarefa...</option>
+			        <option value="">Tipo da tarefa...</option>
 			        <?php foreach($taskKinds as $taskKind) { ?>
 			        <option value="<?=$taskKind->taskKindID?>"><?=$taskKind->taskKindName?></option>
 			        <?php } ?>
@@ -45,38 +46,42 @@
 
 				</div>
 
-				<div>
-		      <label class="radio inline">
-		      <input type="radio" name="taskLink" id="taskLink1" value="1" checked /> Vinculada
-		      </label>
-		      <label class="radio inline">
-		      <input type="radio" name="taskLink" id="taskLink2" value="2" /> Referenciada
-		      </label>
-				</div>
+        <div class="row-fluid">
+          <div class="span12">
+            <div class="span6">
+              <div class="btn-group pull-left" data-toggle="buttons-radio">
+                <button class="btn btn-large" type="button" name="taskLink" value="0">
+                  Referenciada
+                </button>
+                <button class="btn btn-large active" type="button" name="taskLink" value="1">
+                  Vinculada
+                </button>
+              </div>
+            </div>
 
-				<div>
-		      <label class="radio inline">
-		      ao <input type="radio" name="taskSource" class="taskSource" id="taskSource1" value="1"> Projeto
-		      </label>
-		      <label class="radio inline">
-		      à <input type="radio" name="taskSource" class="taskSource" id="taskSource2" value="2"> Tarefa
-		      </label>
-		      <br></br>
-				</div>
+            <div class="span6">
+              <div class="btn-group pull-right" data-toggle="buttons-radio">
+                <button class="btn btn-large active" id="taskSourceTask" type="button" name="taskSource" value="task">à Tarefa</button>
+                <button class="btn btn-large" id="taskSourceProject" type="button" name="taskSource" value="project">ao Projeto</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      	<div class="newTaskTaskSelect hide">
+        </br>
+    
+      	<div class="newTaskTaskSelect">
           <select id="newTaskFather" name="newTaskFather" data-rel="chosen" class="input-block-level">
-            <option value="<?=$taskID?>"><?=$taskTitle?></option>
+            <option value="">Selecione a tarefa pai...</option>
             <?php foreach($tasks as $task) { ?>
-            <option value="<?=$task->taskID?>" projectID="<?=$task->taskProject?>"><?=$task->taskID?> - <?=substr($task->taskTitle, 0, 60)?></option>
+            <option value="<?=$task->taskID?>" project="<?=$task->taskProject?>"><?=$task->taskID?> - <?=substr($task->taskTitle, 0, 60)?></option>
             <?php } ?>
-
           </select>       
         </div>
 
         <div class="newTaskProjectSelect hide">
           <select id="newTaskProject" name="newTaskProject" data-rel="chosen" class="input-block-level">
-            <option value="<?=$projectID?>"><?=$projectTitle?></option>
+            <option value="">Selecione o projeto pai...</option>
             <?php foreach($taskProjects as $project) { ?>
             <option value="<?=$project->projectID?>"><?=$project->projectTitle?></option>
             <?php } ?>
@@ -88,8 +93,9 @@
 	</div><!--modal-body row end -->
 
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" id="saveNewTask">Criar</button>
+		<button type="submit" class="btn btn-primary" id="saveNewTask" data-loading-text="Salvando...">Criar</button>
 		<a href="#" class="btn" data-dismiss="modal">Fechar</a>
+    <a href="#" class="btn" id="test">Fechar</a>
 	</div>
 
 	<script src="<?=base_url()?>assets/js/task/newTask.js"></script>

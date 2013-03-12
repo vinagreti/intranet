@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 	$(".refreshList").live('click', function( e ){ // atualiza a lista
 		filterData['firstRow'] = 0;
-		filterData['numRows'] = $('.listBody tr').length;
+		filterData['numRows'] = 10;
 		$(".listBody").empty();	
 		getTasks(filterData); // função que popula a tabela de tarefas
 	});

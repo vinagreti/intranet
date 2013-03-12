@@ -4,55 +4,60 @@ $(document).ready(function(){
     language: 'pt-BR'
   });
 
-	$(".taskSource").live('change', function( e ){
-		
-		if ( $("#taskSource1").is(':checked') ){
-			$(".newTaskProjectSelect").show();
-			$(".newTaskTaskSelect").hide();
-		} 
-		if ( $("#taskSource2").is(':checked') ) {
-			$(".newTaskProjectSelect").hide();
-			$(".newTaskTaskSelect").show();			
-		}
+	$("#taskSourceProject").live('click', function( e ){
+		$(".newTaskProjectSelect").show();
+		$(".newTaskTaskSelect").hide();
+	});
+
+	$("#taskSourceTask").live('click', function( e ){
+		$(".newTaskProjectSelect").hide();
+		$(".newTaskTaskSelect").show();			
+	});
+
+	$("#test").live('click', function( e ){
+		console.log($('#newTaskFather').find(':selected').attr('project'));
 	});
 
 	if (typeof newTask !== 'function') {
 		newTask = function newTask(){
 			$("#saveNewTask").live('click', function( e ){
 
-				$('.loading').show();
+				$("#saveNewTask").button('loading');
 
-				newTaskFather = "";
-				newTaskProject = "";
-
-				taskResponsableUser = $('#taskResponsableUser').val();
-				taskKind = $('#taskKind').val();
-				newTaskTitle = $('#newTaskTitle').val();
-				newTaskDesc = $('#newTaskDesc').val();
-				deadLineDate = $('#deadLine').val();
-				if ( $("#taskLink1").is(':checked') ) taskLink = 1;
-				if ( $("#taskLink2").is(':checked') ) taskLink = 0;
-				if ( $("#taskSource1").is(':checked') ) newTaskProject = $('#newTaskProject').val();
-
-				if ( $("#taskSource2").is(':checked') ) {
-					fatherSelect = $('#newTaskFather');
-					newTaskFather = fatherSelect.val();
-					newTaskProject = fatherSelect.find(':selected').attr('projectID');
+				if ( $('button[name="taskSource"].active').val() == 'task' ) {
+					taskFather = $('#newTaskFather').val();
+					taskProject = $('#newTaskFather').find(':selected').attr('project');
+				}
+				if ( $('button[name="taskSource"].active').val() == 'project' ){
+					taskFather = 0;
+					taskProject = $('#newTaskProject').val();
 				} 
-				
-				$.post(base_url + "task/newTask", {
-					taskFather : newTaskFather,
-					taskProject : newTaskProject,
-					taskKind : taskKind,
-					taskResponsableUser : taskResponsableUser,
-					taskTitle : newTaskTitle,
-					taskDesc : newTaskDesc,
-					taskLink : taskLink,
-					deadLineDate: deadLineDate		
-				},function( response ) {
-					$('#tzadiTaskForm').modal('hide');
-					$('.loading').hide();
-				});
+
+				var valid = true;
+				console.log(taskFather);
+				valid = valid && globalValidateLenght(1, 65535, $('#newTaskTitle').val(), 'Favor definir o título da tarefa');
+				valid = valid && globalValidateLenght(1, 65535, $('#taskKind').val(), 'Favor definir o tipo da tarefa');
+				valid = valid && globalValidateLenght(1, 65535, $('#deadLineDate').val(), 'Favor definir o deadline da tarefa');
+				valid = valid && globalValidateLenght(1, 65535, taskFather, 'Favor definir o vínculo da tarefa');
+
+				if ( valid ) {
+					$.post(base_url + "task/newTask", {
+						taskFather : taskFather,
+						taskProject : taskProject,
+						taskKind : $('#taskKind').val(),
+						taskResponsableUser : $('#taskResponsableUser').val(),
+						taskTitle : $('#newTaskTitle').val(),
+						taskDesc : $('#newTaskDesc').val(),
+						taskLink : $('button[name="taskLink"].active').val(),
+						deadLineDate: $('#deadLineDate').val()		
+					},function( response ) {
+						$('#tzadiTaskForm').modal('hide');
+						$("#saveNewTask").button('reset')
+					});
+				} else {
+					$("#saveNewTask").button('reset');
+				}
+
 
 			});
 		};
