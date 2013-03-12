@@ -19,6 +19,9 @@ $(document).ready(function(){
 	if (typeof newTask !== 'function') {
 		newTask = function newTask(){
 			$("#saveNewTask").live('click', function( e ){
+
+				$('.loading').show();
+
 				newTaskFather = "";
 				newTaskProject = "";
 
@@ -48,9 +51,9 @@ $(document).ready(function(){
 					deadLineDate: deadLineDate		
 				},function( response ) {
 					$('#tzadiTaskForm').modal('hide');
-					if(searchPattern["taskStatus1"]) loadList(searchPattern);
+					$('.loading').hide();
 				});
-				
+
 			});
 		};
 		newTask();

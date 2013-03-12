@@ -32,7 +32,7 @@
     {
       display:none;
       position: fixed;
-      z-index: 1000;
+      z-index: 9999;
       top: 0;
       left: 0;
       height: 100%;
@@ -47,7 +47,7 @@
     }
 
     /* Arrumando o datetimepiker para aparecer sobre os modais. */
-    .bootstrap-datetimepicker-widget { z-index: 9999;}
+    .bootstrap-datetimepicker-widget { z-index: 9998;}
 
   </style>
   <!-- Loading the JQuery -->

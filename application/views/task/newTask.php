@@ -33,12 +33,12 @@
 					</div>
 
 					<div class="span6">
-					  <div id="deadLine" class="input-append date">
-					    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="deadLineDate"></input>
+					  <div id="deadLine" class="input-prepend date">
 					    <span class="add-on">
 					      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
 					      </i>
 					    </span>
+					    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="deadLineDate"></input>
 					  </div>
 				  </div>
 
@@ -88,7 +88,7 @@
 	</div><!--modal-body row end -->
 
 	<div class="modal-footer">
-		<a href="#" class="btn btn-primary" id="saveNewTask">Criar</a>
+		<button type="submit" class="btn btn-primary" id="saveNewTask">Criar</button>
 		<a href="#" class="btn" data-dismiss="modal">Fechar</a>
 	</div>
 
