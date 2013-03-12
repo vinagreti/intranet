@@ -22,12 +22,8 @@
 	      </div>
 
 				<div class="row-fluid">
-					<div class="span5">
-			      <input type="text" id="deadLineDate" data-date-format="dd-mm-yyyy" class="input-small" />
-			      <input type="text" id="deadLineTime" class="input-small" />
-					</div>
 
-					<div class="span7">
+					<div class="span6">
 			      <select  id="taskKind" name="taskKind" data-rel="chosen" class="input-block-level">
 			        <option>Tipo da tarefa...</option>
 			        <?php foreach($taskKinds as $taskKind) { ?>
@@ -35,6 +31,18 @@
 			        <?php } ?>
 			      </select>
 					</div>
+
+					<div class="span6">
+					  <div id="deadLine" class="input-append date">
+					    <input data-format="dd/MM/yyyy hh:mm:ss" type="text" id="deadLineDate"></input>
+					    <span class="add-on">
+					      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+					      </i>
+					    </span>
+					  </div>
+				  </div>
+
+
 				</div>
 
 				<div>

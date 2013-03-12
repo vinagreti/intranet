@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+  $('#deadLine').datetimepicker({
+    language: 'pt-BR'
+  });
+
 	$(".taskSource").live('change', function( e ){
 		
 		if ( $("#taskSource1").is(':checked') ){
@@ -22,18 +26,17 @@ $(document).ready(function(){
 				taskKind = $('#taskKind').val();
 				newTaskTitle = $('#newTaskTitle').val();
 				newTaskDesc = $('#newTaskDesc').val();
-				date = $('#deadLineDate').val();
-				time = $('#deadLineTime').val();
-				deadLineDate = date+" "+ time;
+				deadLineDate = $('#deadLine').val();
 				if ( $("#taskLink1").is(':checked') ) taskLink = 1;
 				if ( $("#taskLink2").is(':checked') ) taskLink = 0;
-
 				if ( $("#taskSource1").is(':checked') ) newTaskProject = $('#newTaskProject').val();
+
 				if ( $("#taskSource2").is(':checked') ) {
 					fatherSelect = $('#newTaskFather');
 					newTaskFather = fatherSelect.val();
 					newTaskProject = fatherSelect.find(':selected').attr('projectID');
 				} 
+				
 				$.post(base_url + "task/newTask", {
 					taskFather : newTaskFather,
 					taskProject : newTaskProject,
@@ -47,6 +50,7 @@ $(document).ready(function(){
 					$('#tzadiTaskForm').modal('hide');
 					if(searchPattern["taskStatus1"]) loadList(searchPattern);
 				});
+				
 			});
 		};
 		newTask();

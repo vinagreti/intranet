@@ -22,8 +22,6 @@ $(document).ready(function(){
 					form : true
 				},function( response ) {
 					$('#tzadiTaskForm').append( response );
-					$('#deadLineTime').clockface();
-					$('#deadLineDate').datepicker();
 				});
 				$('#tzadiTaskForm').modal('show');
 			}

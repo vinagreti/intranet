@@ -8,6 +8,8 @@
   <meta name="author" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="<?=base_url()?>assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="<?=base_url()?>assets/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
   <!-- Le styles -->
   <link href="<?=base_url()?>assets/bootstrap/css/bootstrap.css" rel="stylesheet">
   <style type="text/css">
@@ -43,6 +45,10 @@
     th.header { 
         cursor: pointer; 
     }
+
+    /* Arrumando o datetimepiker para aparecer sobre os modais. */
+    .bootstrap-datetimepicker-widget { z-index: 9999;}
+
   </style>
   <!-- Loading the JQuery -->
   <script src="<?=base_url()?>assets/JQuery/jquery.js"></script>
@@ -64,11 +70,11 @@
   <script src="<?=base_url()?>assets/bootstrap/js/html5shiv.js"></script>
   <![endif]-->
   <!-- Fav and touch icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?=base_url()?>assets/bootstrap/ico/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?=base_url()?>assets/bootstrap/ico/apple-touch-icon-114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?=base_url()?>assets/bootstrap/ico/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="<?=base_url()?>assets/bootstrap/ico/apple-touch-icon-57-precomposed.png">
-  <link rel="shortcut icon" href="<?=base_url()?>assets/bootstrap/ico/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?=base_url()?>assets/img/144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?=base_url()?>assets/img/114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?=base_url()?>assets/img/72x72.png">
+  <link rel="apple-touch-icon-precomposed" href="<?=base_url()?>assets/img/32x32.png">
+  <link rel="shortcut icon" href="<?=base_url()?>assets/img/32x32.png">
 </head>
 <body>
   <div class="navbar <?php if (ENVIRONMENT == "production") echo "navbar-inverse"; ?> navbar-fixed-top">
@@ -184,10 +190,9 @@
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-collapse.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-typeahead.js"></script>
-    <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-daterangepicker.js"></script>
-    <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-daterangepicker-date.js"></script>
-    <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-datepicker.js"></script>
-    <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-clockface.js"></script>
+
+    <script src="<?=base_url()?>assets/bootstrap/js/bootstrap-datetimepicker.min"></script>
+
     <script type="text/javascript" src="<?=base_url()?>assets/JQuery/jquery.tablesorter.min.js"></script> 
 
     <!-- Cusom JS -->
@@ -196,8 +201,8 @@
 
 
     <!-- Dialogs -->
-    <div class="modal hide fade" id="tzadiDialogs"></div>
-    <div class="modal hide fade" id="tzadiTaskForm"></div>
+    <div class="modal hide fade" id="tzadiDialogs" tabindex="-1"></div>
+    <div class="modal hide fade" id="tzadiTaskForm" tabindex="-1"></div>
     <div class="modal hide fade" id="tzadiCalc" tabindex="-1"></div>
     <div class="modal hide fade" id="filter" tabindex="-1"></div>
     <div class="loading"></div>
