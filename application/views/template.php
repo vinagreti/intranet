@@ -191,7 +191,7 @@
     <script type="text/javascript" src="<?=base_url()?>assets/bootstrap/js/bootstrap-carousel.js"></script>
     <script type="text/javascript" src="<?=base_url()?>assets/bootstrap/js/bootstrap-typeahead.js"></script>
 
-    <script type="text/javascript" src="<?=base_url()?>assets/bootstrap/js/bootstrap-datetimepicker.min"></script>
+    <script type="text/javascript" src="<?=base_url()?>assets/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 
     <script type="text/javascript" src="<?=base_url()?>assets/JQuery/jquery.tablesorter.min.js"></script> 
 
