@@ -356,15 +356,13 @@ $(document).ready(function(){
 			$(".activityButton").live('click', function( e ){
 				e.preventDefault();
 				taskID = $(this).attr('taskID');
-				if(globalConfirmAction("Deseja realmente reabrir a tarefa "+ taskID + '?')){
-					$.post(base_url + "task/saveActivity", {
-						form : true,
-						taskID : taskID
-					}, function( e ) {
-						$('#tzadiDialogs').html( e );
-						$('#tzadiDialogs').modal('show');
-					});
-				}
+				$.post(base_url + "task/saveActivity", {
+					form : true,
+					taskID : taskID
+				}, function( e ) {
+					$('#tzadiDialogs').html( e );
+					$('#tzadiDialogs').modal('show');
+				});
 			});
 
 			/*
@@ -439,18 +437,19 @@ var insertRow = function (task) { // insere linha na tabela
 
 	row = '<td class="center" rel="tooltip" title="Número da tarefa"><small>'+task.taskID+'</small></td>';
 	row += '<td rel="tooltip" title="Opções de interação com a tarefa">';
-		row += '<span class="nav"><li class="dropdown">';
-			row += '<button class="actionButton btn btn-info btn-mini" data-toggle="dropdown"><i class="icon-chevron-down"></i></button>';
+		row += '<span class="dropdown">';
+			row += '<a class="btn btn-info btn-mini dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ações"><i class="icon-chevron-down"></i></a>';
 			row += '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" tabindex="-1">';
-			if(task.taskStatus == "1") row += '<li ><a class="approveButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-thumbs-up"></i> Aprovar</a></li>';
-			if(task.taskStatus == "1") row += '<li><a class="rejectButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-thumbs-down"></i> Rejeitar</a></li>';
-			if(task.taskStatus != "1" && task.taskStatus != "5"  && task.taskStatus != "2") row += '<li><a class="cancelButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-remove"></i> Cancelar</a></li>';
-			if(task.taskStatus != "5"  && task.taskStatus != "2"  && task.taskStatus != "4") row += '<li><a class="startButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-play"></i> Iniciar</a></li>';
-			if(task.taskStatus != "5"  && task.taskStatus != "2") row += '<li><a class="finishButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-ok"></i> Finaizar</a></li>';
-			if(task.taskStatus == "5" || task.taskStatus == "2") row += '<li><a class="reopenButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-warning-sign"></i> Reabrir tarefa</a></li>';
-			row += '<li><a class="commentButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-comment"></i> Comentar</a></li>';
-			if(task.taskStatus != "1") row += '<li><a class="activityButton" taskID="'+task.taskID+'" href="#profile"><i class="icon-time"></i> Registrar atividade</a></li>';
-		row += '</ul></li></span>';
+				if(task.taskStatus == "1") row += '<li><a href="#" class="approveButton" taskID="'+task.taskID+'"><i class="icon-thumbs-up"></i> Aprovar</a></li>';
+				if(task.taskStatus == "1") row += '<li><a href="#" class="rejectButton" taskID="'+task.taskID+'"><i class="icon-thumbs-down"></i> Rejeitar</a></li>';
+				if(task.taskStatus != "1" && task.taskStatus != "5"  && task.taskStatus != "2") row += '<li><a href="#" class="cancelButton" taskID="'+task.taskID+'"><i class="icon-remove"></i> Cancelar</a></li>';
+				if(task.taskStatus != "5"  && task.taskStatus != "2"  && task.taskStatus != "4") row += '<li><a href="#" class="startButton" taskID="'+task.taskID+'"><i class="icon-play"></i> Iniciar</a></li>';
+				if(task.taskStatus != "5"  && task.taskStatus != "2") row += '<li><a href="#" class="finishButton" taskID="'+task.taskID+'"><i class="icon-ok"></i> Finaizar</a></li>';
+				if(task.taskStatus == "5" || task.taskStatus == "2") row += '<li><a href="#" class="reopenButton" taskID="'+task.taskID+'"><i class="icon-warning-sign"></i> Reabrir tarefa</a></li>';
+				row += '<li><a href="#" class="commentButton" taskID="'+task.taskID+'"><i class="icon-comment"></i> Comentar</a></li>';
+				if(task.taskStatus != "1") row += '<li><a href="#" class="activityButton" taskID="'+task.taskID+'"><i class="icon-time"></i> Registrar atividade</a></li>';
+			row += '</ul>';
+		row += '</span>';
 	row += '</td>';
 	row += '<td class="center"><small><a href="task/view/'+task.taskID+'" target="_blank" rel="tooltip" title="'+task.taskTitle+'">'+ taskTitle +'</a></small></td>';
 	row += '<td class="center" rel="tooltip" title="Responsável pela tarefa"><small>'+task.taskResponsableName.split(" ")[0]+'</small></td>';
