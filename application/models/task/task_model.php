@@ -27,7 +27,7 @@ function getAll( $data ) {
         ->select('taskLink')
         ->select('taskProject')
         ->from('tzadiTask t')
-        ->order_by('taskID')
+        ->order_by('taskStatus, taskID desc')
         ->join('tzadiTaskProject p', 'p.projectID = t.taskProject', 'left')
         ->join('tzadiUser u', 'u.userID = t.taskResponsableUser', 'left')
         ->join('tzadiTaskKind tk', 'tk.taskKindID = t.taskKind', 'left')

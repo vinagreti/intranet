@@ -8,7 +8,12 @@ class User extends CI_Controller {
 	}
 
 	public function login(){
-		$this->load->view('user/login');
+		$content = $this->load->view('user/login', "", true);
+		$data = array(
+			'page_title' => 'Login',
+			'content' => $content
+			);
+		$this->parser->parse('template', $data);
 	}
 
 	public function submitLogin()

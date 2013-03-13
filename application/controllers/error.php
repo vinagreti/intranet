@@ -4,7 +4,7 @@ class Error extends CI_Controller {
 
 	public function index()
 	{
-		$this->permission();
+		$this->denyDirectAccess();
 	}
 
 	public function permission()
@@ -12,6 +12,15 @@ class Error extends CI_Controller {
 		$conteudo = $this->load->view('error/permission', "", true);
 		$data = array(
 			'page_title' => 'Permissão negada',
+			'content' => $conteudo);
+		$this->parser->parse('template', $data);
+	}
+
+	public function denyDirectAccess()
+	{
+		$conteudo = $this->load->view('error/denyDirectAccess', "", true);
+		$data = array(
+			'page_title' => 'Acesso direto negado',
 			'content' => $conteudo);
 		$this->parser->parse('template', $data);
 	}

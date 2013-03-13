@@ -86,27 +86,42 @@
           <span class="icon-bar"></span>
         </button>
 
-        <span class="brand dropdown">
-          Projeto:
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Selecione outro projeto">
-            <?php
-              if($this->session->userdata('userProject') > 0) {
-                echo $this->session->userdata('userProjectName');
-              } else {
-                echo "Todos";
-              }
-            ?>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="#" id='0' class="projectSelect">Todos</a></li>
-            <?php foreach($this->session->userdata('userProjects') as $project) { ?>
-              <li><a href="#" id='<?=$project->projectID?>' class="projectSelect"><?=$project->projectTitle?></a></li>
-            <?php } ?>
-          </ul>
-        </span>
+        <?php if($this->session->userdata('userID')) { ?>
+          <span class="brand dropdown">
+            Projeto:
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Selecione outro projeto">
+              <?php
+                if($this->session->userdata('userProject') > 0) {
+                  echo $this->session->userdata('userProjectName');
+                } else {
+                  echo "Todos";
+                }
+              ?>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#" id='0' class="projectSelect">Todos</a></li>
+              <?php foreach($this->session->userdata('userProjects') as $project) { ?>
+                <li><a href="#" id='<?=$project->projectID?>' class="projectSelect"><?=$project->projectTitle?></a></li>
+              <?php } ?>
+            </ul>
+          </span>
+        <?php } else { ?>
+          <style type="text/css">
+            /* arrumando o local do logo */
+            .brand
+            {
+              background: url("<?=base_url()?>assets/img/logo.png") no-repeat left center;
+              height: 20px;
+              width: 110px;
+            }
+          </style>
+          <span class="brand"></span>
+        <?php } ?>
+
 
         <div class="nav-collapse collapse">
-          <ul class="nav pull-right">  
+          <ul class="nav pull-right">
+            <?php if($this->session->userdata('userID')) { ?>
             <li class="dropdown pull-right">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-large"></i> <?=$this->session->userdata('userName')?></a>
               <ul class="dropdown-menu">
@@ -116,6 +131,12 @@
                 <li><a tabindex="-1"  href="<?=base_url()?>user/logout">Logout</a></li>
               </ul>
             </li>
+            <?php } else { ?> 
+              <p class="navbar-text pull-right">
+                <i class="icon-user icon-large"></i>
+                <a class="navbar-link" href="<?=base_url()?>user/login"> Entrar</a>
+              </p>
+            <?php } ?>
           </ul>
           <ul class="nav">
 

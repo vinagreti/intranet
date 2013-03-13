@@ -102,9 +102,6 @@
 	</div>
 <?php } ?>
 
-
-<script src="<?=base_url()?>assets/js/task/view.js"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){
 

@@ -152,10 +152,10 @@ class Task extends CI_Controller {
 	public function update($taskID)
 	{
 		$data = $this->input->post();
-		if(!$data['taskResponsableUser']) $data['taskResponsableUser'] = $this->session->userdata('userID');
+		if(!isset($data['taskResponsableUser'])) $data['taskResponsableUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
 		$response = $this->task_model->update($taskID, $data);
-		echo($response);
+		echo json_encode($response);
 	}
 
 	public function newTask() {
@@ -166,33 +166,25 @@ class Task extends CI_Controller {
 				$temp->numRows = "18446744073709551615";
 				$tasks = $this->task_model->getAll($temp);
 				$data->tasks = $tasks->tasks;
-				$data->taskID = '';
-				$data->taskTitle = '';
 				$this->load->model('user/user_model');
 				$data->taskResponsableUsers = $this->user_model->getAll();
 				$data->taskKinds = $this->task_model->getAllKind();
 				$data->taskProjects = $this->task_model->getAllProject();
-				$data->projectID = '';
-				$data->projectTitle = '';
-				$data->date = date('d-m-Y', time());
-				$data->time = date('H:i', time());
-				echo $this->load->view('task/newTask', $data);		
+				echo $this->load->view('task/taskForm', $data);		
 			}
 			else {
-
 				$this->load->model('user/user_model');
-
 				$data = $this->input->post();
 				$data['taskCreatorUser'] = $this->session->userdata('userID');
-				$date = date_create($data['deadLineDate']);
-				$data['deadLineDate'] = date_format($date, 'Y-m-d H:i:s');
+				$date = DateTime::createFromFormat('d/m/Y H:i:s', $data['deadLineDate']);
+				$data['deadLineDate'] = $date->format('Y-m-d H:i:s');
 				$this->load->model('task/task_model');
-				$dbResponse = $this->task_model->createTask($data);
+				$response['db'] = $this->task_model->createTask($data);
 
 				$userID = $this->input->post('taskResponsableUser');
 				$responsable = $this->user_model->getByID($userID);
 				$to = $responsable->userEmail;
-				$subject = 'Task ' . $dbResponse;
+				$subject = 'Task ' . $response['db'];
 				$message = '<p>Uma nova tarefa foi criada por<p>';
 				foreach($this->input->post() as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
 
@@ -204,9 +196,10 @@ class Task extends CI_Controller {
 				$message = '<html><head><meta charset="utf-8"></head><body>'.$message.'</body></html>';
 				$this->email->message(utf8_decode($message));
 
-				if(!$this->email->send()) echo show_error($this->email->print_debugger());
+				$this->load->library('gmail');
+				$response['mail'] = $this->gmail->send($to, utf8_decode($subject), utf8_decode($message));
 
-				echo $dbResponse;
+				echo $response;
 			}
 		}
 	}
@@ -214,107 +207,146 @@ class Task extends CI_Controller {
 	public function createProjectForm()
 	{
 		$data = '';
-		echo $this->load->view('task/newProjectForm', $data, true);
+		echo $this->load->view('task/projectForm', $data, true);
 	}
 
 	public function createProject()
 	{
 		$data = $this->input->post();
 		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->createProject($data);
-		echo $dbResponse;
+		$response = $this->task_model->createProject($data);
+		echo $response;
 	}
 
-	public function newCommentForm()
+	public function rejectTask()
 	{
-		$data->taskID = $this->input->post("taskID");
-		echo $this->load->view('task/newCommentForm', $data, true);
+		if($this->input->post()){
+			if($this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				echo $this->load->view('task/rejectForm', $data, true);
+			}
+		} else { 
+			$this->session->set_flashdata('uri', uri_string());
+			redirect(base_url() . 'error/denyDirectAccess', 'refresh');
+		}
 	}
 
-	public function newComment()
+	public function cancelTask()
+	{
+		if($this->input->post()){
+			if($this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				echo $this->load->view('task/cancelForm', $data, true);
+			}
+		} else { 
+			$this->session->set_flashdata('uri', uri_string());
+			redirect(base_url() . 'error/denyDirectAccess', 'refresh');
+		}
+	}
+
+	public function reopenTask()
+	{
+		if($this->input->post()){
+			if($this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				echo $this->load->view('task/reopenForm', $data, true);
+			}
+		} else { 
+			$this->session->set_flashdata('uri', uri_string());
+			redirect(base_url() . 'error/denyDirectAccess', 'refresh');
+		}
+	}
+
+	public function saveActivity()
+	{
+		if($this->input->post()){
+			if($this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				echo $this->load->view('task/activityForm', $data, true);
+			} else {
+
+				$data = $this->input->post();
+
+				$date = DateTime::createFromFormat('d/m/Y H:i:s', $data['activityStart']);
+				$data['activityStart'] = $date->format('Y-m-d H:i:s');
+
+				$date = DateTime::createFromFormat('d/m/Y H:i:s', $data['activityEnd']);
+				$data['activityEnd'] = $date->format('Y-m-d H:i:s');
+
+				$data['activityUser'] = $this->session->userdata('userID');
+
+				$this->load->model('task/task_model');
+				$response['db'] = $this->task_model->registerActivity($data);
+
+
+				echo json_encode($response);				
+			}
+		} else { 
+			$this->session->set_flashdata('uri', uri_string());
+			redirect(base_url() . 'error/denyDirectAccess', 'refresh');
+		}
+	}
+
+	public function finishTask()
+	{
+		if($this->input->post()){
+			if($this->input->post("form")){
+				$data->taskID = $this->input->post("taskID");
+				echo $this->load->view('task/finishForm', $data, true);
+			} else {
+
+				$data = $this->input->post();
+
+				$date = DateTime::createFromFormat('d/m/Y H:i:s', $data['activityStart']);
+				$data['activityStart'] = $date->format('Y-m-d H:i:s');
+
+				$date = DateTime::createFromFormat('d/m/Y H:i:s', $data['activityEnd']);
+				$data['activityEnd'] = $date->format('Y-m-d H:i:s');
+
+				$data['activityUser'] = $this->session->userdata('userID');
+
+				$this->load->model('task/task_model');
+				$response['db'] = $this->task_model->registerActivity($data);
+
+
+				echo json_encode($response);				
+			}
+		} else { 
+			$this->session->set_flashdata('uri', uri_string());
+			redirect(base_url() . 'error/denyDirectAccess', 'refresh');
+		}
+	}
+
+	public function saveActionComment()
 	{
 		$data = $this->input->post();
 		$data['commentUser'] = $this->session->userdata('userID');
 		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->createComment($data);
+		$response['db'] = $this->task_model->createComment($data);
 
 		$responsable = $this->task_model->getTaskResponsable($data['commentTask']);
 		$to = $responsable->userEmail;
 		$subject = 'Task ' . $data['commentTask'];
 		$message = '<p>Um novo comentário foi efetuado na tarefa <a href="intranet.tzadi.com/task/view/'.$data['commentTask'].'">'.$data['commentTask'].'</a><p>';
 		foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
-		$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
+		$this->load->library('gmail');
+		$response['mail'] = $this->gmail->send($to, utf8_decode($subject), utf8_decode($message));
 
-		echo $dbResponse;
-	}
-
-	public function action()
-	{
-		if($this->input->post()){
-			if($data->taskID = $this->input->post("form")){
-				$data->taskID = $this->input->post("taskID");
-				$data->action = $this->input->post("action");
-				echo $this->load->view('task/action', $data, true);			
-			}
-			else {
-				$data = $this->input->post();
-				$data['commentUser'] = $this->session->userdata('userID');
-				$this->load->model('task/task_model');
-				$dbResponse = $this->task_model->createComment($data);
-
-				$responsable = $this->task_model->getTaskResponsable($data['commentTask']);
-				$to = $responsable->userEmail;
-				$subject = 'Task ' . $data['commentTask'];
-				$message = '<p>Um novo comentário foi efetuado na tarefa <a href="intranet.tzadi.com/task/view/'.$data['commentTask'].'">'.$data['commentTask'].'</a><p>';
-				foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
-				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
-
-				echo $dbResponse;
-			}
-		} else {
-			echo "Fail! None argument passed.";
-		}
-	}
-
-	public function activity()
-	{
-		if($this->input->post()){
-			if($this->input->post("form")){
-				$data->taskID = $this->input->post("taskID");
-				$data->date = date('d-m-Y', time());
-				$data->time = date('H:i', time());
-				echo $this->load->view('task/activity', $data, true);		
-			}
-			else {
-				$data = $this->input->post();
-				$data['activityUser'] = $this->session->userdata('userID');
-				$data['activityStart'] =  $this->myDatePhpMysql($data['activityStart']);
-				$data['activityEnd'] =  $this->myDatePhpMysql($data['activityEnd']);
-				$this->load->model('task/task_model');
-				$dbResponse = $this->task_model->registerActivity($data);
-
-				$responsable = $this->task_model->getTaskResponsable($data['activityTask']);
-				$to = $responsable->userEmail;
-				$subject = 'Task ' . $data['activityTask'];
-				$message = '<p>Uma nova atividade foi registrada na tarefa <a href="intranet.tzadi.com/task/view/'.$data['activityTask'].'">'.$data['activityTask'].'</a><p>';
-				foreach($data as $key => $content) $message = $message."<p>".$key.": ".$content."</p>";
-				$this->sendGmail($to, utf8_decode($subject), utf8_decode($message));
-
-				echo $dbResponse;
-			}
-		}
+		echo json_encode($response);
 	}
 
 	public function comment()
 	{
-		$data->comment = $this->input->post('comment', true);
-		$data->taskID = $this->input->post('taskID', true);
-		$data->commentUserID = $this->session->userdata('userID');
-		$this->load->model('task/task_model');
-		$dbResponse = $this->task_model->comment($data);
-		echo $dbResponse;
+		if($this->input->post()) {
+			if($this->input->post('form')){
+				$data->taskID = $this->input->post("taskID");
+				echo $this->load->view('task/commentForm', $data, true);
+			}
+		} else { 
+			$this->session->set_flashdata('uri', uri_string());
+			redirect(base_url() . 'error/denyDirectAccess', 'refresh');
+		}
 	}
-
 
 	public function getUsersLog()
 	{

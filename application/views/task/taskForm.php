@@ -152,8 +152,6 @@ $(document).ready(function(){
         } else {
           $("#saveNewTask").button('reset');
         }
-
-
       });
     };
     newTask();
