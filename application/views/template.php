@@ -188,7 +188,11 @@
           <div class="globalAlert"></div>
         </div>
       </div>
-      {content}
+      <div class="row-fluid">
+        <div class="span12 well">
+          {content}
+        </div>
+      </div>
       <hr>
       <footer>
         <p class="pull-left">&copy; <a target="_blank" href="http://tzadi.com">Tzadi.com</a> 2013</p>
