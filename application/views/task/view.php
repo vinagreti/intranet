@@ -1,103 +1,61 @@
-<div class="box">
+<h3>Tarefa <?=$task->taskID?></h3>
 
-	<div data-original-title="" class="box-header">
-		<h3></i><span class="break"></span>Tarefa <?=$task->taskID?></h3>
-	</div>
-
-	<div class="box-content">
-
-		<form  class="form-horizontal">
-
+<div class="row-fluid">
+	<div class="span12">
+		<form>
 			<input type="hidden" class="taskID" name="taskID" value="<?=$task->taskID?>">
+			<input type="text" class="taskTitle span10" name="taskTitle" size="16" id="taskTitle" value="<?=$task->taskTitle?>">
 
-			<fieldset>
+			<select class="taskResponsableUser" id="taskResponsableUser" name="taskResponsableUser" data-rel="chosen">
+				<option value="<?=$task->taskResponsableUser?>"><?=$task->taskResponsableName?></option>
 
-				<div class="control-group">
-					<label for="taskTitle" class="control-label">Título</label>
-					<div class="controls ">
-						<input type="text" class="taskTitle span10" name="taskTitle" size="16" id="taskTitle" value="<?=$task->taskTitle?>">
-					</div>
+				<?php foreach($users as $user) { ?>
+					<?php if($user->userID != $task->taskResponsableUser){?>
+					<option value="<?=$user->userID?>"><?=$user->userName?></option>
+					<?php } ?>
+				<?php } ?>
 
-					<label class="control-label" for="taskResponsableUser">Responsável</label>
-					<div class="controls">
-						<select class="taskResponsableUser" id="taskResponsableUser" name="taskResponsableUser" data-rel="chosen">
-							<option value="<?=$task->taskResponsableUser?>"><?=$task->taskResponsableName?></option>
+			</select>
 
-							<?php foreach($users as $user) { ?>
-								<?php if($user->userID != $task->taskResponsableUser){?>
-								<option value="<?=$user->userID?>"><?=$user->userName?></option>
-								<?php } ?>
-							<?php } ?>
+	    <span class="add-on">
+				<span class="dropdown">
+					<a class="btn btn-info btn-mini dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ações"><i class="icon-chevron-down"></i></a>
+					<ul class="dropdown-menu" id="taskStatus" role="menu" aria-labelledby="dLabel" tabindex="-1">
+						<?php if($task->taskStatus == "1") echo '<li><a href="#" class="approveButton" taskID="'.$task->taskID.'"><i class="icon-thumbs-up"></i> Aprovar</a></li>'; ?>
+						<?php if($task->taskStatus == "1") echo '<li><a href="#" class="rejectButton" taskID="'.$task->taskID.'"><i class="icon-thumbs-down"></i> Rejeitar</a></li>'; ?>
+						<?php if($task->taskStatus != "1" && $task->taskStatus != "5"  && $task->taskStatus != "2") echo '<li><a href="#" class="cancelButton" taskID="'.$task->taskID.'"><i class="icon-remove"></i> Cancelar</a></li>'; ?>
+						<?php if($task->taskStatus != "5"  && $task->taskStatus != "2"  && $task->taskStatus != "4") echo '<li><a href="#" class="startButton" taskID="'.$task->taskID.'"><i class="icon-play"></i> Iniciar</a></li>'; ?>
+						<?php if($task->taskStatus != "5"  && $task->taskStatus != "2") echo '<li><a href="#" class="finishButton" taskID="'.$task->taskID.'"><i class="icon-ok"></i> Finaizar</a></li>'; ?>
+						<?php if($task->taskStatus == "5" || $task->taskStatus == "2") echo '<li><a href="#" class="reopenButton" taskID="'.$task->taskID.'"><i class="icon-warning-sign"></i> Reabrir tarefa</a></li>'; ?>
+						<?php if($task->taskStatus != "1") echo '<li><a href="#" class="activityButton" taskID="'.$task->taskID.'"><i class="icon-time"></i> Registrar atividade</a></li>'; ?>
+					</ul>
+				</span>
+	    </span>
 
-						</select>
-					</div>
+	    <span class="input-xlarge uneditable-input"><?=$task->taskStatus?></span>
 
-				  <div id="deadLine" class="input-prepend date">
-				    <span class="add-on">
-							<span class="dropdown">
-								<a class="btn btn-info btn-mini dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ações"><i class="icon-chevron-down"></i></a>
-								<ul class="dropdown-menu" id="taskStatus" role="menu" aria-labelledby="dLabel" tabindex="-1">
-									<?php if($task->taskStatus == "1") echo '<li><a href="#" class="approveButton" taskID="'.$task->taskID.'"><i class="icon-thumbs-up"></i> Aprovar</a></li>'; ?>
-									<?php if($task->taskStatus == "1") echo '<li><a href="#" class="rejectButton" taskID="'.$task->taskID.'"><i class="icon-thumbs-down"></i> Rejeitar</a></li>'; ?>
-									<?php if($task->taskStatus != "1" && $task->taskStatus != "5"  && $task->taskStatus != "2") echo '<li><a href="#" class="cancelButton" taskID="'.$task->taskID.'"><i class="icon-remove"></i> Cancelar</a></li>'; ?>
-									<?php if($task->taskStatus != "5"  && $task->taskStatus != "2"  && $task->taskStatus != "4") echo '<li><a href="#" class="startButton" taskID="'.$task->taskID.'"><i class="icon-play"></i> Iniciar</a></li>'; ?>
-									<?php if($task->taskStatus != "5"  && $task->taskStatus != "2") echo '<li><a href="#" class="finishButton" taskID="'.$task->taskID.'"><i class="icon-ok"></i> Finaizar</a></li>'; ?>
-									<?php if($task->taskStatus == "5" || $task->taskStatus == "2") echo '<li><a href="#" class="reopenButton" taskID="'.$task->taskID.'"><i class="icon-warning-sign"></i> Reabrir tarefa</a></li>'; ?>
-									<?php if($task->taskStatus != "1") echo '<li><a href="#" class="activityButton" taskID="'.$task->taskID.'"><i class="icon-time"></i> Registrar atividade</a></li>'; ?>
-								</ul>
-							</span>
-				    </span>
-				    <span class="input-xlarge uneditable-input"><?=$task->taskStatus?></span>
-				  </div>
+			<select class="taskKind" id="taskKind" name="taskKind" data-rel="chosen">
+				<option value="<?=$task->taskKind?>"><?=$task->taskKindName?></option>
 
-					<label class="control-label" for="taskKind">Tipo</label>
-					<div class="controls">
-						<select class="taskKind" id="taskKind" name="taskKind" data-rel="chosen">
-							<option value="<?=$task->taskKind?>"><?=$task->taskKindName?></option>
+				<?php foreach($kinds as $kind) { ?>
+				<?php if($kind->taskKindID != $task->taskKind){?>
+				<option value="<?=$kind->taskKindID?>"><?=$kind->taskKindName?></option>
+				<?php } ?>
+				<?php } ?>
 
-							<?php foreach($kinds as $kind) { ?>
-							<?php if($kind->taskKindID != $task->taskKind){?>
-							<option value="<?=$kind->taskKindID?>"><?=$kind->taskKindName?></option>
-							<?php } ?>
-							<?php } ?>
+			</select>
 
-						</select>
-					</div>
-
-					<label class="control-label">Projeto</label>
-					<div class="controls">
-						<span class="input-xlarge uneditable-input"><?=$task->projectTitle?></span>
-					</div>
-
-					<label class="control-label">Criado por</label>
-					<div class="controls">
-						<span class="input-xlarge uneditable-input"><?=$task->taskCreatorName?></span>
-					</div>
-
-					<label class="control-label">DeadLine</label>
-					<div class="controls">
-						<span class="input-xlarge uneditable-input"><?=$task->deadLineDate?></span>
-					</div>
-
-					<label class="control-label" for="taskDesc">Descrição</label>
-
-					<div class="controls">
-						<textarea class="taskDesc span10" id="taskDesc" name="taskDesc" rows="5"><?=$task->taskDesc?></textarea>
-					</div>
-
-				</div>
-
-				 <div class="control-group">
-					<div class="controls">
-						<a class="btn btn-primary saveTaskEdition" href="#">Salvar</a>
-						<a class="btn btn-warning commentButton" href="#">Comentar</a>
-					</div>
-				</div>
-
-			</fieldset>
+			<span class="input-xlarge uneditable-input"><?=$task->projectTitle?></span>
+			<span class="input-xlarge uneditable-input"><?=$task->taskCreatorName?></span>
+			<span class="input-xlarge uneditable-input"><?=$task->deadLineDate?></span>
+			<textarea class="taskDesc span10" id="taskDesc" name="taskDesc" rows="5"><?=$task->taskDesc?></textarea>
+			<a class="btn btn-primary saveTaskEdition" href="#">Salvar</a>
+			<a class="btn btn-warning commentButton" href="#">Comentar</a>
 		</form>
 	</div>
-</div><!--end: box-->
+</div>
+	
+
 
 <?php foreach($taskComments as $comment) { ?>
 	<div class="alert alert-warning">
