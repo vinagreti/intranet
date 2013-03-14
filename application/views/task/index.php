@@ -82,6 +82,7 @@
 </div>
 
 <script type="text/javascript">
+
 var searchPattern = {};
 
 var filterData = { 

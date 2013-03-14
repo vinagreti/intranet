@@ -14,7 +14,7 @@ class Task extends CI_Controller {
 	{
 		$this->load->model("task/task_model");
 		$data->filters = $this->task_model->getAllFilters($this->session->userdata('userID'));
-		$content = $this->load->view('task/search', $data, true);
+		$content = $this->load->view('task/index', $data, true);
 		$data = array(
 			'page_title' => 'Tarefas',
 			'content' => $content

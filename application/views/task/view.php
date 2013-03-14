@@ -32,19 +32,23 @@
 						</select>
 					</div>
 
-					<label class="control-label" for="taskStatus">Status</label>
-					<div class="controls">
-						<select class="taskStatus" id="taskStatus" name="taskStatus" data-rel="chosen">
-							<option value="<?=$task->taskStatus?>"><?=$task->taskStatusName?></option>
-
-							<?php foreach($statuses as $status) { ?>
-							<?php if($status->taskStatusID != $task->taskStatus){?>
-							<option value="<?=$status->taskStatusID?>"><?=$status->taskStatusName?></option>
-							<?php } ?>
-							<?php } ?>
-
-						</select>
-					</div>
+				  <div id="deadLine" class="input-prepend date">
+				    <span class="add-on">
+							<span class="dropdown">
+								<a class="btn btn-info btn-mini dropdown-toggle" data-toggle="dropdown" rel="tooltip" title="Ações"><i class="icon-chevron-down"></i></a>
+								<ul class="dropdown-menu" id="taskStatus" role="menu" aria-labelledby="dLabel" tabindex="-1">
+									<?php if($task->taskStatus == "1") echo '<li><a href="#" class="approveButton" taskID="'.$task->taskID.'"><i class="icon-thumbs-up"></i> Aprovar</a></li>'; ?>
+									<?php if($task->taskStatus == "1") echo '<li><a href="#" class="rejectButton" taskID="'.$task->taskID.'"><i class="icon-thumbs-down"></i> Rejeitar</a></li>'; ?>
+									<?php if($task->taskStatus != "1" && $task->taskStatus != "5"  && $task->taskStatus != "2") echo '<li><a href="#" class="cancelButton" taskID="'.$task->taskID.'"><i class="icon-remove"></i> Cancelar</a></li>'; ?>
+									<?php if($task->taskStatus != "5"  && $task->taskStatus != "2"  && $task->taskStatus != "4") echo '<li><a href="#" class="startButton" taskID="'.$task->taskID.'"><i class="icon-play"></i> Iniciar</a></li>'; ?>
+									<?php if($task->taskStatus != "5"  && $task->taskStatus != "2") echo '<li><a href="#" class="finishButton" taskID="'.$task->taskID.'"><i class="icon-ok"></i> Finaizar</a></li>'; ?>
+									<?php if($task->taskStatus == "5" || $task->taskStatus == "2") echo '<li><a href="#" class="reopenButton" taskID="'.$task->taskID.'"><i class="icon-warning-sign"></i> Reabrir tarefa</a></li>'; ?>
+									<?php if($task->taskStatus != "1") echo '<li><a href="#" class="activityButton" taskID="'.$task->taskID.'"><i class="icon-time"></i> Registrar atividade</a></li>'; ?>
+								</ul>
+							</span>
+				    </span>
+				    <span class="input-xlarge uneditable-input"><?=$task->taskStatus?></span>
+				  </div>
 
 					<label class="control-label" for="taskKind">Tipo</label>
 					<div class="controls">
@@ -105,35 +109,19 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	/*
-	Função do botão COMENTAR: commentButton
-	Este botão:
-	- inicia a inserção de comentário na tarefa selecionada
-	*/
+	refresh = function refresh() {
+		location.reload();
+	}
+
 	$(".commentButton").live('click', function( e ){
 		e.preventDefault();
-
-		$('#tzadiDialogs').empty();
-
-		taskID = $('.taskID').val();
-
-		$.post(base_url + "task/newCommentForm/", {
-			taskID : taskID
-		},function( response ) {
-			$('#tzadiDialogs').append( response );
-		});
-
-		$('#tzadiDialogs').modal('show');
-	});
-
-	$("#saveNewComment").live('click', function( e ){
-		newComment = $('#newComment').val();
-		taskID = $('#newComment').attr("taskID");
-		$.post(base_url + "task/newComment", {
-			comment : newComment,
-			commentTask : taskID
-		},function( response ) {
-			$('#tzadiDialogs').modal('hide');
+		taskID = $(this).attr('taskID');
+		$.post(base_url + "task/comment", {
+			form : true,
+			taskID : "<?=$task->taskID?>"
+		}, function( e ) {
+			$('#tzadiDialogs').html( e );
+			$('#tzadiDialogs').modal('show');
 		});
 	});
 
@@ -164,8 +152,165 @@ $(document).ready(function(){
 		},function( response ) {
 			alert('Salvo com sucesso! - melhorar alertas');
 		});
-
 	});
 
+	/*
+	Função do botão APROVAR: approveButton
+	Este botão:
+	- muda o status de uma tarefa para Approved "taskStatus= 3"
+	- muda a tarefa para a tabela Approved
+	*/
+	$(".approveButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		if(globalConfirmAction("Deseja realmente aprovar a tarefa "+ taskID + "?")){
+			$.post(base_url + "task/update/" + taskID, {
+				taskStatus : 3,
+				taskID : taskID
+			},function( e ) {
+				if ( e ) {
+					$.post(base_url + "task/saveActionComment", {
+						comment : 'Successo!',
+						commentTask : taskID,
+						commentAction : 'Aprovada'
+					});
+					refresh();
+				}
+			});
+		}
+	});
+
+	/*
+	Função do botão REJEITAR: rejectButton
+	Este botão:
+	- Abre um formulário para inserir um comentário
+	- muda o status de uma tarefa para REJECTED "taskStatus= 2"
+	*/
+	$(".rejectButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		if(globalConfirmAction("Deseja realmente rejeitar a tarefa "+ taskID + '?')){
+			$.post(base_url + "task/rejectTask", {
+				form : true,
+				taskID : taskID
+			}, function( e ) {
+				$('#tzadiDialogs').html( e );
+				$('#tzadiDialogs').modal('show');
+			});
+		}
+	});
+
+
+	/*
+	Função do botão CANCELAR: cancelButton
+	Este botão:
+	- muda o status de uma tarefa para CANCELLED "taskStatus= 5"
+	- muda a tarefa para a tabela Cancelled
+	*/
+	$(".cancelButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		if(globalConfirmAction("Deseja realmente cancelar a tarefa "+ taskID + '?')){
+			$.post(base_url + "task/cancelTask", {
+				form : true,
+				taskID : taskID
+			}, function( e ) {
+				$('#tzadiDialogs').html( e );
+				$('#tzadiDialogs').modal('show');
+			});
+		}
+	});
+
+	/*
+	Função do botão INICIAR: startButton
+	Este botão:
+	- muda o status de uma tarefa para OnGOING "taskStatus= 4"
+	- muda a tarefa para a tabela On Going
+	*/
+	$(".startButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		if(globalConfirmAction("Deseja realmente iniciar a tarefa "+ taskID + '?')){
+			$.post(base_url + "task/update/" + taskID, {
+				taskStatus : 4,
+				taskID : taskID
+			},function( e ) {
+				if ( e ) {
+					$.post(base_url + "task/saveActionComment", {
+						comment : 'Successo!',
+						commentTask : taskID,
+						commentAction : 'Iniciada'
+					});
+					refresh();
+				}
+			});
+		}
+	});
+
+	/*
+	Função do botão REABRIR: reopenButton
+	Este botão:
+	- muda o status de uma tarefa para NEW "taskStatus= 1"
+	- muda a tarefa para a tabela NEW
+	*/
+	$(".reopenButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		if(globalConfirmAction("Deseja realmente reabrir a tarefa "+ taskID + '?')){
+			$.post(base_url + "task/reopenTask", {
+				form : true,
+				taskID : taskID
+			}, function( e ) {
+				$('#tzadiDialogs').html( e );
+				$('#tzadiDialogs').modal('show');
+			});
+		}
+	});
+
+	/*
+	Função do botão ACTIVITY: activityButton
+	Este botão:
+	- Abre o formulário para registro de atividades
+	- insere um comentário na atividade selecionada
+	*/
+	$(".activityButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		$.post(base_url + "task/saveActivity", {
+			form : true,
+			taskID : taskID
+		}, function( e ) {
+			$('#tzadiDialogs').html( e );
+			$('#tzadiDialogs').modal('show');
+		});
+	});
+
+	/*
+	Função do botão FINALIZAR: finishButton
+	Este botão:
+	- muda o status de uma tarefa para FINISHED "taskStatus= 6"
+	- muda a tarefa para a tabela FINISHED
+	*/
+	$(".finishButton").live('click', function( e ){
+		e.preventDefault();
+		taskID = $(this).attr('taskID');
+		if(globalConfirmAction("Deseja realmente reabrir a tarefa "+ taskID + '?')){
+
+			$.post(base_url + "task/update/" + taskID, {
+				taskStatus : 6,
+				taskID : taskID
+			},function( e ) {
+				if ( e ) {
+					$.post(base_url + "task/finishTask", {
+						form : true,
+						taskID : taskID
+					}, function( e ) {
+						$('#tzadiDialogs').html( e );
+						$('#tzadiDialogs').modal('show');
+					});
+				}
+			});
+		}
+	});	
 });
 </script>
