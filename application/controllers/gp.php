@@ -24,7 +24,7 @@ class Gp extends CI_Controller {
   {
   
     $this->load->library('gmail');
-    $data = $this->gmail->readMail(3);
+    $data = $this->gmail->readMail(0);
     $content = $this->load->view('gp/mail', $data, true);
 
     $data = array(

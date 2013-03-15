@@ -37,27 +37,46 @@ class Gmail {
     else return show_error($this->CI->email->print_debugger());
   }
 
-  function readMail($id = 1) {
+  function readMail($id) {
 
-    $dns = "{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX";
-    $email = $this->smtp_user;
-    $password = $this->smtp_pass;
-    $imap = imap_open($dns,$email,$password ) or die("Cannot Connect ".imap_last_error());
+      $dns = "{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX";
+      $email = $this->smtp_user;
+      $password = $this->smtp_pass;
+      $imap = imap_open($dns,$email,$password ) or die("Cannot Connect ".imap_last_error());
 
-    $message_count = imap_num_msg($imap);
-    $header = imap_header($imap, $id);
-    $headers = imap_headers($imap);
+    if($id > 0) {
+      $header = imap_header($imap, $id);
 
-    $data->emails[0]->id = $header->Msgno;
-    $data->emails[0]->date = date("Y-m-d H:i:s", $header->udate);
-    $data->emails[0]->from = $header->from[0]->mailbox."@".$header->from[0]->host;
-    $data->emails[0]->subject = $header->subject;
+      $data->emails[0]->id = $header->Msgno;
+      $data->emails[0]->date = date("Y-m-d H:i:s", $header->udate);
+      $data->emails[0]->from = $header->from[0]->mailbox."@".$header->from[0]->host;
+      $data->emails[0]->subject = $header->subject;
 
-    $data->emails[0]->message = quoted_printable_decode(utf8_encode(imap_qprint(imap_fetchbody($imap,$id,2))));
+      $data->emails[0]->message = quoted_printable_decode(utf8_encode(imap_qprint(imap_fetchbody($imap,$id,2))));
 
-    imap_close($imap);
+      imap_close($imap);
+      return $data;
 
-    return $data;
+    } else {
+      $headers = imap_headers($imap);
+
+      if (!$headers) {
+          print "Failed to retrieve headers\n";
+      } else {
+        for ($id = 1; $id <= imap_num_msg($imap); ++$id) {
+          $header = imap_header($imap, $id);
+
+          $data->emails[$id]->id = $header->Msgno;
+          $data->emails[$id]->date = date("Y-m-d H:i:s", $header->udate);
+          $data->emails[$id]->from = $header->from[0]->mailbox."@".$header->from[0]->host;
+          $data->emails[$id]->subject = $header->subject;
+
+          $data->emails[$id]->message = quoted_printable_decode(utf8_encode(imap_qprint(imap_fetchbody($imap,$id,2))));
+        }
+      }
+      imap_close($imap);
+      return $data; 
+    }
   }
 }
 /* End of file Gmail.php */
