@@ -3,15 +3,23 @@
 class Gmail {
   public function __construct() {
     $this->CI =& get_instance();
+    if (ENVIRONMENT ==  'production') {
+      $this->smtp_user = 'task@tzadi.com';
+      $this->smtp_pass = 'Task2010ireland';
+    } else {
+      $this->smtp_user = 'taskstaging@tzadi.com';
+      $this->smtp_pass = 'TaskS2010ireland';      
+    }
   }
 
   public function send($to, $subject, $message) {
+
     $config = Array(
       'protocol' => 'smtp',
       'smtp_host' => 'ssl://smtp.googlemail.com',
       'smtp_port' => 465,
-      'smtp_user' => 'task@tzadi.com',
-      'smtp_pass' => 'Task2010ireland',
+      'smtp_user' => $this->smtp_user,
+      'smtp_pass' => $this->smtp_pass,
       'mailtype' => 'html',
       'charset' => 'iso-8859-1',
       'wordwrap' => TRUE

@@ -4,7 +4,7 @@
       <h4 class="form-signin-heading">Por favor, identifique-se</h4>
       <p><input type="text" class="input-block-level" placeholder="Email" id="email" name="email"></p>
       <p><input type="password" class="input-block-level" placeholder="Senha" id="password" name="password"></p>
-      <p><a class="btn btn-large btn-primary btn-block" id="submitLogin">Entrar</a></p>
+      <p><a src="#" class="btn btn-large btn-primary btn-block" id="submitLogin">Entrar</a></p>
     </form>
   </div>
 </div> <!-- /container -->
@@ -22,6 +22,17 @@
           else window.location = "<?=base_url()?>task";
         }
       }, "json");
+    });
+
+    $("#password").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#submitLogin").click();
+        }
+    });
+    $("#email").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#submitLogin").click();
+        }
     });
   });
 </script>
