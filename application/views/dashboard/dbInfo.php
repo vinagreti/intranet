@@ -28,23 +28,25 @@
 	<table class="table table-hover table-condensed tablesorter">
 		<thead>
 			<tr>
-				<th class="span1">id</th>
 				<th class="span1"></th>
+				<th class="span1">id</th>
 				<th class="span2">Nome</th>
 				<th class="span2">Email</th>
 				<th class="span2">Identidade</th>
 				<th class="span2">Tipo de uauário</th>
+				<th class="span1">Data</th>
 			</tr>
 		</thead>
 		<tbody class="listBody">
 			<?php foreach($users as $user) { ?>
 			<tr>
-				<td class="span2"><?=$user["_id"]?></td>
 				<td class="span1"><img src="<?=$user["img"]?>" style="width:40px;"></td>
+				<td class="span1"><?=$user["_id"]?></td>
 				<td class="span2"><?=$user["name"]?></td>
 				<td class="span2"><?=$user["email"]?></td>
 				<td class="span2"><a href="http://<?=$user['identity']?>.tzadi.com"><?=$user["identity"]?></a></td>
 				<td class="span2"><?=$user["kind"]?></td>
+				<td class="span1"><?=date("d/m/Y H:i", $user["register"])?></td>
 			</tr>
 			<?php } ?>
 		</tbody>
