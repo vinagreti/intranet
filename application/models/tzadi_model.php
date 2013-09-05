@@ -39,7 +39,7 @@ class Tzadi_Model extends CI_Model {
 	{
 
 		return $this->mongo_db
-		->order_by( array("_id" => "asc") )
+		->order_by( array("_id" => "desc") )
 		->get('user');
 
 	}
