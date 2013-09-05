@@ -29,7 +29,7 @@
 		<thead>
 			<tr>
 				<th class="span1"></th>
-				<th class="span1">id</th>
+				<th class="span1">ID</th>
 				<th class="span2">Nome</th>
 				<th class="span2">Email</th>
 				<th class="span2">Identidade</th>
