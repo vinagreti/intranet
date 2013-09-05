@@ -145,6 +145,7 @@
               <ul class="dropdown-menu">
                 <li><a href="<?=base_url()?>dashboard" rel="tooltip" title="Estatísticas">Estatísticas</a></li>
                 <li><a href="<?=base_url()?>dashboard/apacheInfo" rel="tooltip" title="Dados do apache">Servidor</a></li>
+                <li><a href="<?=base_url()?>dashboard/dbInfo" rel="tooltip" title="Dados do apache">TZADI</a></li>
               </ul>
             </li>
 

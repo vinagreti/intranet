@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller {
 
 	public function dash()
 	{
-		$data->serverInfo = $_SERVER;
+		$data->serverInfo = false;
 		$content = $this->load->view('dashboard/estatisticas', $data, true);
 
 		$data = array(
@@ -29,8 +29,8 @@ class Dashboard extends CI_Controller {
 
 	public function apacheInfo()
 	{
-    $permissionData['methodLevel'] = array('admin');
-    $permissionData['methodName'] = 'Dashboard - Apache info';
+    	$permissionData['methodLevel'] = array('admin');
+    	$permissionData['methodName'] = 'Dashboard - Apache info';
 		$this->permission->allow($permissionData);
 
 		$data->serverInfo = $_SERVER;
@@ -43,6 +43,28 @@ class Dashboard extends CI_Controller {
 
 		$this->parser->parse('template', $data);
 	}
+
+
+	public function dbInfo()
+	{
+    	$permissionData['methodLevel'] = array('admin');
+    	$permissionData['methodName'] = 'Dashboard - Database info';
+		$this->permission->allow($permissionData);
+
+		$this->load->model("tzadi_model");
+		
+		$data->resume = $this->tzadi_model->getResume();
+		$data->users = $this->tzadi_model->getUsers();
+		$content = $this->load->view('dashboard/dbInfo', $data, true);
+
+		$data = array(
+			'page_title' => 'Dash - Apache conf',
+			'content' => $content
+			);
+
+		$this->parser->parse('template', $data);
+	}
+
 }
 
 /* End of file welcome.php */
